@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — Obsidian Motors — Mock-up</title>
+  <meta name="description" content="Wireframe mock-up of the Obsidian Motors terms of service — layout and structure only." />
+
+  <style>
+    /* ============================================================
+       Obsidian Motors — MOCK-UP / wireframe styles (self-contained)
+       ============================================================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f4f4f2; --panel: #ffffff;
+      --line: #d4d4ce; --line-dash: #b9b9b1;
+      --ink: #2c2c2c; --ink-dim: #6a6a64; --ink-faint: #9b9b92;
+      --max: 1180px; --wide: 1440px; --radius: 10px; --gap: 24px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.66; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+
+    .wrap-wide { max-width: var(--wide); margin: 0 auto; padding: 0 var(--gap); }
+    .section { padding: 56px 0; }
+
+    h1 { font-weight: 600; font-size: clamp(2rem, 1.2rem + 3vw, 3rem); }
+
+    .nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.82); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .nav-inner { max-width: var(--wide); margin: 0 auto; padding: 15px var(--gap); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .nav-logo { font-weight: 700; text-decoration: none; color: var(--ink); font-size: 1.02rem; }
+    .nav-links { list-style: none; display: flex; gap: 26px; }
+    .nav-links a { text-decoration: none; color: var(--ink-dim); font-size: .9rem; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta { text-decoration: none; color: var(--ink); border: 1px solid var(--line-dash); padding: 9px 18px; border-radius: 999px; font-size: .85rem; }
+
+    /* legal article */
+    .legal { max-width: 760px; margin: 0 auto; }
+    .legal h2 { font-weight: 600; font-size: 1.2rem; margin: 30px 0 10px; }
+    .legal p, .legal li { color: var(--ink-dim); }
+    .legal ul { padding-left: 20px; margin: 8px 0; }
+    .legal-updated { font-size: .82rem; color: var(--ink-faint); margin-bottom: 8px; }
+
+    .footer { background: #ececea; border-top: 1px solid var(--line); margin-top: 40px; }
+    .footer-grid { max-width: var(--max); margin: 0 auto; padding: 54px var(--gap) 30px; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+    .footer h4 { font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 14px; }
+    .footer-logo { font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; }
+    .footer-tagline { font-size: .92rem; }
+    .footer ul { list-style: none; }
+    .footer ul li { margin-bottom: 8px; }
+    .footer a { color: var(--ink-dim); text-decoration: none; font-size: .9rem; }
+    .footer a:hover { color: var(--ink); }
+    .footer address { font-style: normal; color: var(--ink-dim); font-size: .9rem; line-height: 1.8; }
+    .footer-bottom { max-width: var(--max); margin: 0 auto; padding: 18px var(--gap) 40px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: .82rem; color: var(--ink-faint); }
+    .footer-bottom a { color: var(--ink-faint); text-decoration: none; margin-left: 18px; }
+    .footer-bottom a:hover { color: var(--ink); }
+
+    .mock-flag { position: fixed; left: 14px; bottom: 14px; z-index: 80; background: var(--ink); color: var(--bg); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; opacity: .78; }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Obsidian Motors</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="collection.html">Collection</a></li>
+          <li><a href="showcase.html">Showcase</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="consign.html">Consign</a></li>
+        </ul>
+      </nav>
+      <a href="contact.html" class="nav-cta">Enquire</a>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="wrap-wide">
+      <article class="legal">
+        <h1>Terms of Service</h1>
+        <p class="legal-updated">Last updated: 14 August 2026</p>
+
+        <section>
+          <h2>1. About This Website</h2>
+          <p>These terms govern your use of the Obsidian Motors website. By using this site, you agree to these terms. If you do not agree, please do not use the site.</p>
+        </section>
+
+        <section>
+          <h2>2. Vehicle Information</h2>
+          <ul>
+            <li>Vehicle specifications, pricing and availability are subject to change without notice.</li>
+            <li>Images are for illustration purposes and may differ from the actual vehicle.</li>
+            <li>All vehicles are offered subject to prior sale.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>3. No Warranty</h2>
+          <p>The information on this website is provided "as is" and for general information only. Obsidian Motors makes no warranties, express or implied, regarding the accuracy, completeness or availability of the content on this site.</p>
+        </section>
+
+        <section>
+          <h2>4. Intellectual Property</h2>
+          <p>All content on this site — including text, images, logos and vehicle photography — is the property of Obsidian Motors or its licensors. You may not reproduce, distribute or use this content without our prior written permission.</p>
+        </section>
+
+        <section>
+          <h2>5. Liability</h2>
+          <p>To the fullest extent permitted by law, Obsidian Motors will not be liable for any loss or damage arising from your use of, or reliance on, the information on this website.</p>
+        </section>
+
+        <section>
+          <h2>6. Contact</h2>
+          <p>Questions about these terms? Contact us at <a href="mailto:enquiries@obsidianmotors.example">enquiries@obsidianmotors.example</a> or <a href="tel:+27111234567">+27 11 123 4567</a>.</p>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Obsidian Motors</div>
+        <p class="footer-tagline">Curating the world's most exceptional automobiles.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="collection.html">Collection</a></li>
+          <li><a href="showcase.html">Showcase</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="consign.html">Consign</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <address>
+          Rosebank, Johannesburg<br>
+          <a href="tel:+27111234567">+27 11 123 4567</a><br>
+          <a href="mailto:enquiries@obsidianmotors.example">enquiries@obsidianmotors.example</a>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Obsidian Motors. All rights reserved.</p>
+      <div>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <span class="mock-flag">Mock-up · wireframe</span>
+</body>
+</html>
