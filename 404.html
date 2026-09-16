@@ -3,56 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 — Page Not Found — Obsidian Motors — Mock-up</title>
-  <meta name="description" content="Wireframe mock-up of the Obsidian Motors 404 page — layout and structure only." />
-
-  <style>
-    /* ============================================================
-       Obsidian Motors — MOCK-UP / wireframe styles (self-contained)
-       ============================================================ */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #f4f4f2; --panel: #ffffff;
-      --line: #d4d4ce; --line-dash: #b9b9b1;
-      --ink: #2c2c2c; --ink-dim: #6a6a64; --ink-faint: #9b9b92;
-      --max: 1180px; --wide: 1440px; --gap: 24px;
-    }
-
-    html, body { height: 100%; }
-    body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; }
-    a { color: inherit; }
-
-    .nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.82); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-    .nav-inner { max-width: var(--wide); margin: 0 auto; padding: 15px var(--gap); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .nav-logo { font-weight: 700; text-decoration: none; color: var(--ink); font-size: 1.02rem; }
-    .nav-links { list-style: none; display: flex; gap: 26px; }
-    .nav-links a { text-decoration: none; color: var(--ink-dim); font-size: .9rem; }
-    .nav-links a:hover { color: var(--ink); }
-    .nav-cta { text-decoration: none; color: var(--ink); border: 1px solid var(--line-dash); padding: 9px 18px; border-radius: 999px; font-size: .85rem; }
-
-    .centered { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px var(--gap); }
-    .centered .code { font-size: clamp(3rem, 2rem + 6vw, 6rem); font-weight: 700; color: var(--ink-faint); letter-spacing: .05em; }
-    .centered h1 { font-weight: 600; font-size: clamp(1.4rem, 1rem + 1.5vw, 2rem); margin: 8px 0 12px; }
-    .centered p { color: var(--ink-dim); margin-bottom: 24px; }
-    .btn { display: inline-block; text-decoration: none; padding: 11px 24px; border-radius: 999px; border: 1px solid var(--ink); color: var(--ink); font-size: .9rem; }
-    .btn:hover { background: var(--ink); color: var(--bg); }
-
-    .footer { background: #ececea; border-top: 1px solid var(--line); }
-    .footer-bottom { max-width: var(--max); margin: 0 auto; padding: 22px var(--gap); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: .82rem; color: var(--ink-faint); }
-    .footer-bottom a { color: var(--ink-faint); text-decoration: none; margin-left: 18px; }
-    .footer-bottom a:hover { color: var(--ink); }
-
-    .mock-flag { position: fixed; left: 14px; bottom: 14px; z-index: 80; background: var(--ink); color: var(--bg); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; opacity: .78; }
-
-    @media (max-width: 860px) { .nav-links { display: none; } }
-  </style>
+  <title>Page Not Found — Obsidian Motors</title>
+  <meta name="description" content="This page has slipped off the grid. Head back to the Obsidian Motors home page." />
+  <meta name="theme-color" content="#07080a" />
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta property="og:title" content="Page Not Found — Obsidian Motors" />
+  <meta property="og:description" content="This page has slipped off the grid." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/site.css" />
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
+  <div class="scroll-progress" aria-hidden="true"><i></i></div>
 
   <header class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Obsidian Motors</a>
+      <a href="index.html" class="nav-logo">Obsidian <span>Motors</span></a>
       <nav>
         <ul class="nav-links">
           <li><a href="collection.html">Collection</a></li>
@@ -61,20 +31,24 @@
           <li><a href="consign.html">Consign</a></li>
         </ul>
       </nav>
-      <a href="contact.html" class="nav-cta">Enquire</a>
+      <div class="nav-actions">
+        <a href="contact.html" class="nav-cta">Enquire</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
+      </div>
     </div>
   </header>
 
   <main class="centered">
     <div class="code">404</div>
-    <h1>Page Not Found</h1>
-    <p>Sorry, the page you are looking for does not exist.</p>
-    <a href="index.html" class="btn">Return Home</a>
+    <span class="eyebrow">Signal lost</span>
+    <h1>This page took a wrong turn.</h1>
+    <p>The road you were on doesn't lead anywhere — the page may have moved, or never existed. Let's get you back on track.</p>
+    <a href="index.html" class="btn">Return home</a>
   </main>
 
   <footer class="footer">
     <div class="footer-bottom">
-      <p>&copy; 2026 Obsidian Motors. All rights reserved.</p>
+      <p>&copy; <span data-year>2026</span> Obsidian Motors. All rights reserved.</p>
       <div>
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Service</a>
@@ -82,6 +56,6 @@
     </div>
   </footer>
 
-  <span class="mock-flag">Mock-up · wireframe</span>
+  <script src="js/site.js" defer></script>
 </body>
 </html>
