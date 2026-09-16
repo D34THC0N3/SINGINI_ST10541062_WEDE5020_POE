@@ -384,7 +384,9 @@ cite { display: block; margin-top: 20px; font-style: normal; font-family: var(--
 .centered p { margin-bottom: 28px; }
 
 /* ---------- 17b. Intro logo reveal (home only) ---------- */
-#intro { position: fixed; inset: 0; z-index: 300; background: var(--void);
+/* JS-off / opened-from-disk: keep it hidden — only JS can dismiss it, so only show it when JS is on */
+#intro { display: none; }
+.js #intro { position: fixed; inset: 0; z-index: 300; background: var(--void);
   display: grid; place-items: center; overflow: hidden; cursor: pointer;
   transition: opacity .8s var(--ease), visibility .8s; }
 #intro.is-gone { opacity: 0; visibility: hidden; pointer-events: none; }
