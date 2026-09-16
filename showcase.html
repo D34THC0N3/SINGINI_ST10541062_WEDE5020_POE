@@ -3,89 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Showcase — Obsidian Motors — Mock-up</title>
-  <meta name="description" content="Wireframe mock-up of the Obsidian Motors full-screen 3D showcase — layout and structure only." />
-
-  <style>
-    /* ============================================================
-       Obsidian Motors — MOCK-UP / wireframe styles (self-contained)
-       Showcase is a full-screen stage: the canvas fills the viewport
-       and every control floats over it. This mock-up lays out those
-       floating pieces as labelled placeholders.
-       ============================================================ */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #f4f4f2; --panel: #ffffff; --box: #e9e9e5;
-      --line: #d4d4ce; --line-dash: #b9b9b1;
-      --ink: #2c2c2c; --ink-dim: #6a6a64; --ink-faint: #9b9b92;
-      --wide: 1440px; --radius: 10px; --gap: 24px;
-    }
-
-    html, body { height: 100%; }
-    body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow: hidden; }
-    a { color: inherit; }
-
-    /* nav */
-    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(255,255,255,.72); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-    .nav-inner { max-width: var(--wide); margin: 0 auto; padding: 15px var(--gap); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .nav-logo { font-weight: 700; text-decoration: none; color: var(--ink); font-size: 1.02rem; }
-    .nav-links { list-style: none; display: flex; gap: 26px; }
-    .nav-links a { text-decoration: none; color: var(--ink-dim); font-size: .9rem; }
-    .nav-links a:hover, .nav-links a.is-current { color: var(--ink); }
-    .nav-cta { text-decoration: none; color: var(--ink); border: 1px solid var(--line-dash); padding: 9px 18px; border-radius: 999px; font-size: .85rem; }
-
-    /* stage */
-    .stage { position: relative; height: 100vh; width: 100%; overflow: hidden;
-      background: repeating-linear-gradient(45deg, #ededea, #ededea 14px, #e6e6e2 14px, #e6e6e2 28px); }
-    .stage-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--ink-faint); font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; }
-    .chip { background: rgba(255,255,255,.72); border: 1px solid var(--line); border-radius: var(--radius); backdrop-filter: blur(6px); }
-
-    /* identity — top-left */
-    .sc-identity { position: absolute; top: 96px; left: clamp(16px, 4vw, 48px); max-width: 42ch; padding: 18px 20px; }
-    .sc-eyebrow { font-size: .68rem; letter-spacing: .28em; text-transform: uppercase; color: var(--ink-faint); }
-    .sc-index { margin-top: 8px; font-size: .72rem; letter-spacing: .16em; color: var(--ink-faint); }
-    .sc-index b { color: var(--ink); }
-    .sc-name { font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem); font-weight: 600; margin-top: 6px; }
-    .sc-tagline { font-size: 1.05rem; color: var(--ink-dim); margin-top: 6px; }
-    .sc-specline { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); margin-top: 12px; }
-
-    /* car switcher — right edge */
-    .sc-switch { position: absolute; top: 50%; right: clamp(12px, 2vw, 24px); transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; }
-    .sc-switch-btn { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 8px; text-decoration: none; color: var(--ink-dim); font-size: .85rem; min-width: 190px; }
-    .sc-switch-btn.is-active { color: var(--ink); border-color: var(--ink); }
-    .sc-switch-num { font-size: .68rem; color: var(--ink-faint); }
-
-    /* hint — top-right under nav */
-    .sc-hint { position: absolute; top: 100px; right: clamp(16px, 4vw, 48px); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); padding: 8px 12px; }
-
-    /* control dock — bottom-centre */
-    .sc-dock { position: absolute; left: 50%; bottom: clamp(16px, 3vw, 34px); transform: translateX(-50%); display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); padding: 14px 18px; }
-    .sc-start { width: 74px; height: 74px; border-radius: 50%; border: 1px solid var(--line-dash); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: var(--panel); }
-    .sc-start small { font-size: .46rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint); }
-    .sc-start strong { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
-    .sc-throttle { min-width: 108px; text-align: center; padding: 14px 16px; border-radius: 8px; border: 1px solid var(--line); font-size: .6rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-dim); }
-    .sc-gauge { width: 74px; height: 74px; border-radius: 50%; border: 5px solid var(--line); border-top-color: var(--ink-faint); display: flex; align-items: center; justify-content: center; font-size: .7rem; color: var(--ink-dim); }
-    .sc-views { display: flex; gap: 6px; }
-    .sc-view { padding: 9px 14px; border-radius: 8px; border: 1px solid transparent; font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim); }
-    .sc-view.is-active { border-color: var(--line-dash); color: var(--ink); background: rgba(255,255,255,.6); }
-
-    .mock-flag { position: fixed; left: 14px; bottom: 14px; z-index: 80; background: var(--ink); color: var(--bg); font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; opacity: .78; }
-
-    @media (max-width: 860px) {
-      .nav-links { display: none; }
-      .sc-switch { top: auto; bottom: 150px; right: 50%; transform: translateX(50%); flex-direction: row; }
-      .sc-switch-btn { min-width: 0; }
-      .sc-hint { display: none; }
-      .sc-dock { flex-wrap: wrap; justify-content: center; }
-    }
-  </style>
+  <title>Showcase — Obsidian Motors</title>
+  <meta name="description" content="Walk around the collection in 3D. Orbit, zoom, and study every line — live in your browser." />
+  <meta name="theme-color" content="#07080a" />
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta property="og:title" content="Showcase — Obsidian Motors" />
+  <meta property="og:description" content="Walk around the collection in 3D — orbit, zoom, and study every line." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/site.css" />
+  <script>document.documentElement.classList.add("js");</script>
 </head>
-<body>
+<body class="showcase">
+  <div class="scroll-progress" aria-hidden="true"><i></i></div>
 
   <header class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Obsidian Motors</a>
+      <a href="index.html" class="nav-logo">Obsidian <span>Motors</span></a>
       <nav>
         <ul class="nav-links">
           <li><a href="collection.html">Collection</a></li>
@@ -94,46 +31,65 @@
           <li><a href="consign.html">Consign</a></li>
         </ul>
       </nav>
-      <a href="contact.html" class="nav-cta">Enquire</a>
+      <div class="nav-actions">
+        <a href="contact.html" class="nav-cta">Enquire</a>
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
+      </div>
     </div>
   </header>
 
-  <!-- Full-screen stage: WebGL canvas on the live site -->
   <main class="stage">
-    <div class="stage-label">[ Full-screen 3D car stage — WebGL canvas ]</div>
+    <!-- Real 3D. Drag to orbit, scroll to zoom. Slotted poster covers loading / offline / no-JS. -->
+    <model-viewer
+      id="mv"
+      src="https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Assets@main/Models/ToyCar/glTF-Binary/ToyCar.glb"
+      alt="Interactive 3D car model — drag to orbit, scroll to zoom"
+      camera-controls
+      auto-rotate
+      rotation-per-second="30deg"
+      interaction-prompt="none"
+      camera-orbit="-30deg 75deg 110%"
+      exposure="1"
+      shadow-intensity="1"
+      environment-image="neutral"
+      loading="eager">
+      <div class="mv-fallback" slot="poster">Live 3D preview · needs an internet connection</div>
+    </model-viewer>
 
     <!-- identity (top-left) -->
     <div class="sc-identity chip">
-      <div class="sc-eyebrow">Showcase</div>
-      <div class="sc-index"><b>01</b> / 03</div>
-      <div class="sc-name">Mercedes-AMG GT3</div>
-      <div class="sc-tagline">Track-bred theatre.</div>
-      <div class="sc-specline">2019 · Affalterbach · 4.0L twin-turbo V8 · RWD</div>
+      <p class="sc-eyebrow">Showcase</p>
+      <p class="sc-index"><b data-sc-index>01</b> / 03</p>
+      <h1 class="sc-name" data-sc-name>Mercedes-AMG GT3</h1>
+      <p class="sc-tagline" data-sc-tag>Track-bred theatre.</p>
+      <p class="sc-specline" data-sc-spec>2019 · Affalterbach · 4.0L twin-turbo V8 · RWD</p>
     </div>
 
     <!-- interaction hint (top-right) -->
-    <div class="sc-hint chip">Drag to orbit · hold a hotspot to focus</div>
+    <p class="sc-hint chip">Drag to orbit · scroll to zoom · demo 3D model</p>
 
-    <!-- car switcher (right edge) -->
-    <nav class="sc-switch">
-      <a class="sc-switch-btn chip is-active" href="showcase.html?car=0"><span class="sc-switch-num">01</span> Mercedes-AMG GT3</a>
-      <a class="sc-switch-btn chip" href="showcase.html?car=1"><span class="sc-switch-num">02</span> Pagani Zonda</a>
-      <a class="sc-switch-btn chip" href="showcase.html?car=2"><span class="sc-switch-num">03</span> Porsche GT2 RS</a>
-    </nav>
+    <!-- car switch (right) -->
+    <div class="sc-switch" role="group" aria-label="Choose a car">
+      <button class="sc-switch-btn chip is-active" type="button" data-car="0"><span class="sc-switch-num">01</span> Mercedes-AMG GT3</button>
+      <button class="sc-switch-btn chip" type="button" data-car="1"><span class="sc-switch-num">02</span> Pagani Zonda</button>
+      <button class="sc-switch-btn chip" type="button" data-car="2"><span class="sc-switch-num">03</span> Porsche GT2 RS</button>
+    </div>
 
-    <!-- control dock (bottom-centre) -->
+    <!-- dock (bottom-centre): turntable + rev + camera views -->
     <div class="sc-dock chip">
-      <div class="sc-start"><small>Push</small><strong>Start</strong></div>
-      <div class="sc-throttle">Hold to rev</div>
-      <div class="sc-gauge">RPM</div>
-      <div class="sc-views">
-        <span class="sc-view is-active">Exterior</span>
-        <span class="sc-view">Interior</span>
-        <span class="sc-view">Stats</span>
+      <button class="sc-start" type="button" aria-pressed="true"><small>Turntable</small><strong>Pause</strong></button>
+      <button class="sc-throttle" type="button">Hold to rev</button>
+      <div class="sc-gauge" aria-hidden="true">3D</div>
+      <div class="sc-views" role="group" aria-label="Camera angle">
+        <button class="sc-view is-active" type="button">Exterior</button>
+        <button class="sc-view" type="button">Profile</button>
+        <button class="sc-view" type="button">Top</button>
       </div>
     </div>
   </main>
 
-  <span class="mock-flag">Mock-up · wireframe</span>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+  <script src="js/site.js" defer></script>
+  <script src="js/showcase.js" defer></script>
 </body>
 </html>
