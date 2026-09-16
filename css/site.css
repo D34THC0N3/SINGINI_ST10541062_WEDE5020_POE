@@ -386,8 +386,63 @@ cite { display: block; margin-top: 20px; font-style: normal; font-family: var(--
 .centered h1 { font-size: clamp(1.5rem, 1rem + 1.5vw, 2.2rem); margin: 0 0 14px; }
 .centered p { margin-bottom: 28px; }
 
+/* ---------- 17b. Intro logo reveal (home only) ---------- */
+#intro { position: fixed; inset: 0; z-index: 300; background: var(--void);
+  display: grid; place-items: center; overflow: hidden; cursor: pointer;
+  transition: opacity .8s var(--ease), visibility .8s; }
+#intro.is-gone { opacity: 0; visibility: hidden; pointer-events: none; }
+.intro-inner { text-align: center; padding: 24px; }
+.intro-boot { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .32em; text-transform: uppercase;
+  color: var(--teal); opacity: 0; animation: intro-boot .6s var(--ease) .1s forwards; }
+.intro-word { font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  font-size: clamp(2.4rem, 1rem + 9vw, 6.5rem); line-height: .92; letter-spacing: .01em; margin-top: 12px; }
+.intro-word span { display: block; opacity: 0; transform: translateY(34px); animation: intro-rise .8s var(--ease) forwards; }
+.intro-word span:nth-child(2) { animation-delay: .16s; color: transparent; -webkit-text-stroke: 1.4px var(--teal); }
+.intro-rule { height: 1px; width: 0; margin: 24px auto 0; background: var(--teal); box-shadow: 0 0 14px var(--teal);
+  animation: intro-rule 1s var(--ease) .5s forwards; }
+@keyframes intro-boot { to { opacity: .85; } }
+@keyframes intro-rise { to { opacity: 1; transform: none; } }
+@keyframes intro-rule { to { width: min(340px, 62vw); } }
+
+/* ---------- 17c. Home hero scroll stage (sticky pin, scrubbed by --p) ---------- */
+.hero { position: relative; }
+.js .hero { height: 240vh; }                         /* tall scroll track — only when JS is on */
+.hero-stage { position: relative; display: grid; place-items: center; text-align: center; overflow: hidden;
+  min-height: 88vh; padding: calc(var(--nav-h) + 24px) var(--gap) 48px; }
+.js .hero-stage { position: sticky; top: 0; height: 100vh; min-height: 0; }
+.hero-wheel { position: absolute; z-index: 0; width: min(82vmin, 660px); aspect-ratio: 1; border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg, rgba(233,240,247,.09) 0 1.1deg, transparent 1.1deg 15deg),
+    radial-gradient(circle, transparent 0 30%, rgba(51,214,204,.06) 30% 67%, transparent 68%);
+  -webkit-mask: radial-gradient(circle, transparent 0 15%, #000 16% 99%, transparent 100%);
+          mask: radial-gradient(circle, transparent 0 15%, #000 16% 99%, transparent 100%);
+  box-shadow: inset 0 0 0 1px var(--line-2), inset 0 0 90px rgba(51,214,204,.10);
+  transform: rotate(calc(var(--p, 0) * 540deg)) scale(calc(1 + var(--p, 0) * .14));
+  opacity: calc(.45 + var(--p, 0) * .55); }
+.hero-inner { position: relative; z-index: 1; max-width: 940px; transform: translateY(calc(var(--p, 0) * -9vh)); }
+.hero-title { font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+  font-size: clamp(2.8rem, 1rem + 11.5vw, 8.5rem); line-height: .9; letter-spacing: -.01em; margin-top: 10px;
+  filter: drop-shadow(0 8px 40px rgba(7,8,10,.7)); }
+.hero-title .outline { color: transparent; -webkit-text-stroke: 1.6px var(--teal); }
+.hero-lead { max-width: 52ch; margin: 24px auto 0; font-size: 1.12rem; color: var(--chrome);
+  opacity: calc(1 - var(--p, 0) * 1.5); }
+.hero-cta { justify-content: center; opacity: calc(1 - var(--p, 0) * 1.7); }
+.hud { position: absolute; z-index: 1; left: 50%; bottom: 5vh; transform: translateX(-50%);
+  display: flex; border: 1px solid var(--line); border-radius: 999px; background: rgba(12,14,18,.62);
+  backdrop-filter: blur(10px); font-family: var(--font-mono); }
+.hud-cell { padding: 10px 24px; display: flex; flex-direction: column; align-items: center; gap: 3px; border-right: 1px solid var(--line); }
+.hud-cell:last-child { border-right: 0; }
+.hud-label { font-size: .6rem; letter-spacing: .22em; text-transform: uppercase; color: var(--faint); }
+.hud b { font-size: 1.12rem; font-weight: 500; color: var(--chrome); font-variant-numeric: tabular-nums; }
+.hud-unit { font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); }
+/* count-up figures */
+.fig b { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
 /* ---------- 18. Responsive ---------- */
 @media (max-width: 860px) {
+  .js .hero { height: 200vh; }
+  .hud { flex-wrap: wrap; border-radius: 16px; bottom: 3vh; }
+  .hud-cell { padding: 8px 16px; }
   .nav-links { display: none; }
   .nav-links.is-open {
     display: flex; flex-direction: column; gap: 4px;
