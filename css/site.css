@@ -170,7 +170,6 @@ header, main, footer { position: relative; z-index: 2; }
   opacity: 0;
   transform: translateY(26px);
   transition: opacity .8s var(--ease), transform .8s var(--ease);
-  will-change: opacity, transform;
 }
 .js .section.is-in, .js .reveal.is-in { opacity: 1; transform: none; }
 
@@ -256,7 +255,7 @@ header, main, footer { position: relative; z-index: 2; }
 /* ---------- 10. About: sourcing channels + values ---------- */
 .channel { display: grid; grid-template-columns: 72px 1fr 1fr; gap: 36px; align-items: start; margin-bottom: 64px; }
 .channel--reverse .channel-img { order: -1; }
-.channel-num { font-family: var(--font-mono); font-size: 2.4rem; font-weight: 700; color: var(--teal); opacity: .5; }
+.channel-num { font-family: var(--font-mono); font-size: 2.4rem; font-weight: 500; color: var(--teal); opacity: .5; }
 .channel-content p { margin-top: 14px; }
 .value-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; transition: border-color .3s, transform .3s var(--ease); }
 .value-card:hover { border-color: var(--line-2); transform: translateY(-4px); }
