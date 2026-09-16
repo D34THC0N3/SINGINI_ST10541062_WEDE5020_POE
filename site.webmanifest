@@ -1,0 +1,12 @@
+{
+  "name": "Obsidian Motors",
+  "short_name": "Obsidian",
+  "description": "Curating the world's most exceptional automobiles.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#07080a",
+  "theme_color": "#07080a",
+  "icons": [
+    { "src": "assets/icons/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

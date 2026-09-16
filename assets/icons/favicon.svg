@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Obsidian Motors">
+  <rect width="64" height="64" rx="13" fill="#07080a"/>
+  <!-- obsidian shard: a cut "O" that reads as a faceted black gem -->
+  <path d="M32 12 L50 26 L44 50 L20 50 L14 26 Z" fill="none" stroke="#33d6cc" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M32 12 L32 50 M14 26 L50 26" stroke="#1c8f88" stroke-width="1.4"/>
+  <circle cx="32" cy="33" r="4" fill="#33d6cc"/>
+</svg>
