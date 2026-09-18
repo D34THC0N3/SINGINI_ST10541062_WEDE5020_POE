@@ -163,6 +163,15 @@ header, main, footer { position: relative; z-index: 2; }
 .ph-tall { min-height: 340px; }
 .ph-hero { min-height: 460px; }
 
+/* real photographs in the .ph slots — slightly darkened so they sit inside the night theme */
+img.ph { padding: 0; border: none; aspect-ratio: 16 / 10; object-fit: cover; background: var(--panel);
+  filter: saturate(.78) contrast(1.06) brightness(.86);
+  transition: filter .5s var(--ease), transform .9s var(--ease); }
+img.ph-tall { aspect-ratio: 4 / 5; }
+img.ph-hero { aspect-ratio: 21 / 9; }
+.card { overflow: hidden; }
+.card:hover img.ph { filter: saturate(.95) contrast(1.05) brightness(.95); transform: scale(1.045); }
+
 /* ---------- 6. Reveal-on-scroll ---------- */
 /* Gated on .js so content is fully visible when JS is off / the file
    is opened straight from disk. JS adds .is-in as elements enter view. */
