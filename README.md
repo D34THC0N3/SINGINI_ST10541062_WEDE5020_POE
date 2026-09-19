@@ -1,14 +1,14 @@
-# Obsidian Motors — WEDE5020 POE Part 2 (images + video, no 3D)
+# Obsidian Motors — WEDE5020 POE Part 2 (pure cinema, no 3D)
 
-A dark, cinematic private-collection site for ultra-rare cars — now **images + video only** (showcase/3D removed for time). Obsidian/onyx palette, Fraunces + Inter + IBM Plex Mono, garage-at-night mood.
+yo — we cut the 3D cuz deadline lowkey eating us alive. now its just **cold vids + crisp pics** that go hard. think NFS Underground after dark, not some ai slop gradient. obsidian blacks, bone text, one gold hit (#b8976a), Fraunces for the drama, Inter for the read, Plex Mono for the hud. all garage, all night.
 
-Live premise: **Obsidian Motors** sources, verifies and quietly places the world's rarest cars from **Rosebank International, Pretoria** (WEDE5020 / ST10541062 / fictional brand for coursework).
+real talk: **Obsidian Motors** moves the rarest whips — quietly, no cap — outta **Rosebank International, Pretoria** (WEDE5020 / ST10541062 / fake brand for school, fr).
 
 ## Pages (7 + 404)
 
 | Page | What it is |
 |------|------------|
-| `index.html` | Hero (static high-fidelity still) + provenance + current inventory (3 cards → collection) |
+| `index.html` | Fullscreen hypercar vid hero (scroll scrubs it, parallax) + grow-vid sticky (text left, vertical edit right that blows up to bg) + inventory (3 cards → collection) |
 | `collection.html` | Vault: 4 dossiers (M3 GTR #15, AMG GT3 #14, McLaren F1 #13, Fenomeno #12) — photography cards → contact |
 | `about.html` | How we source (private acquisitions · Dubai recovery) |
 | `consign.html` / `contact.html` | Consignment + enquiry forms (client-side validation) |

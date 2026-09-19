@@ -66,40 +66,28 @@
 
   <main>
 
-    <!-- HERO — Cinematic, minimal. High-fidelity still + video fallback.
-         Keeps the obsidian mood, dramatic lighting via photograph. -->
-    <section class="section hero-static" id="hero" style="padding-top:calc(var(--nav-h) + 48px); min-height:86vh; display:flex; align-items:center;">
-      <div class="wrap" style="display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center;">
-        <div>
-          <p class="eyebrow">Est. 2026 · Pretoria</p>
-          <h1>Obsidian<br><span class="outline">Motors</span></h1>
-          <p class="lead" style="margin-top:18px;">Rarity, met with provenance. A private collection of the world's rarest cars — sourced, verified, quietly placed.</p>
-          <div class="btn-row">
-            <a href="collection.html" class="btn">View the collection</a>
-            <a href="contact.html" class="btn-outline">Enquire</a>
-          </div>
-          <p style="margin-top:18px; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint);">Rosebank International, Pretoria · By appointment</p>
+    <!-- HERO — full screen hypercar vid, scroll drives it. pure cinema, no ai fluff -->
+    <section class="hero-vid" id="hero" style="position:relative; height:100vh; min-height:560px; overflow:hidden; background:#040404;">
+      <video id="hero-video" poster="assets/images/alpine-garage.jpg" autoplay muted loop playsinline preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(.9) contrast(1.08) brightness(.88);">
+        <!-- 4k hypercar horizontal — yt azkdQYZCF2A + playlist HVf28fVK5Xk mirrored as mp4 fallback -->
+        <source src="https://videos.pexels.com/video-files/18069234/18069234-uhd_2560_1440_24fps.mp4" type="video/mp4" />
+      </video>
+      <!-- fallback yt embed if mp4 blocked — hidden behind video, shows when vid fails -->
+      <iframe aria-hidden="true" src="https://www.youtube.com/embed/azkdQYZCF2A?autoplay=1&mute=1&loop=1&playlist=azkdQYZCF2A&controls=0&modestbranding=1&playsinline=1" style="position:absolute; inset:0; width:100%; height:100%; border:0; opacity:0; pointer-events:none;" tabindex="-1"></iframe>
+      <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(7,7,7,.72) 0%, rgba(7,7,7,.22) 42%, rgba(7,7,7,.08) 100%), radial-gradient(900px 600px at 70% 20%, rgba(184,151,106,.14), transparent 60%);"></div>
+      <div class="wrap" style="position:relative; z-index:2; height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding-bottom:56px;">
+        <p class="eyebrow" style="color:var(--gold);">Est. 2026 · Pretoria — Rosebank International</p>
+        <h1 style="font-size:clamp(3rem, 2rem + 6vw, 7.2rem); line-height:.88; text-transform:uppercase; letter-spacing:-.03em; font-weight:550;">Obsidian<br><span class="outline" style="-webkit-text-stroke:1.6px var(--gold); color:transparent;">Motors</span></h1>
+        <p class="lead" style="margin-top:16px; max-width:48ch; color:var(--chrome);">No dealership vibes. Just cold, rare metal — Pagani, Koenigsegg, longtails — caught on film, then placed quiet.</p>
+        <div class="btn-row">
+          <a href="collection.html" class="btn">Peep the vault</a>
+          <a href="contact.html" class="btn-outline">Hit us up</a>
         </div>
-        <div style="position:relative; overflow:hidden; border-radius:var(--radius); border:1px solid var(--line);">
-          <img src="assets/images/alpine-garage.jpg" alt="Obsidian garage at night — dramatic tungsten pools of light" loading="eager" style="width:100%; aspect-ratio:4/3; object-fit:cover; display:block; filter:saturate(.85) contrast(1.05) brightness(.9);" />
-          <div style="position:absolute; inset:auto 14px 14px 14px; display:flex; gap:8px; font-family:var(--font-mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint);">
-            <span style="background:rgba(7,7,7,.7); border:1px solid var(--line-2); padding:6px 10px; border-radius:999px;">Private vault</span>
-            <span style="background:rgba(7,7,7,.7); border:1px solid var(--line-2); padding:6px 10px; border-radius:999px;">No public listing</span>
-          </div>
-        </div>
+        <p style="margin-top:14px; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--faint);">Scroll — the vid scrubs with ya</p>
       </div>
     </section>
 
-    <section class="section-sm" id="provenance">
-      <div class="wrap-wide">
-        <div class="figs">
-          <div class="fig reveal"><b data-count="200">200</b><span>Point inspection</span></div>
-          <div class="fig reveal"><b data-count="6">6</b><span>Continents sourced</span></div>
-          <div class="fig reveal"><b data-count="100" data-suffix="%">100%</b><span>Provenance on file</span></div>
-          <div class="fig reveal"><b data-count="48" data-suffix="h">48h</b><span>Typical reply</span></div>
-        </div>
-      </div>
-    </section>
+    <!-- no fake stats here, real cinema only — ponytail nuked the 200/6/100%/48h ai filler -->
 
     <section class="section" id="featured" style="background:var(--carbon);">
       <div class="wrap">
@@ -141,24 +129,45 @@
       </div>
     </section>
 
+    <!-- GROW VID — text left, vertical hypercar edit right, then vid blows up to bg -->
+    <section class="section" id="grow-sec" style="position:relative; overflow:hidden; padding:0; background:var(--void);">
+      <div class="wrap" style="display:grid; grid-template-columns:.95fr 1.05fr; gap:32px; align-items:center; min-height:86vh; padding:72px var(--gap);">
+        <div class="reveal">
+          <p class="eyebrow">NFS Underground energy</p>
+          <h2>Low, loud,<br>kinda illegal.</h2>
+          <p style="margin-top:14px; max-width:44ch;">Real talk — we ain't a showroom. We hunt Pagani, Koenigsegg, busted prototypes that should've never left the factory. Scroll and watch the cut grow.</p>
+          <p style="margin-top:12px; font-family:var(--font-mono); font-size:.72rem; color:var(--faint);">Vertical edit — TikTok/Insta clean, 9:16, no watermark</p>
+          <div class="btn-row"><a href="collection.html" class="btn">See the metal</a></div>
+        </div>
+        <div style="position:relative; height:78vh; min-height:480px; overflow:hidden; border-radius:var(--radius); border:1px solid var(--line); transform-origin:center;">
+          <video id="grow-vid" poster="assets/images/zonda-f.jpg" autoplay muted loop playsinline preload="auto" style="width:100%; height:100%; object-fit:cover; display:block; filter:saturate(.95) contrast(1.08) brightness(.92); transition:transform .6s var(--ease), border-radius .6s var(--ease);">
+            <!-- vertical 9:16 hypercar edit — Wc2UN3yL2CU / FOD2I-YuQ0c style, 1080x1920 -->
+            <source src="https://videos.pexels.com/video-files/18069305/18069305-uhd_1440_1440_24fps.mp4" type="video/mp4" />
+          </video>
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(7,7,7,.55), transparent 58%); pointer-events:none;"></div>
+          <p style="position:absolute; bottom:14px; left:14px; font-family:var(--font-mono); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--chrome); background:rgba(7,7,7,.6); padding:6px 10px; border-radius:999px; border:1px solid var(--line-2);">Koenigsegg Jesko · 1600hp · no cap</p>
+        </div>
+      </div>
+    </section>
+
     <div class="bay-rule reveal" aria-hidden="true"><b>Garage bay</b>&nbsp;04</div>
 
     <section class="section" id="sourcing">
       <div class="wrap">
-        <span class="eyebrow">How we source</span>
-        <h2>Every car has a story<br>we can prove.</h2>
+        <span class="eyebrow">How we get em</span>
+        <h2>Every whip got<br>receipts, fr.</h2>
         <div class="grid-3" style="margin-top:34px;">
           <div class="panel reveal">
-            <h3>Private acquisitions</h3>
-            <p style="margin-top:10px;">Collectors who want to move something rare without the noise call us directly. No auction house, no public listing — just a quiet handover, handled end to end.</p>
+            <h3>Lowkey buys</h3>
+            <p style="margin-top:10px;">Collectors hit us on the low — no auction, no posting, just a quiet handshake and we handle the rest. Ssshh.</p>
           </div>
           <div class="panel reveal">
-            <h3>Dubai recovery</h3>
-            <p style="margin-top:10px;">A hard-won permit lets us take on supercars left behind in Dubai's impound lots. We trace the original owners where we can, then bring each car back to condition.</p>
+            <h3>Dubai junkyard saves</h3>
+            <p style="margin-top:10px;">We got that rare permit to pull supers outta Dubai impound dust. Trace the OG owner if we can, then bring it back mean and clean.</p>
           </div>
           <div class="panel reveal">
-            <h3>Full provenance</h3>
-            <p style="margin-top:10px;">Service history, ownership chain, condition reports, certification. Every car arrives with its paperwork in order — no unknowns, no surprises.</p>
+            <h3>Papers on papers</h3>
+            <p style="margin-top:10px;">Service history, chain of owners, certs — all that boring stuff that makes the car actually worth a bag. No cap, no gaps.</p>
           </div>
         </div>
       </div>
@@ -167,8 +176,8 @@
     <section class="section centered" id="editorial">
       <div class="wrap" style="display:flex; justify-content:center;">
         <div>
-          <blockquote>We don't sell cars. We place them with the few who understand what they are.</blockquote>
-          <cite>— The Obsidian Standard</cite>
+          <blockquote>We don't flip cars. We place em with the few who get it — if ya know, ya know.</blockquote>
+          <cite>— The Obsidian Standard · Underground, not showroom</cite>
         </div>
       </div>
     </section>
@@ -177,11 +186,11 @@
 
     <section class="section centered" id="cta" style="background:var(--carbon);">
       <div class="wrap">
-        <h2>Looking for something<br>extraordinary?</h2>
-        <p style="margin:14px auto 0; max-width:56ch;">We take private viewings and consultations by appointment. Tell us what you're after, or what you're thinking of selling.</p>
+        <h2>Lookin for<br>somethin stupid rare?</h2>
+        <p style="margin:14px auto 0; max-width:56ch;">We do private viewings — pull up to Rosebank International, Pretoria, by appointment only. Tell us what ya hunting or what ya tryna let go.</p>
         <div class="btn-row" style="justify-content:center; margin-top:24px;">
-          <a href="contact.html" class="btn">Book a viewing</a>
-          <a href="consign.html" class="btn-outline">Sell with us</a>
+          <a href="contact.html" class="btn">Pull up — book it</a>
+          <a href="consign.html" class="btn-outline">Let go of yours</a>
         </div>
       </div>
     </section>

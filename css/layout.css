@@ -16,19 +16,13 @@
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
 
-/* ---------- nav ---------- */
+/* nav — solid, not that ghosty transparent ai nav */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background .35s var(--ease), border-color .35s var(--ease), backdrop-filter .35s;
+  background: #070707;
+  border-bottom: 1px solid var(--line);
 }
-.nav.is-scrolled {
-  background: rgba(7, 7, 7, .78);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom-color: var(--line);
-}
+.nav.is-scrolled { background: #070707; }
 .nav-inner { max-width: var(--wide); margin: 0 auto; min-height: var(--nav-h);
   padding: 10px var(--gap); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 
@@ -66,7 +60,7 @@
 .nav.is-open .nav-toggle span::before { transform: translate(-50%, -50%) rotate(45deg); top: 0; }
 .nav.is-open .nav-toggle span::after  { transform: translate(-50%, -50%) rotate(-45deg); top: 0; }
 
-/* ---------- page fade (transitions between pages) ---------- */
+/* page fade — lil blink between pages, still cinematic */
 #page-fade { display: none; }
 .js #page-fade { display: block; position: fixed; inset: 0; z-index: 999; background: var(--void);
   pointer-events: none; opacity: 1; }
@@ -101,49 +95,9 @@
 /* while the intro plays the page is locked so no one scrolls through it */
 .intro-lock { overflow: hidden; }
 
-/* ---------- the scroll story (home) ---------- */
-/* The page grows a long run; the 3D stage pins inside it while
-   the scrub drives the car through the garage. */
-.story { position: relative; }
-.js .story { height: 480vh; }               /* the length of the drive */
-.story-pin { position: relative; min-height: 100vh; overflow: hidden; }
-.js .story-pin { position: sticky; top: 0; height: 100vh; min-height: 0; }
-#drive-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
-
-/* chapters: copy blocks that occupy the side *opposite* the car.
-   Without JS they stack as normal sections so nothing is lost. */
-.story-chapter { position: relative; display: flex; align-items: center; min-height: 60vh; padding: 12vh var(--gap); }
-.story-chapter-inner { max-width: 460px; }
-.story-chapter .eyebrow { margin-bottom: 14px; }
-.story-chapter h1 { font-size: clamp(2.8rem, 1.2rem + 8.5vw, 8rem); line-height: .92; text-transform: uppercase; font-weight: 550; }
-.story-chapter h1 .outline { color: transparent; -webkit-text-stroke: 1.5px var(--gold); }
-.story-chapter h2 { font-size: clamp(2rem, 1.2rem + 4vw, 4rem); line-height: 1; }
-.story-chapter p { margin-top: 20px; color: var(--chrome); max-width: 44ch; }
-.story-chapter .btn-row { margin-top: 26px; }
-
-.js .story .story-chapter { position: absolute; inset: 0; min-height: 0; padding-top: var(--nav-h); pointer-events: none; }
-.js .story .story-chapter .btn-row { pointer-events: auto; }
-.js .story .story-chapter-inner { opacity: 0; }            /* scroll-story.js reveals each in turn */
-.story-chapter[data-side="right"] { justify-content: flex-end; text-align: right; }
-.story-chapter[data-side="right"] p { margin-left: auto; }
-.story-chapter[data-side="right"] .btn-row { justify-content: flex-end; }
-.story-chapter[data-side="center"] { justify-content: center; text-align: center; }
-.story-chapter[data-side="center"] p { margin-left: auto; margin-right: auto; }
-.story-chapter[data-side="center"] .btn-row { justify-content: center; }
-
-/* the HUD readout in the corner during the drive */
-.story-hud { position: absolute; left: var(--gap); bottom: 22px; z-index: 3; display: none;
-  font-family: var(--font-mono); font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--faint); gap: 18px; }
-.js .story .story-hud { display: flex; }
-.story-hud b { color: var(--gold); font-weight: 500; }
-/* rpm-style tick strip — small NFS-MW'05 nod */
-.hud-ticks { display: inline-flex; gap: 3px; align-items: flex-end; }
-.hud-ticks i { width: 3px; height: 9px; background: var(--line-2); }
-.hud-ticks i.on { background: var(--gold); }
-
-/* the whole thing dissolves into page black before the footer */
-.story-fade { position: absolute; inset: auto 0 0 0; height: 32vh; z-index: 2; pointer-events: none;
-  background: linear-gradient(to bottom, transparent, var(--void)); opacity: 0; }
+/* hero vid — full screen, scroll scrubs it. ponytail: one vid, css does stretch */
+.hero-vid { position: relative; }
+#hero-video { will-change: transform, filter; }
 
 /* ---------- footer ---------- */
 .footer { background: var(--carbon); border-top: 1px solid var(--line); margin-top: 0; }
@@ -173,9 +127,8 @@
 .centered h1 { font-size: clamp(1.5rem, 1rem + 1.5vw, 2.2rem); margin: 0 0 14px; }
 .centered p { margin-bottom: 28px; }
 
-/* ---------- responsive ---------- */
+/* responsive — thinner = more screen, ya feel */
 @media (max-width: 860px) {
-  .js .story { height: 420vh; }
   .nav-links { display: none; }
   .nav-links.is-open {
     display: flex; flex-direction: column; gap: 4px;
@@ -189,17 +142,9 @@
   .channel { grid-template-columns: 1fr; gap: 16px; }
   .channel--reverse .channel-img { order: 0; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .story-chapter h1 { font-size: clamp(2.4rem, 1rem + 10vw, 4rem); }
 }
 @media (max-width: 560px) {
   .footer-grid { grid-template-columns: 1fr; gap: 30px; }
 }
 
-/* ---------- reduced-motion layout fallbacks ---------- */
-@media (prefers-reduced-motion: reduce) {
-  .js .story { height: auto; }              /* no pinning — chapters stack normally */
-  .js .story-pin { position: relative; height: auto; }
-  .js .story .story-chapter { position: relative; inset: auto; padding: 12vh var(--gap); }
-  .js .story .story-chapter-inner { opacity: 1; }
-  .js .story .story-hud { display: none; }
-}
+/* reduced motion — no fancy, just show it. a11y first */

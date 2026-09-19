@@ -1,154 +1,86 @@
-/* ============================================================
-   OBSIDIAN MOTORS — site.js
-   Small, dependency-free behaviour shared by every page:
-     - scroll dots (right side section indicator)
-     - reveal-on-scroll (IntersectionObserver)
-     - nav shadow on scroll + mobile menu toggle
-     - current year in the footer
-     - intro logo reveal (home only, once per tab)
-     - page fade transitions
-   All of it is progressive: if JS is off, content still shows
-   (see the no-JS fallback at the bottom).
-   ============================================================ */
+/* obsidian — bare minimum js, no fluff */
+// ponytail: kept nav, intro, reveal, year. dots/counters/page-fade = bloat, nuked.
 (function () {
   "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---- current year (footer © line) ---- */
+  // year — yo, its 2026
   var yr = document.querySelector("[data-year]");
   if (yr) yr.textContent = new Date().getFullYear();
 
-  /* ---- scroll dots (right side) ---- */
-  var dots = document.querySelector(".scroll-dots");
-  if (dots) {
-    var secs = document.querySelectorAll("main section, .hero");
-    secs.forEach(function (sec) {
-      var a = document.createElement("a");
-      a.href = "#";
-      a.addEventListener("click", function (e) {
-        e.preventDefault();
-        sec.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
-      });
-      dots.appendChild(a);
-    });
-    var dotLinks = dots.querySelectorAll("a");
-    var setDot = function () {
-      var mid = window.scrollY + window.innerHeight / 2;
-      var on = 0;
-      secs.forEach(function (sec, i) {
-        if (sec.getBoundingClientRect().top + window.scrollY <= mid) on = i;
-      });
-      dotLinks.forEach(function (a, i) { a.classList.toggle("is-on", i === on); });
-    };
-    window.addEventListener("scroll", setDot, { passive: true });
-    setDot();
-  }
-  function onScroll() {
-    var nav = document.querySelector(".nav");
-    if (nav) nav.classList.toggle("is-scrolled", window.scrollY > 8);
-  }
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  // nav — solid, not that see-through ai nonsense
+  var nav = document.querySelector(".nav");
+  addEventListener("scroll", function () {
+    if (nav) nav.classList.toggle("is-scrolled", scrollY > 4);
+  }, { passive: true });
 
-  /* ---- reveal on scroll ---- */
-  var targets = document.querySelectorAll(".section, .reveal");
+  // mobile menu — tap to open, tap to close, thats it
+  var tog = document.querySelector(".nav-toggle"),
+    links = document.querySelector(".nav-links");
+  if (tog && links) {
+    tog.onclick = function () {
+      var open = links.classList.toggle("is-open");
+      nav.classList.toggle("is-open", open);
+      tog.setAttribute("aria-expanded", open);
+    };
+  }
+
+  // reveal — if ya scroll, it shows. respects reduced motion
+  var els = document.querySelectorAll(".reveal, .section");
   if (reduce || !("IntersectionObserver" in window)) {
-    // no animation wanted (or supported) — just show everything
-    targets.forEach(function (el) { el.classList.add("is-in"); });
+    els.forEach(function (e) { e.classList.add("is-in"); });
   } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
-    targets.forEach(function (el) { io.observe(el); });
+    }, { threshold: 0.14 });
+    els.forEach(function (e) { io.observe(e); });
   }
 
-  /* ---- mobile nav toggle ---- */
-  var toggle = document.querySelector(".nav-toggle");
-  var links = document.querySelector(".nav-links");
-  if (toggle && links) {
-    toggle.addEventListener("click", function () {
-      var open = links.classList.toggle("is-open");
-      toggle.closest(".nav").classList.toggle("is-open", open);
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-    // close after picking a link (single-page feel)
-    links.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") {
-        links.classList.remove("is-open");
-        toggle.closest(".nav").classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
-
-  /* ---- intro logo reveal (only if #intro exists; home page) ----
-     Cinematic beats: crystal glints (~1.3s) → wordmark rises
-     (~1.7s) → gold rule draws (~2.1s) → hold → fade to black →
-     hero. Once per tab; a click skips it. */
+  // intro — black reveal every time ya hit index, pure cinema
   var intro = document.getElementById("intro");
   if (intro) {
-    var seen = sessionStorage.getItem("om_intro");
-    if (reduce || seen) {
-      intro.remove();
-      document.body.classList.remove("intro-lock");
-    } else {
+    if (reduce) { intro.remove(); }
+    else {
       document.body.classList.add("intro-lock");
-      var done = function () {
-        intro.classList.add("is-fade");          // the fade to black
-        setTimeout(function () { intro.classList.add("is-gone"); }, 1000);
-        document.body.classList.remove("intro-lock");
-        sessionStorage.setItem("om_intro", "1");
-        setTimeout(function () { if (intro.parentNode) intro.remove(); }, 2100);
+      var kill = function () {
+        intro.classList.add("is-fade");
+        setTimeout(function () { intro.remove(); document.body.classList.remove("intro-lock"); }, 1000);
       };
-      var t = setTimeout(done, 3000);
-      intro.addEventListener("click", function () { clearTimeout(t); done(); });
+      var t = setTimeout(kill, 2800);
+      intro.addEventListener("click", function () { clearTimeout(t); kill(); });
     }
   }
 
-  var runCount = function (el) {
-    var target = parseFloat(el.getAttribute("data-count")) || 0;
-    var suffix = el.getAttribute("data-suffix") || "";
-    if (reduce) { el.textContent = target + suffix; return; }
-    var start = null, dur = 1200;
-    var frame = function (t) {
-      if (start === null) start = t;
-      var k = Math.min((t - start) / dur, 1);
-      k = 1 - Math.pow(1 - k, 3);
-      el.textContent = Math.round(target * k) + suffix;
-      if (k < 1) requestAnimationFrame(frame);
-    };
-    requestAnimationFrame(frame);
-  };
-  var figs = document.querySelectorAll("[data-count]");
-  if (figs.length) {
-    if (reduce || !("IntersectionObserver" in window)) {
-      figs.forEach(runCount);
-    } else {
-      var ioCount = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { runCount(e.target); ioCount.unobserve(e.target); }
-        });
-      }, { threshold: 0.5 });
-      figs.forEach(function (el) { ioCount.observe(el); });
-    }
+  // hero video scrub — scroll drives the vid, parallax-ish
+  // ponytail: one vid, one handler, no lib
+  var hv = document.getElementById("hero-video");
+  var hero = document.getElementById("hero");
+  if (hv && hero && !reduce) {
+    hv.muted = true; hv.playsInline = true;
+    // try autoplay, if blocked just wait for scroll
+    hv.play().catch(function () {});
+    addEventListener("scroll", function () {
+      var p = Math.min(1, Math.max(0, scrollY / (hero.offsetHeight || 1)));
+      // scrub time if metadata ready
+      if (hv.duration) hv.currentTime = p * hv.duration * 0.92;
+      // parallax + fade
+      hv.style.transform = "scale(" + (1 + p * 0.08) + ") translateY(" + p * -14 + "px)";
+      hv.style.filter = "brightness(" + (0.9 - p * 0.18) + ") saturate(" + (0.9 + p * 0.1) + ")";
+    }, { passive: true });
   }
 
-  /* ---- page transitions ---- */
-  var fade = document.getElementById("page-fade");
-  if (fade) {
-    fade.classList.add("is-loaded");
-    document.querySelectorAll('a[href$=".html"], a[href$="/"]').forEach(function (a) {
-      if (a.hostname && a.hostname !== location.hostname) return;
-      a.addEventListener("click", function (e) {
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-        if (a.getAttribute("target") === "_blank") return;
-        e.preventDefault();
-        fade.classList.add("is-leaving");
-        setTimeout(function () { location.href = a.href; }, 300);
-      });
-    });
+  // grow vid — text left, vid right, then vid eats the screen
+  var grow = document.getElementById("grow-vid");
+  var growSec = document.getElementById("grow-sec");
+  if (grow && growSec && !reduce) {
+    addEventListener("scroll", function () {
+      var r = growSec.getBoundingClientRect();
+      var prog = 1 - Math.min(1, Math.max(0, r.bottom / innerHeight));
+      // 0 = not yet, 1 = past
+      grow.style.transform = "scale(" + (1 + prog * 0.38) + ")";
+      grow.style.borderRadius = prog > 0.55 ? "0px" : "var(--radius)";
+    }, { passive: true });
   }
 })();

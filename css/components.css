@@ -17,17 +17,7 @@
 .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
 .btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
 
-/* ---------- scroll dots (right-edge section indicator) ---------- */
-.scroll-dots { position: fixed; right: 18px; top: 50%; transform: translateY(-50%);
-  z-index: 200; display: none; flex-direction: column; gap: 12px; }
-.js .scroll-dots { display: flex; }
-.scroll-dots a { width: 7px; height: 7px; border-radius: 50%; background: rgba(154,148,140,.35);
-  transition: background .3s ease, transform .3s ease; }
-.scroll-dots a.is-on { background: var(--gold); transform: scale(1.35); }
-.scroll-dots a:hover { background: var(--steel); }
-@media (max-width: 860px) { .scroll-dots { display: none; } }
-
-/* ---------- reveal-on-scroll ---------- */
+/* reveal — scroll in, real smooth, no ai jitter */
 .js .section:not(.story), .js .reveal {
   opacity: 0;
   transform: translateY(26px);

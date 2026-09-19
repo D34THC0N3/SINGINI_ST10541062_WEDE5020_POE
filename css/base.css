@@ -29,12 +29,12 @@
   --gold-dim: #8a6d4a;
   --ember:    var(--gold-dim); /* required * uses gold-dim so no second hue ships */
 
-  /* metrics */
-  --max:   1180px;
-  --wide:  1440px;
-  --radius: 12px;
-  --gap:   24px;
-  --nav-h: 60px;
+  /* metrics — thinner, uses more screen, real cinema */
+  --max:   1320px;
+  --wide:  1520px;
+  --radius: 14px;
+  --gap:   16px;
+  --nav-h: 56px;
 
   /* the editorial trio:
      Fraunces  — high-contrast display serif (the voice)
