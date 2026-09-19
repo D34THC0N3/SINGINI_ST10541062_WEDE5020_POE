@@ -69,10 +69,10 @@
     <!-- HERO — full screen hypercar vid, scroll drives it. pure cinema, no ai fluff -->
     <section class="hero-vid" id="hero" style="position:relative; height:100vh; min-height:560px; overflow:hidden; background:#040404;">
       <video id="hero-video" poster="assets/images/alpine-garage.jpg" autoplay muted loop playsinline preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(.9) contrast(1.08) brightness(.88);">
-        <!-- 4k hypercar horizontal — yt azkdQYZCF2A + playlist HVf28fVK5Xk mirrored as mp4 fallback -->
-        <source src="https://videos.pexels.com/video-files/18069234/18069234-uhd_2560_1440_24fps.mp4" type="video/mp4" />
+        <!-- local Blender ref — Cycles X cinematic (D:\Blender Reference videos\Blender Cinematic Car Animation (Cycles X) [d-QnAc_kSe0].mp4) -->
+        <source src="assets/videos/hero.mp4" type="video/mp4" />
       </video>
-      <!-- fallback yt embed if mp4 blocked — hidden behind video, shows when vid fails -->
+      <!-- yt fallback (azkdQYZCF2A) if local blocked — hidden -->
       <iframe aria-hidden="true" src="https://www.youtube.com/embed/azkdQYZCF2A?autoplay=1&mute=1&loop=1&playlist=azkdQYZCF2A&controls=0&modestbranding=1&playsinline=1" style="position:absolute; inset:0; width:100%; height:100%; border:0; opacity:0; pointer-events:none;" tabindex="-1"></iframe>
       <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(7,7,7,.72) 0%, rgba(7,7,7,.22) 42%, rgba(7,7,7,.08) 100%), radial-gradient(900px 600px at 70% 20%, rgba(184,151,106,.14), transparent 60%);"></div>
       <div class="wrap" style="position:relative; z-index:2; height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding-bottom:56px;">
@@ -141,8 +141,8 @@
         </div>
         <div style="position:relative; height:78vh; min-height:480px; overflow:hidden; border-radius:var(--radius); border:1px solid var(--line); transform-origin:center;">
           <video id="grow-vid" poster="assets/images/zonda-f.jpg" autoplay muted loop playsinline preload="auto" style="width:100%; height:100%; object-fit:cover; display:block; filter:saturate(.95) contrast(1.08) brightness(.92); transition:transform .6s var(--ease), border-radius .6s var(--ease);">
-            <!-- vertical 9:16 hypercar edit — Wc2UN3yL2CU / FOD2I-YuQ0c style, 1080x1920 -->
-            <source src="https://videos.pexels.com/video-files/18069305/18069305-uhd_1440_1440_24fps.mp4" type="video/mp4" />
+            <!-- local Blender ref — Epic Cycles (D:\Blender Reference videos\Epic Cinematic Car Animation [8iyQqNKvPY0].mp4), cropped 9:16 via object-fit -->
+            <source src="assets/videos/grow.mp4" type="video/mp4" />
           </video>
           <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(7,7,7,.55), transparent 58%); pointer-events:none;"></div>
           <p style="position:absolute; bottom:14px; left:14px; font-family:var(--font-mono); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--chrome); background:rgba(7,7,7,.6); padding:6px 10px; border-radius:999px; border:1px solid var(--line-2);">Koenigsegg Jesko · 1600hp · no cap</p>

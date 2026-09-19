@@ -8,6 +8,8 @@ Framework context: the site is a **no-build static site** (HTML + CSS + JS on CD
 importmaps, Three.js 0.167). That constraint is a school requirement — do not add
 a bundler, a framework, or npm tooling to the shipped site.
 
+> **Amendment 2026-09-19 — pressed for time:** `showcase.html` + `js/three-engine.js` + `js/showcase3d.js` + `js/scroll-story.js` **removed** (commit `d966b33`). Site now ships **images + video only**. Hero/grow videos are now sourced from `D:\New folder\Blender\Blender Reference videos` → copied to `assets/videos/hero.mp4` (Cycles X [d-QnAc_kSe0], 4.71 MB) + `grow.mp4` (Epic [8iyQqNKvPY0], 3.34 MB) + `nightcity.webm` (1.39 MB). If you re-enable showcase, restore from `cb0d921` and re-apply ponytail trim.
+
 ---
 
 ## 1. Audit (done — POE Part 1 code)
