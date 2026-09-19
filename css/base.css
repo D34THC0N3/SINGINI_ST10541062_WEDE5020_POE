@@ -24,10 +24,10 @@
   --steel:  #9b958c;   /* secondary — warm stone */
   --faint:  #6b6560;   /* captions / tertiary */
 
-  /* the ONE saturated accent — muted garage gold */
+  /* the ONE saturated accent — muted garage gold (single hue, no second saturation) */
   --gold:     #b8976a;
   --gold-dim: #8a6d4a;
-  --ember:    #c47a52; /* required fields / alerts — used sparingly */
+  --ember:    var(--gold-dim); /* required * uses gold-dim so no second hue ships */
 
   /* metrics */
   --max:   1180px;

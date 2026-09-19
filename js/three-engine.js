@@ -92,7 +92,7 @@ export function loadEnvironment(renderer, scene, url) {
    shadow without us having to draw a visible floor disc.
    ------------------------------------------------------------ */
 export function makeLightRig(scene) {
-  var key = new THREE.DirectionalLight(0xffe6c4, 2.6);
+  var key = new THREE.DirectionalLight(0xffe6c4, 2.9);
   key.position.set(6, 8, 4);
   key.castShadow = true;
   key.shadow.mapSize.set(2048, 2048);
@@ -106,11 +106,11 @@ export function makeLightRig(scene) {
   key.shadow.radius = 6;
   scene.add(key);
 
-  var rim = new THREE.DirectionalLight(0x9fb4d8, 1.6); // cold steel blue — picks out glass + edges
+  var rim = new THREE.DirectionalLight(0x9fb4d8, 1.85); // cold steel blue — picks out glass + edges
   rim.position.set(-6, 5, -6);
   scene.add(rim);
 
-  var fill = new THREE.DirectionalLight(0xffffff, 0.55);
+  var fill = new THREE.DirectionalLight(0xffffff, 0.62);
   fill.position.set(-3, 1.5, 5);
   scene.add(fill);
 
