@@ -147,9 +147,11 @@ header, main, footer { position: relative; z-index: 2; }
 @media (max-width: 860px) { .scroll-dots { display: none; } }
 
 /* page transition overlay */
-#page-fade { position: fixed; inset: 0; z-index: 9999; background: #080808; pointer-events: none; opacity: 1; }
-#page-fade.is-loaded { animation: fadeOut .45s ease forwards; }
-#page-fade.is-leaving { opacity: 1; pointer-events: all; transition: opacity .3s ease; }
+#page-fade { display: none; }
+.js #page-fade { display: block; position: fixed; inset: 0; z-index: 999; background: var(--void);
+  pointer-events: none; opacity: 1; }
+.js #page-fade.is-loaded { animation: fadeOut .45s ease forwards; }
+.js #page-fade.is-leaving { opacity: 1; pointer-events: all; transition: opacity .3s ease; }
 @keyframes fadeOut { to { opacity: 0; } }
 
 /* placeholder plate */

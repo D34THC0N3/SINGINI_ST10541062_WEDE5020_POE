@@ -1,11 +1,12 @@
 /* ============================================================
    OBSIDIAN MOTORS — site.js
    Small, dependency-free behaviour shared by every page:
-     - scroll progress bar
+     - scroll dots (right side section indicator)
      - reveal-on-scroll (IntersectionObserver)
      - nav shadow on scroll + mobile menu toggle
      - current year in the footer
      - intro logo reveal (home only, once per tab)
+     - page fade transitions
    All of it is progressive: if JS is off, content still shows
    (see the no-JS fallback at the bottom).
    ============================================================ */
