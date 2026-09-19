@@ -13,8 +13,10 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" href="css/site.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
   {
@@ -31,7 +33,13 @@
 
   <header class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Obsidian <span>Motors</span></a>
+      <a href="index.html" class="nav-logo">
+        <svg class="crystal" viewBox="0 0 32 32" aria-hidden="true">
+          <polygon points="16,2 27,11 23,30 9,30 5,11" fill="none" stroke="#b8976a" stroke-width="1.4"/>
+          <circle cx="10.5" cy="8.5" r="1.5" fill="#ede8e0"/>
+        </svg>
+        Obsidian <span>Motors</span>
+      </a>
       <nav>
         <ul class="nav-links">
           <li><a href="collection.html">Collection</a></li>
@@ -66,7 +74,8 @@
     <div class="sc-switch" role="group" aria-label="Choose a car">
       <button class="sc-switch-btn chip is-active" type="button" data-car="0"><span class="sc-switch-num">#15</span> BMW M3 GTR</button>
       <button class="sc-switch-btn chip" type="button" data-car="1"><span class="sc-switch-num">#14</span> Mercedes-AMG GT3</button>
-      <button class="sc-switch-btn chip" type="button" data-car="2"><span class="sc-switch-num">#13</span> Porsche GT2 RS</button>
+      <button class="sc-switch-btn chip" type="button" data-car="2"><span class="sc-switch-num">#13</span> McLaren F1</button>
+      <button class="sc-switch-btn chip" type="button" data-car="3"><span class="sc-switch-num">#12</span> Lamborghini Fenomeno</button>
     </div>
 
     <!-- dock (bottom-centre): turntable + camera views -->
@@ -81,6 +90,7 @@
   </main>
 
   <script src="js/site.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script type="module" src="js/showcase3d.js"></script>
 </body>
 </html>

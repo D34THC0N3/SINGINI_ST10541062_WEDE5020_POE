@@ -1,0 +1,217 @@
+/* ============================================================
+   OBSIDIAN MOTORS — components.css
+   The pieces that live inside the layout: buttons, cards,
+   panels, forms, the showcase showroom HUD, the reveal system.
+   ============================================================ */
+
+/* ---------- buttons ---------- */
+.btn, .btn-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px; border-radius: 999px;
+  font-family: var(--font-mono); font-size: .78rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  cursor: pointer; transition: transform .25s var(--ease), background .25s, color .25s, border-color .25s;
+}
+.btn { background: var(--gold); color: var(--void); border: 1px solid var(--gold); }
+.btn:hover { transform: translateY(-2px); }
+.btn-outline { background: transparent; color: var(--chrome); border: 1px solid var(--line-2); }
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+
+/* ---------- scroll dots (right-edge section indicator) ---------- */
+.scroll-dots { position: fixed; right: 18px; top: 50%; transform: translateY(-50%);
+  z-index: 200; display: none; flex-direction: column; gap: 12px; }
+.js .scroll-dots { display: flex; }
+.scroll-dots a { width: 7px; height: 7px; border-radius: 50%; background: rgba(154,148,140,.35);
+  transition: background .3s ease, transform .3s ease; }
+.scroll-dots a.is-on { background: var(--gold); transform: scale(1.35); }
+.scroll-dots a:hover { background: var(--steel); }
+@media (max-width: 860px) { .scroll-dots { display: none; } }
+
+/* ---------- reveal-on-scroll ---------- */
+.js .section:not(.story), .js .reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .9s var(--ease), transform .9s var(--ease);
+}
+.js .section.is-in, .js .reveal.is-in { opacity: 1; transform: none; }
+
+/* ---------- media plates (real photographs, dark-graded) ---------- */
+.ph {
+  position: relative;
+  border: 1px dashed var(--line-2);
+  background: var(--panel);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  padding: 24px; min-height: 200px;
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+}
+.ph-tall { min-height: 340px; }
+.ph-hero { min-height: 460px; }
+img.ph { padding: 0; border: none; aspect-ratio: 16 / 10; object-fit: cover; background: var(--panel);
+  filter: saturate(.78) contrast(1.06) brightness(.86);
+  transition: filter .5s var(--ease), transform .9s var(--ease); }
+img.ph-tall { aspect-ratio: 4 / 5; }
+img.ph-hero { aspect-ratio: 21 / 9; }
+.card:hover img.ph { filter: saturate(.95) contrast(1.05) brightness(.95); transform: scale(1.045); }
+
+/* ---------- cards ---------- */
+.card {
+  position: relative; background: var(--panel); border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden; color: inherit; display: block;
+  transition: transform .4s var(--ease), border-color .4s, box-shadow .4s;
+}
+.card:hover { transform: translateY(-6px); border-color: var(--line-2); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+.card .ph { border: none; border-radius: 0; min-height: 220px; }
+.card-body { padding: 20px 22px 24px; }
+.card-body h3 { margin-bottom: 6px; }
+.card-body p { font-size: .92rem; color: var(--steel); }
+.card-price { display: block; margin-top: 14px; font-family: var(--font-mono); font-size: .88rem; color: var(--chrome); }
+.card-cue { display: inline-block; margin-top: 12px; font-family: var(--font-mono); font-size: .74rem;
+  letter-spacing: .12em; color: var(--gold); text-transform: uppercase; }
+.card-index { position: absolute; top: 14px; left: 16px; z-index: 2; font-family: var(--font-mono);
+  font-size: .72rem; letter-spacing: .1em; color: var(--chrome); background: rgba(7,7,7,.6);
+  border: 1px solid var(--line-2); border-radius: 6px; padding: 3px 8px; }
+
+/* ---------- panels & stats ---------- */
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px;
+  transition: border-color .3s, transform .3s var(--ease); }
+.panel:hover { border-color: var(--line-2); transform: translateY(-4px); }
+
+.figs { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
+.fig { border-top: 1px solid var(--line-2); padding-top: 18px; }
+.fig b { display: block; font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-size: clamp(1.6rem, 1rem + 2vw, 2.4rem); font-weight: 600; color: var(--chrome); }
+.fig span { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .08em; color: var(--faint); text-transform: uppercase; }
+
+/* ---------- editorial / quotes ---------- */
+blockquote { font-family: var(--font-display); font-weight: 550; font-size: clamp(1.6rem, 1rem + 2.4vw, 3rem);
+  color: var(--chrome); line-height: 1.2; max-width: 24ch; letter-spacing: -.01em; }
+cite { display: block; margin-top: 20px; font-style: normal; font-family: var(--font-mono); font-size: .8rem;
+  letter-spacing: .12em; color: var(--gold); text-transform: uppercase; }
+
+/* ---------- garage-door section reveal (the NFS-MW nod) ---------- */
+/* a thin industrial divider: mono bay number + hairlinetick strip */
+.bay-rule { display: flex; align-items: center; gap: 18px; max-width: var(--max); margin: 0 auto; padding: 0 var(--gap) 34px;
+  font-family: var(--font-mono); font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--faint); }
+.bay-rule::before, .bay-rule::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+.bay-rule b { color: var(--gold); font-weight: 500; }
+
+/* ---------- about page: channels + values ---------- */
+.channel { display: grid; grid-template-columns: 72px 1fr 1fr; gap: 36px; align-items: start; margin-bottom: 64px; }
+.channel--reverse .channel-img { order: -1; }
+.channel-num { font-family: var(--font-mono); font-size: 2.4rem; font-weight: 500; color: var(--gold); opacity: .5; }
+.channel-content p { margin-top: 14px; }
+.value-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px;
+  transition: border-color .3s, transform .3s var(--ease); }
+.value-card:hover { border-color: var(--line-2); transform: translateY(-4px); }
+.value-card p { margin-top: 12px; font-size: .92rem; }
+
+/* ---------- forms ---------- */
+.form-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; }
+.field { margin-bottom: 20px; }
+.field label { display: block; font-family: var(--font-mono); font-size: .74rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--steel); margin-bottom: 8px; }
+.req { color: var(--ember); }
+.opt { color: var(--faint); }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 13px 15px; font: inherit; color: var(--chrome);
+  background: var(--void); border: 1px solid var(--line-2); border-radius: 10px;
+  transition: border-color .25s;
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--faint); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--gold); }
+.field textarea { min-height: 130px; resize: vertical; }
+.form-note { font-family: var(--font-mono); font-size: .74rem; color: var(--faint); margin-top: 14px; }
+
+/* ordered process list */
+ul.process { list-style: none; margin-top: 10px; counter-reset: step; }
+ul.process li { padding: 16px 0; border-top: 1px solid var(--line); color: var(--steel);
+  display: flex; gap: 14px; align-items: baseline; }
+ul.process li::before { content: counter(step, decimal-leading-zero); counter-increment: step;
+  font-family: var(--font-mono); font-size: .8rem; color: var(--gold); }
+
+/* ---------- contact page ---------- */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
+.details { list-style: none; }
+.details li { padding: 18px 0; border-top: 1px solid var(--line); }
+.details .label { display: block; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--faint); margin-bottom: 6px; }
+.details a, .details .value { color: var(--chrome); }
+.details a:hover { color: var(--gold); }
+.map-address { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 20px; }
+.map-address p { color: var(--chrome); }
+.map-embed { width: 100%; height: 380px; border: 1px solid var(--line); border-radius: var(--radius);
+  filter: invert(.92) hue-rotate(180deg) saturate(.75) brightness(.95); }
+
+/* ---------- legal pages ---------- */
+.legal { max-width: 760px; margin: 0 auto; }
+.legal h1 { margin-bottom: 6px; }
+.legal h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; margin: 36px 0 12px; color: var(--chrome); }
+.legal p, .legal li { color: var(--steel); }
+.legal ul { padding-left: 22px; margin: 10px 0; }
+.legal address { font-style: normal; color: var(--steel); margin-top: 10px; line-height: 1.9; }
+.legal a { color: var(--gold); }
+.legal-updated { font-family: var(--font-mono); font-size: .78rem; color: var(--faint); margin-bottom: 10px; }
+
+/* ---------- showroom (showcase page) ---------- */
+.stage { position: relative; height: 100vh; width: 100%; overflow: hidden; background: var(--void); }
+#showcase-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+.chip { background: rgba(13, 13, 13, .68); border: 1px solid var(--line-2); border-radius: var(--radius);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
+/* identity chip — top left */
+.sc-identity { position: absolute; top: 96px; left: clamp(16px, 4vw, 48px); max-width: 42ch; padding: 20px 22px; z-index: 5; }
+.sc-eyebrow { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); }
+.sc-index { margin-top: 8px; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .16em; color: var(--faint); }
+.sc-index b { color: var(--chrome); font-weight: 500; }
+.sc-name { font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem); margin-top: 6px; }
+.sc-tagline { font-size: 1.05rem; color: var(--steel); margin-top: 6px; }
+.sc-specline { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); margin-top: 14px; }
+
+/* interaction hint — top right */
+.sc-hint { position: absolute; top: 100px; right: clamp(16px, 4vw, 48px); font-family: var(--font-mono); font-size: .64rem;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--faint); padding: 9px 13px; z-index: 5; }
+
+/* the Blacklist car strip — right side */
+.sc-switch { position: absolute; top: 50%; right: clamp(12px, 2vw, 24px); transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 10px; z-index: 5; }
+.sc-switch-btn { display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-radius: 10px;
+  color: var(--steel); font-size: .85rem; min-width: 200px; border: 1px solid transparent;
+  transition: color .25s, border-color .25s, background .25s; }
+.sc-switch-btn:hover { color: var(--chrome); }
+.sc-switch-btn.is-active { color: var(--chrome); border-color: var(--gold); background: rgba(184,151,106,.05); }
+.sc-switch-num { font-family: var(--font-mono); font-size: .68rem; color: var(--gold); }
+
+/* dock — bottom centre */
+.sc-dock { position: absolute; left: 50%; bottom: clamp(16px, 3vw, 34px); transform: translateX(-50%);
+  display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); padding: 15px 20px; z-index: 5; }
+.sc-start { width: 76px; height: 76px; border-radius: 50%; border: 1px solid var(--gold);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: rgba(184,151,106,.04);
+  transition: background .25s; }
+.sc-start:hover { background: rgba(184,151,106,.1); }
+.sc-start small { font-family: var(--font-mono); font-size: .46rem; letter-spacing: .2em; text-transform: uppercase; color: var(--faint); }
+.sc-start strong { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+.sc-views { display: flex; gap: 6px; }
+.sc-view { padding: 10px 15px; border-radius: 8px; border: 1px solid transparent; font-family: var(--font-mono);
+  font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--steel); transition: color .25s, border-color .25s; }
+.sc-view.is-active { border-color: var(--line-2); color: var(--chrome); background: rgba(255,255,255,.04); }
+
+body.showcase { overflow: hidden; }
+
+/* when 3D can't run: a real photograph, never a grey box */
+.poster-fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; }
+.poster-fallback img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: saturate(.75) brightness(.5); }
+.poster-fallback .poster-caption { position: relative; z-index: 2; font-family: var(--font-mono);
+  font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--chrome);
+  background: rgba(7,7,7,.72); padding: 10px 16px; border: 1px solid var(--line-2); border-radius: 8px; }
+
+/* ---------- showroom responsive ---------- */
+@media (max-width: 860px) {
+  .sc-switch { top: auto; bottom: 150px; right: 50%; transform: translateX(50%); flex-direction: row; }
+  .sc-switch-btn { min-width: 0; }
+  .sc-hint { display: none; }
+  .sc-dock { flex-wrap: wrap; justify-content: center; max-width: 92vw; }
+}

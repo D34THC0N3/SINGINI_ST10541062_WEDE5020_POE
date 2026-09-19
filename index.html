@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Obsidian Motors — Rare cars, quietly placed. Johannesburg.</title>
-  <meta name="description" content="A private collection of the world's rarest cars — sourced, verified, and placed with a very few. Rosebank, Johannesburg." />
+  <title>Obsidian Motors — Rare cars, quietly placed. Pretoria.</title>
+  <meta name="description" content="A private collection of the world's rarest cars — sourced, verified, and placed with a very few. Rosebank International, Pretoria." />
   <meta name="theme-color" content="#07080a" />
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
   <link rel="manifest" href="site.webmanifest" />
@@ -13,8 +13,10 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" href="css/site.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
   <script>document.documentElement.classList.add("js");</script>
   <script type="importmap">
   {
@@ -29,9 +31,18 @@
 <div id="page-fade" aria-hidden="true"></div>
   <nav class="scroll-dots" aria-hidden="true"></nav>
 
-  <!-- intro logo reveal — site.js fades it out (once per tab, skipped for reduced motion) -->
+  <!-- intro: the mark wakes on black, hangs, fades to black, and
+       hands over to the hero. Once per tab; click skips it. -->
   <div id="intro" aria-hidden="true">
     <div class="intro-inner">
+      <svg class="intro-crystal" viewBox="0 0 32 32" aria-hidden="true">
+        <polygon points="16,2 27,11 23,30 9,30 5,11" fill="#0a0a0c" stroke="#b8976a" stroke-width="1.1"/>
+        <polyline points="5,11 16,15 27,11" fill="none" stroke="#b8976a" stroke-width=".6" opacity=".6"/>
+        <polyline points="16,15 16,30" fill="none" stroke="#b8976a" stroke-width=".6" opacity=".45"/>
+        <polyline points="16,15 23,30" fill="none" stroke="#b8976a" stroke-width=".6" opacity=".35"/>
+        <polyline points="16,15 9,30" fill="none" stroke="#b8976a" stroke-width=".6" opacity=".35"/>
+        <circle cx="10.5" cy="8.5" r="1.4" fill="#ede8e0"/>
+      </svg>
       <p class="intro-boot">Obsidian Motors · starting up</p>
       <p class="intro-word"><span>Obsidian</span><span>Motors</span></p>
       <div class="intro-rule"></div>
@@ -40,7 +51,13 @@
 
   <header class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Obsidian <span>Motors</span></a>
+      <a href="index.html" class="nav-logo">
+        <svg class="crystal" viewBox="0 0 32 32" aria-hidden="true">
+          <polygon points="16,2 27,11 23,30 9,30 5,11" fill="none" stroke="#b8976a" stroke-width="1.4"/>
+          <circle cx="10.5" cy="8.5" r="1.5" fill="#ede8e0"/>
+        </svg>
+        Obsidian <span>Motors</span>
+      </a>
       <nav>
         <ul class="nav-links">
           <li><a href="collection.html">Collection</a></li>
@@ -57,33 +74,56 @@
   </header>
 
   <main>
-    <section class="hero" id="hero">
-      <div class="hero-stage">
-        <canvas id="hero-canvas" aria-hidden="true"></canvas>
-        <div class="hero-wheel" aria-hidden="true"></div>
-        <div class="hero-inner">
-          <p class="eyebrow">Est. 2026 · Johannesburg</p>
-          <h1 class="hero-title">Obsidian <span class="outline">Motors</span></h1>
-          <p class="hero-lead">Rarity, met with provenance. A private collection of the world's rarest cars — sourced, verified, and placed with a very few.</p>
-          <div class="btn-row hero-cta">
-            <a href="collection.html" class="btn">View the collection</a>
-            <a href="showcase.html" class="btn-outline">Enter showcase</a>
+
+    <!-- THE DRIVE — the cinematic scroll story. Without JS, the
+         chapters below still stack and read like a normal page. -->
+    <section class="section story" id="story">
+      <div class="story-pin">
+        <canvas id="drive-canvas" aria-hidden="true"></canvas>
+
+        <div class="story-chapter" data-side="center" data-chapter="0">
+          <div class="story-chapter-inner">
+            <p class="eyebrow">Est. 2026 · Pretoria</p>
+            <h1>Obsidian<br><span class="outline">Motors</span></h1>
+            <p>Rarity, met with provenance. A private collection of the world's rarest cars.</p>
           </div>
         </div>
+
+        <div class="story-chapter" data-side="right" data-chapter="1">
+          <div class="story-chapter-inner">
+            <p class="eyebrow">Bay 01 — Not a dealership</p>
+            <h2>A trust,<br>on wheels.</h2>
+            <p>Every car arrives through a quiet private sale or our Dubai recovery programme — then gets stripped, inspected, and put back on paper.</p>
+          </div>
+        </div>
+
+        <div class="story-chapter" data-side="left" data-chapter="2">
+          <div class="story-chapter-inner">
+            <p class="eyebrow">Bay 02 — The collection</p>
+            <h2>Four legends<br>in the vault.</h2>
+            <p>An M3 GTR with fresh scars, a McLaren Longtail, a GT3 in race trim, and a Lamborghini the world barely knows yet.</p>
+            <div class="btn-row"><a href="collection.html" class="btn-outline">Open the collection</a></div>
+          </div>
+        </div>
+
+        <div class="story-chapter" data-side="center" data-chapter="3">
+          <div class="story-chapter-inner">
+            <p class="eyebrow">Bay 03 — Your move</p>
+            <h2>Step into<br>the showroom.</h2>
+            <p>Orbit, zoom, and deliberate — every car, live in 3D, the way you would in the vault itself.</p>
+            <div class="btn-row"><a href="showcase.html" class="btn">Enter the showroom</a></div>
+          </div>
+        </div>
+
+        <div class="story-hud" aria-hidden="true">
+          <span>Drive <b data-hud-chapter>01</b> / 04</span>
+          <span class="hud-ticks" data-hud-ticks aria-hidden="true"></span>
+        </div>
       </div>
+      <!-- gradual dissolve into page black before the footer -->
+      <div class="story-fade"></div>
     </section>
-    <section class="section" id="brand" style="background:var(--carbon);">
-      <div class="wrap">
-        <span class="eyebrow">Our model</span>
-        <h2>Not a dealership.<br>A trust.</h2>
-        <p class="lead" style="margin-top:18px;">
-          Every car we handle comes through one of two doors: a quiet sale from a private owner who'd
-          rather skip the auction, or our Dubai recovery programme, where abandoned supercars are traced
-          back to their owners and made right. Whatever the route, each one is stripped down, inspected,
-          and handed over with its full history on paper.
-        </p>
-      </div>
-    </section>
+
     <section class="section-sm" id="provenance">
       <div class="wrap-wide">
         <div class="figs">
@@ -94,13 +134,14 @@
         </div>
       </div>
     </section>
+
     <section class="section" id="featured" style="background:var(--carbon);">
       <div class="wrap">
         <span class="eyebrow">Current inventory</span>
         <h2>Three worth chasing.</h2>
-        <p style="margin:14px 0 32px; max-width:60ch;">Three cars from the current collection, each sitting in our Johannesburg vault. Open any one and walk around it — the whole car, rendered live.</p>
+        <p style="margin:14px 0 32px; max-width:60ch;">Three cars from the current collection, each sitting in our Rosebank International vault. Open any one and walk around it — the whole car, rendered live.</p>
         <div class="grid-3">
-          <a class="card reveal" href="showcase.html?car=0">
+          <a class="card reveal" href="showcase.html?car=1">
             <img class="ph" src="assets/images/amg-gt3.jpg" alt="Yellow Mercedes-AMG GT3 race car in the vault" loading="lazy" />
             <div class="card-body">
               <h3>Mercedes-AMG GT3</h3>
@@ -109,7 +150,7 @@
               <span class="card-cue">View in 3D →</span>
             </div>
           </a>
-          <a class="card reveal" href="showcase.html?car=1">
+          <a class="card reveal" href="showcase.html?car=2">
             <img class="ph" src="assets/images/zonda-f.jpg" alt="Red Pagani Zonda F in the vault" loading="lazy" />
             <div class="card-body">
               <h3>Pagani Zonda</h3>
@@ -118,7 +159,7 @@
               <span class="card-cue">View in 3D →</span>
             </div>
           </a>
-          <a class="card reveal" href="showcase.html?car=2">
+          <a class="card reveal" href="showcase.html?car=3">
             <img class="ph" src="assets/images/gt2rs.jpg" alt="Silver Porsche 911 GT2 RS on a show stand" loading="lazy" />
             <div class="card-body">
               <h3>Porsche GT2 RS</h3>
@@ -133,20 +174,10 @@
         </div>
       </div>
     </section>
-    <section class="section" id="showcase-preview">
-      <div class="wrap">
-        <div class="grid-2">
-          <div class="reveal">
-            <span class="eyebrow">Interactive</span>
-            <h2>Walk around<br>every detail.</h2>
-            <p style="margin-top:16px;">Open any car in the 3D showcase and move around it yourself — orbit, zoom, and look closely at every vent and every line, as if it were parked in front of you.</p>
-            <div class="btn-row"><a href="showcase.html" class="btn-outline">Enter showcase</a></div>
-          </div>
-          <img class="ph ph-tall reveal" src="assets/images/alpine-garage.jpg" alt="Orange Alpine A110 R parked in the workshop" loading="lazy" />
-        </div>
-      </div>
-    </section>
-    <section class="section" id="sourcing" style="background:var(--carbon);">
+
+    <div class="bay-rule reveal" aria-hidden="true"><b>Garage bay</b>&nbsp;04</div>
+
+    <section class="section" id="sourcing">
       <div class="wrap">
         <span class="eyebrow">How we source</span>
         <h2>Every car has a story<br>we can prove.</h2>
@@ -166,6 +197,7 @@
         </div>
       </div>
     </section>
+
     <section class="section centered" id="editorial">
       <div class="wrap" style="display:flex; justify-content:center;">
         <div>
@@ -174,6 +206,9 @@
         </div>
       </div>
     </section>
+
+    <div class="bay-rule reveal" aria-hidden="true"><b>Garage bay</b>&nbsp;05</div>
+
     <section class="section centered" id="cta" style="background:var(--carbon);">
       <div class="wrap">
         <h2>Looking for something<br>extraordinary?</h2>
@@ -191,10 +226,11 @@
     <div class="footer-grid">
       <div>
         <div class="footer-logo">Obsidian <span>Motors</span></div>
-        <p class="footer-tagline">Rare cars, quietly placed.</p>
+        <p class="footer-tagline">Rare cars, quietly placed. A private collection, sourced and verified.</p>
+        <p class="footer-meta">Est. 2026 · Rosebank International<br>Pretoria, South Africa<br>WEDE5020 · POE Part 2</p>
       </div>
       <div>
-        <h4>Navigation</h4>
+        <h4>Showroom</h4>
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="collection.html">Collection</a></li>
@@ -205,16 +241,24 @@
         </ul>
       </div>
       <div>
-        <h4>Contact</h4>
+        <h4>Speak to us</h4>
         <address>
-          Rosebank, Johannesburg<br>
-          <a href="tel:+27111234567">+27 11 123 4567</a><br>
+          Rosebank International<br>
+          Pretoria, South Africa<br>
+          <a href="tel:+27121234567">+27 12 123 4567</a><br>
           <a href="mailto:enquiries@obsidianmotors.example">enquiries@obsidianmotors.example</a>
         </address>
       </div>
+      <div class="footer-hours">
+        <h4>Garage hours</h4>
+        <p>Mon – Fri · 08:00 – 18:00<br>
+           Sat · 10:00 – 16:00<br>
+           Sun · By appointment</p>
+        <p class="footer-meta">Instagram · @obsidian.motors<br>Blacklist advised.</p>
+      </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; <span data-year>2026</span> Obsidian Motors. All rights reserved.</p>
+      <p>&copy; <span data-year>2026</span> Obsidian Motors. All rights reserved. Fictional brand — student project.</p>
       <div>
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Service</a>
@@ -223,6 +267,8 @@
   </footer>
 
   <script src="js/site.js" defer></script>
-  <script type="module" src="js/hero3d.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script type="module" src="js/scroll-story.js"></script>
 </body>
 </html>
