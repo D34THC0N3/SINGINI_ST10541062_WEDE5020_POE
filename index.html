@@ -18,14 +18,6 @@
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
   <script>document.documentElement.classList.add("js");</script>
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.167.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.167.0/examples/jsm/"
-    }
-  }
-  </script>
 </head>
 <body>
 <div id="page-fade" aria-hidden="true"></div>
@@ -61,7 +53,6 @@
       <nav>
         <ul class="nav-links">
           <li><a href="collection.html">Collection</a></li>
-          <li><a href="showcase.html">Showcase</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="consign.html">Consign</a></li>
         </ul>
@@ -75,53 +66,28 @@
 
   <main>
 
-    <!-- THE DRIVE — the cinematic scroll story. Without JS, the
-         chapters below still stack and read like a normal page. -->
-    <section class="section story" id="story">
-      <div class="story-pin">
-        <canvas id="drive-canvas" aria-hidden="true"></canvas>
-
-        <div class="story-chapter" data-side="center" data-chapter="0">
-          <div class="story-chapter-inner">
-            <p class="eyebrow">Est. 2026 · Pretoria</p>
-            <h1>Obsidian<br><span class="outline">Motors</span></h1>
-            <p>Rarity, met with provenance. A private collection of the world's rarest cars.</p>
+    <!-- HERO — Cinematic, minimal. High-fidelity still + video fallback.
+         Keeps the obsidian mood, dramatic lighting via photograph. -->
+    <section class="section hero-static" id="hero" style="padding-top:calc(var(--nav-h) + 48px); min-height:86vh; display:flex; align-items:center;">
+      <div class="wrap" style="display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center;">
+        <div>
+          <p class="eyebrow">Est. 2026 · Pretoria</p>
+          <h1>Obsidian<br><span class="outline">Motors</span></h1>
+          <p class="lead" style="margin-top:18px;">Rarity, met with provenance. A private collection of the world's rarest cars — sourced, verified, quietly placed.</p>
+          <div class="btn-row">
+            <a href="collection.html" class="btn">View the collection</a>
+            <a href="contact.html" class="btn-outline">Enquire</a>
           </div>
+          <p style="margin-top:18px; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint);">Rosebank International, Pretoria · By appointment</p>
         </div>
-
-        <div class="story-chapter" data-side="right" data-chapter="1">
-          <div class="story-chapter-inner">
-            <p class="eyebrow">Bay 01 — Not a dealership</p>
-            <h2>A trust,<br>on wheels.</h2>
-            <p>Quiet sales. Dubai recoveries. Every car stripped, inspected, and re-papered before it earns a place.</p>
+        <div style="position:relative; overflow:hidden; border-radius:var(--radius); border:1px solid var(--line);">
+          <img src="assets/images/alpine-garage.jpg" alt="Obsidian garage at night — dramatic tungsten pools of light" loading="eager" style="width:100%; aspect-ratio:4/3; object-fit:cover; display:block; filter:saturate(.85) contrast(1.05) brightness(.9);" />
+          <div style="position:absolute; inset:auto 14px 14px 14px; display:flex; gap:8px; font-family:var(--font-mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint);">
+            <span style="background:rgba(7,7,7,.7); border:1px solid var(--line-2); padding:6px 10px; border-radius:999px;">Private vault</span>
+            <span style="background:rgba(7,7,7,.7); border:1px solid var(--line-2); padding:6px 10px; border-radius:999px;">No public listing</span>
           </div>
-        </div>
-
-        <div class="story-chapter" data-side="left" data-chapter="2">
-          <div class="story-chapter-inner">
-            <p class="eyebrow">Bay 02 — The vault</p>
-            <h2>Four legends,<br>one garage.</h2>
-            <p>M3 GTR. AMG GT3. McLaren Longtail. Fenomeno. Each verified, each live in 3D.</p>
-            <div class="btn-row"><a href="collection.html" class="btn-outline">Open the collection</a></div>
-          </div>
-        </div>
-
-        <div class="story-chapter" data-side="center" data-chapter="3">
-          <div class="story-chapter-inner">
-            <p class="eyebrow">Bay 03 — Your move</p>
-            <h2>Step into<br>the showroom.</h2>
-            <p>Orbit, zoom, and deliberate — every car, live in 3D, the way you would in the vault itself.</p>
-            <div class="btn-row"><a href="showcase.html" class="btn">Enter the showroom</a></div>
-          </div>
-        </div>
-
-        <div class="story-hud" aria-hidden="true">
-          <span>Drive <b data-hud-chapter>01</b> / 04</span>
-          <span class="hud-ticks" data-hud-ticks aria-hidden="true"></span>
         </div>
       </div>
-      <!-- gradual dissolve into page black before the footer -->
-      <div class="story-fade"></div>
     </section>
 
     <section class="section-sm" id="provenance">
@@ -139,33 +105,33 @@
       <div class="wrap">
         <span class="eyebrow">Current inventory</span>
         <h2>Three worth chasing.</h2>
-        <p style="margin:14px 0 32px; max-width:60ch;">Three cars from the current collection, each sitting in our Rosebank International vault. Open any one and walk around it — the whole car, rendered live.</p>
+        <p style="margin:14px 0 32px; max-width:60ch;">Three cars from the current collection, each sitting in our Rosebank International vault. Tap a dossier to see the full photography.</p>
         <div class="grid-3">
-          <a class="card reveal" href="showcase.html?car=1">
+          <a class="card reveal" href="collection.html">
             <img class="ph" src="assets/images/amg-gt3.jpg" alt="Yellow Mercedes-AMG GT3 race car in the vault" loading="lazy" />
             <div class="card-body">
               <h3>Mercedes-AMG GT3</h3>
               <p>Built for the grid, tamed just enough for the road. Race aero, a hand-built V8.</p>
               <span class="card-price">From R4.2m</span>
-              <span class="card-cue">View in 3D →</span>
+              <span class="card-cue">View dossier →</span>
             </div>
           </a>
-          <a class="card reveal" href="showcase.html?car=2">
+          <a class="card reveal" href="collection.html">
             <img class="ph" src="assets/images/gt2rs.jpg" alt="McLaren F1 GTR Longtail in the vault" loading="lazy" />
             <div class="card-body">
               <h3>McLaren F1 GTR Longtail</h3>
               <p>The long-tail unicorn — 1997, Woking, 6.1L BMW V12, RWD.</p>
               <span class="card-price">From R18.5m</span>
-              <span class="card-cue">View in 3D →</span>
+              <span class="card-cue">View dossier →</span>
             </div>
           </a>
-          <a class="card reveal" href="showcase.html?car=3">
+          <a class="card reveal" href="collection.html">
             <img class="ph" src="assets/images/zonda-f.jpg" alt="Lamborghini Fenomeno in the vault" loading="lazy" />
             <div class="card-body">
               <h3>Lamborghini Fenomeno</h3>
               <p>The next big thing, already rare — 2025, Sant'Agata, 6.5L V12 hybrid, AWD.</p>
               <span class="card-price">From R12.9m</span>
-              <span class="card-cue">View in 3D →</span>
+              <span class="card-cue">View dossier →</span>
             </div>
           </a>
         </div>
@@ -234,7 +200,6 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="collection.html">Collection</a></li>
-          <li><a href="showcase.html">Showcase</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="consign.html">Consign</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -267,8 +232,5 @@
   </footer>
 
   <script src="js/site.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-  <script type="module" src="js/scroll-story.js"></script>
 </body>
 </html>
