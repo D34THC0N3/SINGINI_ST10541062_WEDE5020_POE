@@ -18,14 +18,32 @@
   var yr = document.querySelector("[data-year]");
   if (yr) yr.textContent = new Date().getFullYear();
 
-  /* ---- scroll progress bar ---- */
-  var bar = document.querySelector(".scroll-progress > i");
+  /* ---- scroll dots (right side) ---- */
+  var dots = document.querySelector(".scroll-dots");
+  if (dots) {
+    var secs = document.querySelectorAll("main section, .hero");
+    secs.forEach(function (sec) {
+      var a = document.createElement("a");
+      a.href = "#";
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        sec.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+      });
+      dots.appendChild(a);
+    });
+    var dotLinks = dots.querySelectorAll("a");
+    var setDot = function () {
+      var mid = window.scrollY + window.innerHeight / 2;
+      var on = 0;
+      secs.forEach(function (sec, i) {
+        if (sec.getBoundingClientRect().top + window.scrollY <= mid) on = i;
+      });
+      dotLinks.forEach(function (a, i) { a.classList.toggle("is-on", i === on); });
+    };
+    window.addEventListener("scroll", setDot, { passive: true });
+    setDot();
+  }
   function onScroll() {
-    if (bar) {
-      var h = document.documentElement;
-      var max = h.scrollHeight - h.clientHeight;
-      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
-    }
     var nav = document.querySelector(".nav");
     if (nav) nav.classList.toggle("is-scrolled", window.scrollY > 8);
   }

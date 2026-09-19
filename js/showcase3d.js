@@ -160,7 +160,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
       if (nameEl) nameEl.textContent = c.name;
       if (tagEl) tagEl.textContent = c.tag;
       if (specEl) specEl.textContent = c.spec;
-      if (indexEl) indexEl.textContent = String(i + 1).padStart(2, "0");
+      if (indexEl) indexEl.textContent = "#" + (15 - i);
     });
   });
 

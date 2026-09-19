@@ -136,12 +136,15 @@ body::after {
 /* keep real content above the atmosphere layers */
 header, main, footer { position: relative; z-index: 2; }
 
-/* scroll progress bar (top of every page) */
-.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 200; background: transparent; }
-.scroll-progress > i {
-  display: block; height: 100%; width: 0%;
-  background: var(--gold);
-}
+/* scroll dots (right side of every page) */
+.scroll-dots { position: fixed; right: 18px; top: 50%; transform: translateY(-50%);
+  z-index: 200; display: none; flex-direction: column; gap: 12px; }
+.js .scroll-dots { display: flex; }
+.scroll-dots a { width: 7px; height: 7px; border-radius: 50%; background: rgba(154,148,140,.35);
+  transition: background .3s ease, transform .3s ease; }
+.scroll-dots a.is-on { background: var(--gold); transform: scale(1.35); }
+.scroll-dots a:hover { background: var(--steel); }
+@media (max-width: 860px) { .scroll-dots { display: none; } }
 
 /* page transition overlay */
 #page-fade { position: fixed; inset: 0; z-index: 9999; background: #080808; pointer-events: none; opacity: 1; }
