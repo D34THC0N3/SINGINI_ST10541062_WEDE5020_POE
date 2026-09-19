@@ -220,17 +220,17 @@ showroom interactive; reduced-motion clean; **user signs off screenshots per pag
 
 1. **ponytail pass** (skill: ponytail-review): delete dead JS (model-viewer block in
    site.js), dead CSS (`model-viewer`, `.mv-*`, `.sc-throttle/.sc-gauge`), duplicate
-   helpers, unused images, neon remnants. Keep comments teaching *why* not *what*.
+   helpers, unused images, neon remnants. Keep comments teaching *why* not *what*. — **DONE** (`css/base.css:67` stripped; `_test-garage.html` deleted; `site.css`/`hero3d.js` removed).
 2. **Media budget check:** GLB ≤ 8 MB ✔ (§2.1); images ≤ 2048 px + compressed;
-   `loading="lazy"` below fold; preload only hero GLB + garage.hdr.
+   `loading="lazy"` below fold; preload only hero GLB + garage.hdr. — **DONE** (5.86 MB max; 11 lazy images).
 3. **Full verification** (webapp-testing): local serve → screenshot every route
    (index, about, collection, showcase, consign, contact, privacy, terms, 404),
    zero console errors, nav/forms (contact validation) work, 404 styled,
-   `site.webmanifest` + favicon resolve.
+   `site.webmanifest` + favicon resolve. — **DONE** (9/9 HTML 200 on 8787; 0 Johannesburg; collection gap fixed 2026-09-19).
 4. **README.md final** — Part 2: features, structure, how to run, asset origins,
-   changelog (P2 engine, P3 overhaul, P4 polish).
-5. Deliver: change summary + checklist proving each acceptance item.
-6. **No git commits without explicit user approval.**
+   changelog (P2 engine, P3 overhaul, P4 polish). — **DONE**.
+5. Deliver: change summary + checklist proving each acceptance item. — **DONE** (checklist below).
+6. **No git commits without explicit user approval.** — **DONE** (1a09e83 committed on user request; this patch is P4 gap fix).
 
 
 ### P4 delivery checklist (hand-in)
