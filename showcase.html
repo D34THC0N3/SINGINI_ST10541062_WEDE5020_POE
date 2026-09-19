@@ -13,11 +13,20 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/site.css" />
   <script>document.documentElement.classList.add("js");</script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.167.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.167.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
 <body class="showcase">
+<div id="page-fade" aria-hidden="true"></div>
   <div class="scroll-progress" aria-hidden="true"><i></i></div>
 
   <header class="nav">
@@ -39,47 +48,30 @@
   </header>
 
   <main class="stage">
-    <!-- Real 3D. Drag to orbit, scroll to zoom. Slotted poster covers loading / offline / no-JS. -->
-    <model-viewer
-      id="mv"
-      src="https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Assets@main/Models/ToyCar/glTF-Binary/ToyCar.glb"
-      alt="Interactive 3D car model — drag to orbit, scroll to zoom"
-      camera-controls
-      auto-rotate
-      rotation-per-second="30deg"
-      interaction-prompt="none"
-      camera-orbit="-30deg 75deg 110%"
-      exposure="1"
-      shadow-intensity="1"
-      environment-image="neutral"
-      loading="eager">
-      <div class="mv-fallback" slot="poster">Live 3D preview · needs an internet connection</div>
-    </model-viewer>
+    <canvas id="showcase-canvas"></canvas>
 
     <!-- identity (top-left) -->
     <div class="sc-identity chip">
       <p class="sc-eyebrow">Showcase</p>
       <p class="sc-index"><b data-sc-index>01</b> / 03</p>
-      <h1 class="sc-name" data-sc-name>Mercedes-AMG GT3</h1>
-      <p class="sc-tagline" data-sc-tag>Track-bred theatre.</p>
-      <p class="sc-specline" data-sc-spec>2019 · Affalterbach · 4.0L twin-turbo V8 · RWD</p>
+      <h1 class="sc-name" data-sc-name>BMW M3 GTR</h1>
+      <p class="sc-tagline" data-sc-tag>The hero of Most Wanted.</p>
+      <p class="sc-specline" data-sc-spec>2005 · Garching · 4.0L V8 · RWD</p>
     </div>
 
     <!-- interaction hint (top-right) -->
-    <p class="sc-hint chip">Drag to orbit · scroll to zoom · demo 3D model</p>
+    <p class="sc-hint chip">Drag to orbit · scroll to zoom</p>
 
     <!-- car switch (right) -->
     <div class="sc-switch" role="group" aria-label="Choose a car">
-      <button class="sc-switch-btn chip is-active" type="button" data-car="0"><span class="sc-switch-num">01</span> Mercedes-AMG GT3</button>
-      <button class="sc-switch-btn chip" type="button" data-car="1"><span class="sc-switch-num">02</span> Pagani Zonda</button>
+      <button class="sc-switch-btn chip is-active" type="button" data-car="0"><span class="sc-switch-num">01</span> BMW M3 GTR</button>
+      <button class="sc-switch-btn chip" type="button" data-car="1"><span class="sc-switch-num">02</span> Mercedes-AMG GT3</button>
       <button class="sc-switch-btn chip" type="button" data-car="2"><span class="sc-switch-num">03</span> Porsche GT2 RS</button>
     </div>
 
-    <!-- dock (bottom-centre): turntable + rev + camera views -->
+    <!-- dock (bottom-centre): turntable + camera views -->
     <div class="sc-dock chip">
       <button class="sc-start" type="button" aria-pressed="true"><small>Turntable</small><strong>Pause</strong></button>
-      <button class="sc-throttle" type="button">Hold to rev</button>
-      <div class="sc-gauge" aria-hidden="true">3D</div>
       <div class="sc-views" role="group" aria-label="Camera angle">
         <button class="sc-view is-active" type="button">Exterior</button>
         <button class="sc-view" type="button">Profile</button>
@@ -88,7 +80,7 @@
     </div>
   </main>
 
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
   <script src="js/site.js" defer></script>
+  <script type="module" src="js/showcase3d.js"></script>
 </body>
 </html>
