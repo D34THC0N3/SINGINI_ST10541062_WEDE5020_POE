@@ -1,2 +1,12 @@
 # local dev / editor config — not part of the submission
 .claude/
+
+# large 4K >90MB - keep local, don't push (GitHub 100MB limit)
+assets/videos/Full Carbon Zonda R*.mp4
+assets/videos/KOENIGSEGG CCGT*.mp4
+assets/videos/Pagani Zonda R*Redrum*.mp4
+assets/videos/KOENIGSEGG*
+assets/videos/full-carbon*
+assets/videos/VID_*
+assets/videos/*|*
+assets/videos/vid-7593.mp4

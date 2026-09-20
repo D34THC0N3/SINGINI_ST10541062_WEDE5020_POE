@@ -21,18 +21,14 @@
 </head>
 <body>
 <div id="page-fade" aria-hidden="true"></div>
-  <nav class="scroll-dots" aria-hidden="true"></nav>
 
-  <!-- intro: the mark wakes on black, hangs, fades to black, and
-       hands over to the hero. Once per tab; click skips it. -->
+  <!-- intro: crystal → wordmark → fade to black → hero. once per load, click skips -->
   <div id="intro" aria-hidden="true">
     <div class="intro-inner">
       <svg class="intro-crystal" viewBox="0 0 32 32" aria-hidden="true">
         <polygon points="16,2 27,11 23,30 9,30 5,11" fill="#0a0a0c" stroke="#b8976a" stroke-width="1.1"/>
         <polyline points="5,11 16,15 27,11" fill="none" stroke="#b8976a" stroke-width=".6" opacity=".6"/>
         <polyline points="16,15 16,30" fill="none" stroke="#b8976a" stroke-width=".6" opacity=".45"/>
-        <polyline points="16,15 23,30" fill="none" stroke="#b8976a" stroke-width=".6" opacity=".35"/>
-        <polyline points="16,15 9,30" fill="none" stroke="#b8976a" stroke-width=".6" opacity=".35"/>
         <circle cx="10.5" cy="8.5" r="1.4" fill="#ede8e0"/>
       </svg>
       <p class="intro-boot">Obsidian Motors · starting up</p>
@@ -66,59 +62,63 @@
 
   <main>
 
-    <!-- HERO — full screen hypercar vid, scroll drives it. pure cinema, no ai fluff -->
-    <section class="hero-vid" id="hero" style="position:relative; height:100vh; min-height:560px; overflow:hidden; background:#040404;">
-      <video id="hero-video" poster="assets/images/alpine-garage.jpg" autoplay muted loop playsinline preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(.9) contrast(1.08) brightness(.88);">
-        <!-- local Blender ref — Cycles X cinematic (D:\Blender Reference videos\Blender Cinematic Car Animation (Cycles X) [d-QnAc_kSe0].mp4) -->
+    <!-- HERO — full-screen Pagani film, scroll scrubs the footage -->
+    <section class="hero-vid" id="hero">
+      <video id="hero-video" poster="assets/images/still-zonda-mileson.jpg" autoplay muted loop playsinline preload="auto">
         <source src="assets/videos/hero.mp4" type="video/mp4" />
       </video>
-      <!-- yt fallback (azkdQYZCF2A) if local blocked — hidden -->
-      <iframe aria-hidden="true" src="https://www.youtube.com/embed/azkdQYZCF2A?autoplay=1&mute=1&loop=1&playlist=azkdQYZCF2A&controls=0&modestbranding=1&playsinline=1" style="position:absolute; inset:0; width:100%; height:100%; border:0; opacity:0; pointer-events:none;" tabindex="-1"></iframe>
-      <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(7,7,7,.72) 0%, rgba(7,7,7,.22) 42%, rgba(7,7,7,.08) 100%), radial-gradient(900px 600px at 70% 20%, rgba(184,151,106,.14), transparent 60%);"></div>
-      <div class="wrap" style="position:relative; z-index:2; height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding-bottom:56px;">
-        <p class="eyebrow" style="color:var(--gold);">Est. 2026 · Pretoria — Rosebank International</p>
-        <h1 style="font-size:clamp(3rem, 2rem + 6vw, 7.2rem); line-height:.88; text-transform:uppercase; letter-spacing:-.03em; font-weight:550;">Obsidian<br><span class="outline" style="-webkit-text-stroke:1.6px var(--gold); color:transparent;">Motors</span></h1>
-        <p class="lead" style="margin-top:16px; max-width:48ch; color:var(--chrome);">No dealership vibes. Just cold, rare metal — Pagani, Koenigsegg, longtails — caught on film, then placed quiet.</p>
+      <div class="hero-scrim"></div>
+      <div class="wrap hero-copy">
+        <p class="eyebrow">Est. 2026 · Pretoria — Rosebank International</p>
+        <h1>Obsidian<br><span class="outline">Motors</span></h1>
+        <p class="lead">No dealership vibes. Just cold, rare metal — Pagani, Koenigsegg, longtails — caught on film, then placed quiet.</p>
         <div class="btn-row">
           <a href="collection.html" class="btn">Peep the vault</a>
           <a href="contact.html" class="btn-outline">Hit us up</a>
         </div>
-        <p style="margin-top:14px; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--faint);">Scroll — the vid scrubs with ya</p>
+        <p class="hero-hint">Scroll — the film scrubs with you</p>
       </div>
     </section>
 
-    <!-- no fake stats here, real cinema only — ponytail nuked the 200/6/100%/48h ai filler -->
+    <!-- NFS-style mono ticker -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Blacklist advisory</span><span><b>Pagani Zonda</b> spotted</span><span>Rosebank International</span><span>Koenigsegg Jesko · 1600 hp</span><span>V12 secured</span><span>Viewing by appointment</span><span>Black on black</span>
+        <span>Blacklist advisory</span><span><b>Pagani Zonda</b> spotted</span><span>Rosebank International</span><span>Koenigsegg Jesko · 1600 hp</span><span>V12 secured</span><span>Viewing by appointment</span><span>Black on black</span>
+      </div>
+    </div>
 
+    <!-- featured metal -->
     <section class="section" id="featured" style="background:var(--carbon);">
       <div class="wrap">
         <span class="eyebrow">Current inventory</span>
         <h2>Three worth chasing.</h2>
-        <p style="margin:14px 0 32px; max-width:60ch;">Three cars from the current collection, each sitting in our Rosebank International vault. Tap a dossier to see the full photography.</p>
+        <p style="margin:14px 0 32px; max-width:60ch;">Three cars wearing Obsidian numbers right now. Tap a dossier for the full file.</p>
         <div class="grid-3">
           <a class="card reveal" href="collection.html">
-            <img class="ph" src="assets/images/amg-gt3.jpg" alt="Yellow Mercedes-AMG GT3 race car in the vault" loading="lazy" />
+            <img class="ph" src="assets/images/still-amg.jpg" alt="Mercedes-AMG GT-R Black Series on a night circuit" loading="lazy" />
             <div class="card-body">
-              <h3>Mercedes-AMG GT3</h3>
-              <p>Built for the grid, tamed just enough for the road. Race aero, a hand-built V8.</p>
-              <span class="card-price">From R4.2m</span>
+              <h3>Mercedes-AMG GT-R Black Series</h3>
+              <p>The Green Hell in road clothes — flat-plane V8, carbon everything.</p>
+              <span class="card-price">From R6.8m</span>
               <span class="card-cue">View dossier →</span>
             </div>
           </a>
           <a class="card reveal" href="collection.html">
-            <img class="ph" src="assets/images/gt2rs.jpg" alt="McLaren F1 GTR Longtail in the vault" loading="lazy" />
+            <img class="ph" src="assets/images/still-zonda-r.jpg" alt="Pagani Zonda R on circuit" loading="lazy" />
             <div class="card-body">
-              <h3>McLaren F1 GTR Longtail</h3>
-              <p>The long-tail unicorn — 1997, Woking, 6.1L BMW V12, RWD.</p>
-              <span class="card-price">From R18.5m</span>
+              <h3>Pagani Zonda R</h3>
+              <p>Track-only V12 art. The loudest quiet purchase you will ever make.</p>
+              <span class="card-price">POA</span>
               <span class="card-cue">View dossier →</span>
             </div>
           </a>
           <a class="card reveal" href="collection.html">
-            <img class="ph" src="assets/images/zonda-f.jpg" alt="Lamborghini Fenomeno in the vault" loading="lazy" />
+            <img class="ph" src="assets/images/still-jesko.jpg" alt="Koenigsegg Jesko Attack finished in gold leaf" loading="lazy" />
             <div class="card-body">
-              <h3>Lamborghini Fenomeno</h3>
-              <p>The next big thing, already rare — 2025, Sant'Agata, 6.5L V12 hybrid, AWD.</p>
-              <span class="card-price">From R12.9m</span>
+              <h3>Koenigsegg Jesko Attack</h3>
+              <p>1600 hp under real gold leaf. Megacar territory, documented top to toe.</p>
+              <span class="card-price">POA</span>
               <span class="card-cue">View dossier →</span>
             </div>
           </a>
@@ -129,45 +129,82 @@
       </div>
     </section>
 
-    <!-- GROW VID — text left, vertical hypercar edit right, then vid blows up to bg -->
+    <!-- text left, vertical cut right — scroll past and the cut eats the screen -->
     <section class="section" id="grow-sec" style="position:relative; overflow:hidden; padding:0; background:var(--void);">
-      <div class="wrap" style="display:grid; grid-template-columns:.95fr 1.05fr; gap:32px; align-items:center; min-height:86vh; padding:72px var(--gap);">
+      <div class="wrap grow-grid">
         <div class="reveal">
-          <p class="eyebrow">NFS Underground energy</p>
+          <p class="eyebrow">After hours</p>
           <h2>Low, loud,<br>kinda illegal.</h2>
-          <p style="margin-top:14px; max-width:44ch;">Real talk — we ain't a showroom. We hunt Pagani, Koenigsegg, busted prototypes that should've never left the factory. Scroll and watch the cut grow.</p>
-          <p style="margin-top:12px; font-family:var(--font-mono); font-size:.72rem; color:var(--faint);">Vertical edit — TikTok/Insta clean, 9:16, no watermark</p>
+          <p style="margin-top:14px; max-width:44ch;">Real talk — we are not a showroom. We hunt the cars that never should have left the factory, and we do it after dark. Scroll and watch the cut take over.</p>
           <div class="btn-row"><a href="collection.html" class="btn">See the metal</a></div>
         </div>
-        <div style="position:relative; height:78vh; min-height:480px; overflow:hidden; border-radius:var(--radius); border:1px solid var(--line); transform-origin:center;">
-          <video id="grow-vid" poster="assets/images/zonda-f.jpg" autoplay muted loop playsinline preload="auto" style="width:100%; height:100%; object-fit:cover; display:block; filter:saturate(.95) contrast(1.08) brightness(.92); transition:transform .6s var(--ease), border-radius .6s var(--ease);">
-            <!-- local Blender ref — Epic Cycles (D:\Blender Reference videos\Epic Cinematic Car Animation [8iyQqNKvPY0].mp4), cropped 9:16 via object-fit -->
+        <div class="grow-vid-wrap">
+          <video id="grow-vid" poster="assets/images/still-jesko.jpg" autoplay muted loop playsinline preload="auto">
             <source src="assets/videos/grow.mp4" type="video/mp4" />
           </video>
-          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(7,7,7,.55), transparent 58%); pointer-events:none;"></div>
-          <p style="position:absolute; bottom:14px; left:14px; font-family:var(--font-mono); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--chrome); background:rgba(7,7,7,.6); padding:6px 10px; border-radius:999px; border:1px solid var(--line-2);">Koenigsegg Jesko · 1600hp · no cap</p>
+          <p class="grow-tag">Drift cut · 4K render</p>
         </div>
       </div>
     </section>
 
-    <div class="bay-rule reveal" aria-hidden="true"><b>Garage bay</b>&nbsp;04</div>
+    <!-- full-bleed sticky film break — the night drive -->
+    <section class="vidbreak" id="break">
+      <div class="vidbreak-sticky">
+        <video autoplay muted loop playsinline preload="auto" data-break-vid>
+          <source src="assets/videos/break.mp4" type="video/mp4" />
+        </video>
+        <div class="vidbreak-inner">
+          <p class="eyebrow">Tape 01 — night run</p>
+          <h2>The underground<br>stays open late.</h2>
+        </div>
+      </div>
+    </section>
 
-    <section class="section" id="sourcing">
+    <!-- vertical tapes -->
+    <section class="section" id="tapes">
+      <div class="wrap">
+        <span class="eyebrow">Street tapes</span>
+        <h2>Short. Loud.<br>Watch with sound off, still hits.</h2>
+        <div class="tapes" style="margin-top:34px;">
+          <figure class="tape reveal">
+            <video autoplay muted loop playsinline preload="metadata">
+              <source src="assets/videos/tape-1.mp4" type="video/mp4" />
+            </video>
+            <figcaption>Zonda R · carbon, all the way up</figcaption>
+          </figure>
+          <figure class="tape reveal">
+            <video autoplay muted loop playsinline preload="metadata">
+              <source src="assets/videos/tape-2.mp4" type="video/mp4" />
+            </video>
+            <figcaption>Jesko "Odin" · gold leaf, 1600 hp</figcaption>
+          </figure>
+          <figure class="tape reveal">
+            <video autoplay muted loop playsinline preload="metadata">
+              <source src="assets/videos/tape-3.mp4" type="video/mp4" />
+            </video>
+            <figcaption>Onboard · hold on to something</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- sourcing -->
+    <section class="section" id="sourcing" style="background:var(--carbon);">
       <div class="wrap">
         <span class="eyebrow">How we get em</span>
-        <h2>Every whip got<br>receipts, fr.</h2>
+        <h2>Every car comes<br>with receipts.</h2>
         <div class="grid-3" style="margin-top:34px;">
           <div class="panel reveal">
             <h3>Lowkey buys</h3>
-            <p style="margin-top:10px;">Collectors hit us on the low — no auction, no posting, just a quiet handshake and we handle the rest. Ssshh.</p>
+            <p style="margin-top:10px;">Collectors call us when they want something gone quietly. No auction, no listing — a handshake and a truck.</p>
           </div>
           <div class="panel reveal">
-            <h3>Dubai junkyard saves</h3>
-            <p style="margin-top:10px;">We got that rare permit to pull supers outta Dubai impound dust. Trace the OG owner if we can, then bring it back mean and clean.</p>
+            <h3>Dubai recoveries</h3>
+            <p style="margin-top:10px;">A hard-won permit lets us pull abandoned supercars out of Dubai impound lots, trace the paperwork, and bring them back to standard.</p>
           </div>
           <div class="panel reveal">
-            <h3>Papers on papers</h3>
-            <p style="margin-top:10px;">Service history, chain of owners, certs — all that boring stuff that makes the car actually worth a bag. No cap, no gaps.</p>
+            <h3>Paper trail</h3>
+            <p style="margin-top:10px;">Service history, ownership chain, certificates. The boring bits that make a car worth the number — all filed, all yours.</p>
           </div>
         </div>
       </div>
@@ -176,18 +213,20 @@
     <section class="section centered" id="editorial">
       <div class="wrap" style="display:flex; justify-content:center;">
         <div>
-          <blockquote>We don't flip cars. We place em with the few who get it — if ya know, ya know.</blockquote>
-          <cite>— The Obsidian Standard · Underground, not showroom</cite>
+          <blockquote>We don't flip cars. We place them with the few who understand what they are.</blockquote>
+          <cite>— The Obsidian Standard</cite>
         </div>
       </div>
     </section>
 
-    <div class="bay-rule reveal" aria-hidden="true"><b>Garage bay</b>&nbsp;05</div>
-
-    <section class="section centered" id="cta" style="background:var(--carbon);">
-      <div class="wrap">
-        <h2>Lookin for<br>somethin stupid rare?</h2>
-        <p style="margin:14px auto 0; max-width:56ch;">We do private viewings — pull up to Rosebank International, Pretoria, by appointment only. Tell us what ya hunting or what ya tryna let go.</p>
+    <!-- closing film — the ultrawide CTA -->
+    <section class="section centered" id="cta" style="position:relative; overflow:hidden;">
+      <video autoplay muted loop playsinline preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(.8) brightness(.32);">
+        <source src="assets/videos/cta-bg.mp4" type="video/mp4" />
+      </video>
+      <div class="wrap" style="position:relative; z-index:2;">
+        <h2>Looking for something<br>stupid rare?</h2>
+        <p style="margin:14px auto 0; max-width:56ch;">Private viewings at Rosebank International, Pretoria — by appointment only. Tell us what you are hunting, or what you are ready to let go.</p>
         <div class="btn-row" style="justify-content:center; margin-top:24px;">
           <a href="contact.html" class="btn">Pull up — book it</a>
           <a href="consign.html" class="btn-outline">Let go of yours</a>
@@ -203,6 +242,12 @@
         <div class="footer-logo">Obsidian <span>Motors</span></div>
         <p class="footer-tagline">Rare cars, quietly placed. A private collection, sourced and verified.</p>
         <p class="footer-meta">Est. 2026 · Rosebank International<br>Pretoria, South Africa<br>WEDE5020 · POE Part 2</p>
+        <div class="rpm" aria-hidden="true">
+          <span class="rpm-label">Idle</span>
+          <span class="rpm-bar">
+            <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+        </div>
       </div>
       <div>
         <h4>Showroom</h4>
