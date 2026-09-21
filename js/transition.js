@@ -101,6 +101,8 @@
 
   document.addEventListener("click", function (e) {
     if (!e.target || !e.target.closest) return;
+    // let new-tab clicks and right/middle clicks do their normal thing
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || (e.button !== undefined && e.button !== 0)) return;
     var a = e.target.closest("a[href]");
     if (!a) return;
     var href = a.getAttribute("href");
@@ -113,7 +115,18 @@
   });
 
   // new page: door opens back up
-  addEventListener("pageshow", function () {
+  addEventListener("pageshow", function (ev) {
+    // back button restores the shut door from cache, force it open
+    if (ev && ev.persisted) {
+      try { sessionStorage.removeItem("om_transition"); } catch (e) {}
+      Array.prototype.forEach.call(slats.childNodes, function (el) {
+        el.style.transition = "none";
+        el.style.transform = "translateY(-100%)";
+      });
+      overlay.hidden = true; busy = false;
+      if (window.OMMotion && window.OMMotion.heroIn) window.OMMotion.heroIn();
+      return;
+    }
     var flag = null;
     try { flag = sessionStorage.getItem("om_transition"); } catch (e) {}
     if (flag !== "open") return;

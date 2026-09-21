@@ -140,9 +140,9 @@ ul.process li::before { content: counter(step, decimal-leading-zero); counter-in
 /* sits between the big video and the cars */
 .ticker { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   background: var(--carbon); padding: 14px 0; }
-.ticker-track { display: flex; gap: 48px; width: max-content; animation: ticker-run 28s linear infinite; }
+.ticker-track { display: flex; width: max-content; animation: ticker-run 28s linear infinite; }
 .ticker span { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .3em; text-transform: uppercase;
-  color: var(--faint); white-space: nowrap; }
+  color: var(--faint); white-space: nowrap; padding: 0 24px; }
 .ticker b { color: var(--gold); font-weight: 500; }
 @keyframes ticker-run { to { transform: translateX(-50%); } }
 

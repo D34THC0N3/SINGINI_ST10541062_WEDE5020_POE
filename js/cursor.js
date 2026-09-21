@@ -15,7 +15,7 @@
   var ringScale = 1, targetScale = 1;
   var active = false;
   addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; if (!active) { active = true; ring.classList.add("on"); dot.classList.add("on"); } });
-  addEventListener("mouseleave", function () { active = false; ring.classList.remove("on"); dot.classList.remove("on"); });
+  document.documentElement.addEventListener("mouseleave", function () { active = false; ring.classList.remove("on"); dot.classList.remove("on"); });
   function loop() {
     rx += (mx - rx) * 0.14;
     ry += (my - ry) * 0.14;
@@ -62,6 +62,6 @@
   document.addEventListener("mouseleave", function (e) {
     if (e.target && e.target.matches && e.target.matches("input, textarea, select")) { ring.style.opacity = ""; dot.style.opacity = ""; }
   }, true);
-  // only hide the normal cursor on mouse, not touch
-  document.documentElement.style.cursor = "none";
+  // let css hide the normal cursor, js just adds the class so inputs still show it
+  document.documentElement.classList.add("has-cursor");
 })();

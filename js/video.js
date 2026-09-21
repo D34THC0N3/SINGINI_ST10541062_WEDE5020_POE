@@ -22,7 +22,9 @@
   }, { rootMargin: "200px" });
   vids.forEach(function (v) {
     v.muted = true; v.loop = true; v.playsInline = true;
-    v.setAttribute("preload", "none");
+    // hero loads straight away, the rest wait till theyre close
+    if (v.id === "hero-video" || v.id === "grow-vid") v.setAttribute("preload", "auto");
+    else v.setAttribute("preload", "none");
     if (!v.getAttribute("poster")) v.setAttribute("poster", "assets/images/alpine-garage.webp");
     io.observe(v);
   });

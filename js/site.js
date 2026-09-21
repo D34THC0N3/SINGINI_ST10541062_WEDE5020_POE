@@ -44,9 +44,11 @@
   }
 
   // fade stuff in on scroll
+  // motion.js already does this with gsap when it can, so dont double up
   var els = document.querySelectorAll(".reveal, .section");
-  if (reduce || !("IntersectionObserver" in window)) {
-    els.forEach(function (e) { e.classList.add("is-in"); });
+  var gsapOwnsIt = !reduce && window.gsap && window.ScrollTrigger;
+  if (reduce || !("IntersectionObserver" in window) || gsapOwnsIt) {
+    if (!gsapOwnsIt) els.forEach(function (e) { e.classList.add("is-in"); });
   } else {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
@@ -56,18 +58,7 @@
     els.forEach(function (e) { io.observe(e); });
   }
 
-  // only play vids u can see, saves battery
-  var vids = document.querySelectorAll("video");
-  if ("IntersectionObserver" in window && vids.length) {
-    var vio = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        var v = e.target;
-        if (e.isIntersecting) { if (v.paused) v.play().catch(function () {}); }
-        else { if (!v.paused) v.pause(); }
-      });
-    }, { threshold: 0.05 });
-    vids.forEach(function (v) { vio.observe(v); });
-  }
+  // vids are handled in video.js (one decoder at a time) so dont double-play them here
 
   // intro plays once, click to skip. then show the heading.
   var intro = document.getElementById("intro");
@@ -83,7 +74,7 @@
       var step = function (v) { if (countEl) countEl.textContent = String(v).padStart(3, "0"); };
       if (window.gsap) {
         var c = { v: 0 };
-        gsap.to(c, { v: 100, duration: 1.9, ease: "power2.inOut", onUpdate: function () { step(Math.round(c.v)); } });
+        gsap.to(c, { v: 100, duration: 1.6, ease: "power2.inOut", onUpdate: function () { step(Math.round(c.v)); } });
       } else {
         // no gsap, just use a timer
         var n = 0; var tick = setInterval(function () { n += 5; step(n); if (n >= 100) clearInterval(tick); }, 80);
@@ -97,22 +88,26 @@
           if (window.OMMotion) window.OMMotion.heroIn();
         }, 1000);
       };
-      var t = setTimeout(kill, 3800);
+      var t = setTimeout(kill, 3000); // was 3.8s, felt draggy lol
       intro.addEventListener("click", function () { clearTimeout(t); kill(); });
     }
   }
 
-  // big video moves a bit when u scroll
+  // big video zooms a tiny bit when u scroll, no scrubbing cos it makes it stutter
   var hv = document.getElementById("hero-video");
   var hero = document.getElementById("hero");
   if (hv && hero && !reduce) {
     hv.muted = true; hv.playsInline = true;
     hv.play().catch(function () {});
+    var tick = false;
     addEventListener("scroll", function () {
-      var p = Math.min(1, Math.max(0, scrollY / (hero.offsetHeight || 1)));
-      if (hv.duration) hv.currentTime = p * hv.duration * 0.92;
-      hv.style.transform = "scale(" + (1 + p * 0.08) + ") translateY(" + p * -14 + "px)";
-      hv.style.filter = "brightness(" + (0.9 - p * 0.18) + ") saturate(" + (0.9 + p * 0.1) + ")";
+      if (tick) return; tick = true;
+      requestAnimationFrame(function () {
+        tick = false;
+        var p = Math.min(1, Math.max(0, scrollY / (hero.offsetHeight || 1)));
+        hv.style.transform = "scale(" + (1 + p * 0.08) + ") translateY(" + p * -14 + "px)";
+        hv.style.filter = "brightness(" + (0.9 - p * 0.18) + ") saturate(" + (0.9 + p * 0.1) + ")";
+      });
     }, { passive: true });
   }
 

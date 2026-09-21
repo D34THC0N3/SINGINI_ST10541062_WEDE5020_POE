@@ -12,12 +12,18 @@ body::after { opacity:.03; animation: grainMove 0.8s steps(4) infinite; }
 .bracket::after{ bottom:0; right:0; border-width:0 1px 1px 0; }
 /* moving text */
 .marquee{ overflow:hidden; white-space:nowrap; background:var(--void); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:10px 0; font:11px "IBM Plex Mono",monospace; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); }
-.marquee-inner{ display:inline-flex; animation: marquee 30s linear infinite; }
+.marquee-inner{ display:inline-flex; width:max-content; animation: marquee 30s linear infinite; }
 .marquee span{ padding:0 24px; }
+/* mask h1 lines so the char rise looks like lusion, not a jump */
+h1{ overflow:hidden; }
 @keyframes marquee{ 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 @media (prefers-reduced-motion: reduce){ .marquee-inner{ animation:none; } }
-/* cursor - ring + dot */
-#om-cursor{ position:fixed; left:0; top:0; width:34px; height:34px; border:1.5px solid #ede8e0; border-radius:50%; pointer-events:none; z-index:9999; mix-blend-mode:difference; opacity:0; transition:opacity .2s; }
+/* cursor - ring + dot, only hide normal cursor on real mice */
+@media (pointer:fine) and (prefers-reduced-motion: no-preference){
+  html.has-cursor, html.has-cursor a, html.has-cursor button{ cursor:none; }
+  html.has-cursor input, html.has-cursor textarea, html.has-cursor select{ cursor:auto; }
+}
+#om-cursor{ position:fixed; left:0; top:0; width:34px; height:34px; border:1.5px solid #ede8e0; border-radius:50%; pointer-events:none; z-index:9999; mix-blend-mode:difference; opacity:0; transition:opacity .2s, background .25s; }
 #om-cursor.on{ opacity:1; }
 #om-cursor-dot{ position:fixed; left:0; top:0; width:4px; height:4px; background:#b8976a; border-radius:50%; pointer-events:none; z-index:10000; opacity:0; }
 #om-cursor-dot.on{ opacity:1; }
@@ -25,7 +31,9 @@ body::after { opacity:.03; animation: grainMove 0.8s steps(4) infinite; }
 @media (pointer: coarse){ #om-cursor, #om-cursor-dot{ display:none; } }
 /* carousel */
 .carousel{ display:flex; gap:4vw; overflow:hidden; padding:24px 0; mask:linear-gradient(to right, transparent, black 6%, black 94%, transparent); }
-.carousel-card{ flex:0 0 68vw; max-width:520px; height:62vh; min-height:420px; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--panel); transform-origin:center; }
+.carousel-card{ position:relative; flex:0 0 68vw; max-width:520px; height:62vh; min-height:420px; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--panel); transform-origin:center; display:block; }
+.carousel-card:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+.carousel-card img, .carousel-card video{ position:absolute; inset:0; }
 @media (max-width:860px){ .carousel-card{ flex:0 0 86vw; height:52vh; } }
 .carousel-card img{ width:100%; height:100%; object-fit:cover; filter:saturate(.85) contrast(1.05) brightness(.9); }
 .heat{ height:2px; background:var(--line); margin-top:16px; position:relative; }
@@ -173,3 +181,59 @@ main a:not(.btn):not(.btn-outline):not(.card):not(.carousel-card):hover, .footer
 
 /* text strip under the nav on collection */
 .vault-ticker{ margin-top:var(--nav-h); }
+
+/* bokeh dots behind everything, story.js adds these */
+.bokeh{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+/* the gold road line + the dot that rides it */
+.road{ position:absolute; left:0; top:0; width:80px; z-index:1; pointer-events:none; overflow:visible; }
+.road path{ stroke:var(--gold); stroke-width:1; opacity:.35; }
+.road-dot{ position:absolute; left:0; top:0; width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 10px rgba(184,151,106,.8); z-index:1; pointer-events:none; }
+@media (max-width:860px), (prefers-reduced-motion: reduce){ .bokeh,.road,.road-dot{ display:none; } }
+
+/* hold ring on the carousel cards */
+.peek-ring{ position:fixed; left:0; top:0; width:40px; height:40px; z-index:8100; pointer-events:none; opacity:0; transition:opacity .25s; }
+.peek-ring.on{ opacity:1; }
+.peek-ring svg{ width:100%; height:100%; transform:rotate(-90deg); }
+.pr-track{ fill:none; stroke:rgba(237,232,224,.2); stroke-width:2; }
+.pr-fill{ fill:none; stroke:var(--gold); stroke-width:2; }
+/* lil corner label so people know they can open the card */
+.peek-tick{ position:absolute; right:14px; bottom:12px; z-index:2; font:10px "IBM Plex Mono",monospace; letter-spacing:.14em; color:var(--gold); opacity:.85; pointer-events:none; }
+
+/* full menu */
+.menu-full{ position:fixed; inset:0; z-index:6000; background:#070707; display:flex; flex-direction:column; justify-content:center; padding:0 8vw; }
+.menu-full[hidden]{ display:none !important; }
+.menu-full .menu-kicker{ font:10px "IBM Plex Mono",monospace; letter-spacing:.2em; color:var(--gold); margin-bottom:5vh; }
+.menu-full ul{ list-style:none; }
+.menu-full li{ overflow:hidden; }
+.menu-full li a{ display:inline-block; font:800 italic clamp(2.4rem,7vw,5.5rem)/1.05 "Kanit",sans-serif; text-transform:uppercase; letter-spacing:-.02em; color:var(--chrome); transition:opacity .3s, color .3s; }
+.menu-full li a:hover, .menu-full li a:focus-visible{ color:var(--gold); }
+.menu-full .menu-num{ font:400 12px "IBM Plex Mono",monospace; color:var(--faint); vertical-align:super; letter-spacing:.1em; }
+.menu-full .menu-foot{ position:absolute; bottom:4vh; left:8vw; font:10px "IBM Plex Mono",monospace; letter-spacing:.18em; color:var(--faint); }
+.menu-chaser{ position:absolute; left:0; top:0; width:240px; height:150px; object-fit:cover; opacity:0; pointer-events:none; transition:opacity .3s; filter:saturate(.85) brightness(.85); }
+.menu-chaser.on{ opacity:.9; }
+@media (prefers-reduced-motion: reduce){ .menu-chaser{ display:none; } }
+
+/* next gate block inside the blown up footer */
+.next-gate{ position:absolute; bottom:6vh; right:6vw; text-align:right; }
+.next-gate .ng-label{ font:10px "IBM Plex Mono",monospace; letter-spacing:.2em; color:var(--faint); margin-bottom:10px; }
+.next-gate .ng-link{ display:inline-flex; align-items:center; gap:12px; font:800 italic 1.6rem "Kanit",sans-serif; text-transform:uppercase; color:var(--chrome); }
+.next-gate .ng-link:hover{ color:var(--gold); }
+.ng-ring{ width:34px; height:34px; transform:rotate(-90deg); }
+.ng-track{ fill:none; stroke:var(--line-2); stroke-width:2; }
+.ng-prog{ fill:none; stroke:var(--gold); stroke-width:2; }
+
+/* torch: picture only lit around the mouse */
+.torch{ position:relative; }
+.torch::after{ content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:radial-gradient(circle 340px at var(--mx,50%) var(--my,42%), transparent 0, rgba(4,4,4,.72) 100%); }
+
+/* pics start grey + dark, warm up on hover */
+.warmup{ filter:grayscale(.6) brightness(.85) contrast(1.05); transition:filter .45s cubic-bezier(.22,1,.36,1); }
+a:hover .warmup, .card:hover .warmup, a:focus-visible .warmup{ filter:grayscale(0) brightness(1) contrast(1.05); }
+@media (prefers-reduced-motion: reduce){ .warmup{ filter:none; transition:none; } }
+
+/* lil MENU chip menu.js adds on desktop */
+.menu-btn{ font:10px "IBM Plex Mono",monospace; letter-spacing:.18em; color:var(--gold); border:1px solid var(--line-2); padding:9px 14px; margin-right:10px; transition:border-color .25s, color .25s; }
+.menu-btn:hover{ border-color:var(--gold); }
+
+body{ position:relative; } /* road svg needs this or it floats in space lol */

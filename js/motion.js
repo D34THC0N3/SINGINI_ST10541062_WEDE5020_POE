@@ -4,6 +4,8 @@
 
   // ----- letter splitting bits -----
   function splitChars(el) {
+    // keep the real text for screen readers, spans are decoration
+    if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", el.textContent);
     // go through everything so <br> and colours dont break
     var out = [];
     Array.prototype.slice.call(el.childNodes).forEach(function (node) {
@@ -15,6 +17,7 @@
           s.textContent = t[i] === " " ? " " : t[i]; // keep the spaces or words stick together
           s.style.display = "inline-block";
           s.style.transform = "translateY(110%)";
+          // gsap reads this as y so the tween below lines up
           frag.appendChild(s);
           out.push(s);
         }
@@ -25,13 +28,6 @@
     });
     return out;
   }
-  function splitLines(el) {
-    // wrap words so they can slide up, fine for short headings
-    var text = el.textContent;
-    el.innerHTML = text.split(" ").map(function (w) { return '<span style="display:inline-block;overflow:hidden"><span style="display:inline-block;transform:translateY(110%)">' + w + " </span></span>"; }).join("");
-    return el.querySelectorAll("span span");
-  }
-
   // ----- heading coming in on load -----
   var heroDone = false;
   function heroIn() {
@@ -40,13 +36,17 @@
     var h1 = document.querySelector("h1");
     if (h1) {
       var chars = splitChars(h1);
-      if (window.gsap) gsap.to(chars, { y: "0%", duration: 0.9, ease: "power4.out", stagger: 0.02, overwrite: true });
+      if (window.gsap) {
+        gsap.set(chars, { yPercent: 110 });
+        gsap.to(chars, { yPercent: 0, duration: 0.9, ease: "power4.out", stagger: 0.02, overwrite: true });
+      }
       else for (var i = 0; i < chars.length; i++) chars[i].style.transform = "none";
     }
     var eb = document.querySelector(".eyebrow");
     if (eb && window.gsap) {
       var c2 = splitChars(eb);
-      gsap.to(c2, { y: "0%", duration: 0.5, ease: "none", stagger: 0.015 });
+      gsap.set(c2, { yPercent: 110 });
+      gsap.to(c2, { yPercent: 0, duration: 0.5, ease: "none", stagger: 0.015 });
     }
   }
 
@@ -79,7 +79,7 @@
       });
     });
     // ----- stop the moving text when the tab is hidden -----
-    document.querySelectorAll(".marquee-inner").forEach(function (el) {
+    document.querySelectorAll(".marquee-inner, .ticker-track").forEach(function (el) {
       document.addEventListener("visibilitychange", function () {
         el.style.animationPlayState = document.hidden ? "paused" : "running";
       });
@@ -298,7 +298,17 @@
     });
   }
 
-  window.OMMotion = { heroIn: heroIn, splitLines: splitLines, splitChars: splitChars };
+  window.OMMotion = { heroIn: heroIn, splitChars: splitChars };
+
+  // if anything is still hidden after 2.5s something broke, just show it all
+  setTimeout(function () {
+    document.querySelectorAll("h1 span, .eyebrow span").forEach(function (s) {
+      if (getComputedStyle(s).transform !== "none" && !s.closest("#intro")) s.style.transform = "none";
+    });
+    document.querySelectorAll(".reveal, .section").forEach(function (el) {
+      if (+getComputedStyle(el).opacity < 0.05) { el.style.opacity = "1"; el.style.transform = "none"; }
+    });
+  }, 2500);
 
   // normal load, just show the heading
   addEventListener("load", function () {
