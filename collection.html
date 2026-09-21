@@ -13,23 +13,30 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Kanit:ital,wght@1,800&family=Inter:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/motion.css" />
   <script>document.documentElement.classList.add("js");</script>
+  <noscript><style>
+    /* no js, no carousel drama: plain grid so every car is still there */
+    .carousel{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); overflow:visible; mask:none; }
+    .carousel-card{ height:auto; min-height:0; }
+    .carousel-card img, .carousel-card video{ height:320px; }
+    .heat, .heat-label{ display:none; }
+  </style></noscript>
+  <script src="assets/vendor/gsap/gsap.min.js" defer></script>
+  <script src="assets/vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/gsap/Observer.min.js" defer></script>
 </head>
-<body>
+<body><div class="vignette" aria-hidden="true"></div>
 <div id="page-fade" aria-hidden="true"></div>
-  <nav class="scroll-dots" aria-hidden="true"></nav>
 
   <header class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
-        <svg class="crystal" viewBox="0 0 32 32" aria-hidden="true">
-          <polygon points="16,2 27,11 23,30 9,30 5,11" fill="none" stroke="#b8976a" stroke-width="1.4"/>
-          <circle cx="10.5" cy="8.5" r="1.5" fill="#ede8e0"/>
-        </svg>
+        <img class="crystal" src="assets/icons/logo-crystal.svg" alt="" width="18" height="18" />
         Obsidian <span>Motors</span>
       </a>
       <nav>
@@ -46,6 +53,11 @@
     </div>
   </header>
 
+  <div class="ticker vault-ticker" aria-hidden="true"><div class="ticker-track">
+    <span>Blacklist advisory</span><span><b>BL #15</b> M3 GTR · wanted</span><span><b>BL #14</b> AMG GT3 · spotted</span><span><b>BL #13</b> F1 GTR longtail · wanted</span><span><b>BL #12</b> Zonda F · spotted</span><span>Viewing by appointment</span>
+    <span>Blacklist advisory</span><span><b>BL #15</b> M3 GTR · wanted</span><span><b>BL #14</b> AMG GT3 · spotted</span><span><b>BL #13</b> F1 GTR longtail · wanted</span><span><b>BL #12</b> Zonda F · spotted</span><span>Viewing by appointment</span>
+  </div></div>
+
   <main>
     <section class="section" style="padding-top:calc(var(--nav-h) + 40px);">
       <div class="wrap">
@@ -56,48 +68,42 @@
           logged before it earns a spot here. Open a dossier to see the photography.
         </p>
 
-        <div class="grid-3" style="margin-top:44px;">
-          <a class="card reveal" href="contact.html">
-            <span class="card-index">#15</span>
-            <img class="ph" src="assets/images/mclaren-knightsbridge.jpg" alt="BMW M3 GTR — obsidian clearcoat in the garage" loading="lazy" />
-            <div class="card-body">
-              <h3>BMW M3 GTR</h3>
-              <p>The hero of Most Wanted — E46 obsidian clearcoat, fresh scars, Garching V8.</p>
-              <span class="card-price">From R3.8m</span>
-              <span class="card-cue">Open dossier →</span>
+        <div class="carousel" data-cursor="DRAG" style="margin-top:44px;">
+          <a class="carousel-card bracket" href="contact.html" data-cursor="VIEW">
+            <img src="assets/images/gt2rs.webp" alt="BMW M3 GTR under the vault spots, dark showroom" loading="lazy" />
+            <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
+              <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #15</span>
+              <h3 class="display-nfs" style="font-size:1.4rem; margin-top:4px;">BMW M3 GTR</h3>
+              <p style="font-size:.82rem; color:var(--steel);">Garching V8 — the Most Wanted hero.</p>
             </div>
           </a>
-          <a class="card reveal" href="contact.html">
-            <span class="card-index">#14</span>
-            <img class="ph" src="assets/images/amg-gt3.jpg" alt="Yellow Mercedes-AMG GT3 race car in the vault" loading="lazy" />
-            <div class="card-body">
-              <h3>Mercedes-AMG GT3</h3>
-              <p>A race-homologated V8, made road-legal. Only a handful sit in private hands.</p>
-              <span class="card-price">From R4.2m</span>
-              <span class="card-cue">Open dossier →</span>
+          <a class="carousel-card bracket" href="contact.html" data-cursor="VIEW">
+            <img src="assets/images/amg-gt3.webp" alt="Mercedes-AMG GT3 race car in the vault" loading="lazy" />
+            <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
+              <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #14</span>
+              <h3 class="display-nfs" style="font-size:1.4rem; margin-top:4px;">Mercedes-AMG GT3</h3>
+              <p style="font-size:.82rem; color:var(--steel);">Race V8, road-legal.</p>
             </div>
           </a>
-          <a class="card reveal" href="contact.html">
-            <span class="card-index">#13</span>
-            <img class="ph" src="assets/images/gt2rs.jpg" alt="McLaren F1 GTR Longtail on a show stand" loading="lazy" />
-            <div class="card-body">
-              <h3>McLaren F1 GTR Longtail</h3>
-              <p>The long-tail unicorn — 1997, Woking, 6.1L BMW V12, RWD.</p>
-              <span class="card-price">From R18.5m</span>
-              <span class="card-cue">Open dossier →</span>
+          <a class="carousel-card bracket" href="contact.html" data-cursor="PLAY">
+            <video src="assets/videos/grow.mp4" muted loop playsinline preload="none" poster="assets/images/still-zonda-r.webp" style="width:100%; height:100%; object-fit:cover;"></video>
+            <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
+              <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #13</span>
+              <h3 class="display-nfs" style="font-size:1.4rem; margin-top:4px;">McLaren F1 GTR Longtail</h3>
+              <p style="font-size:.82rem; color:var(--steel);">Woking '97 — 6.1 V12, RWD.</p>
             </div>
           </a>
-          <a class="card reveal" href="contact.html">
-            <span class="card-index">#12</span>
-            <img class="ph" src="assets/images/zonda-f.jpg" alt="Lamborghini Fenomeno in the vault" loading="lazy" />
-            <div class="card-body">
-              <h3>Lamborghini Fenomeno</h3>
-              <p>The next big thing, already rare — 2025, Sant'Agata, 6.5L V12 hybrid, AWD.</p>
-              <span class="card-price">From R12.9m</span>
-              <span class="card-cue">Open dossier →</span>
+          <a class="carousel-card bracket" href="contact.html" data-cursor="VIEW">
+            <img src="assets/images/zonda-f.webp" alt="Red Pagani Zonda F out on the lawn" loading="lazy" />
+            <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
+              <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #12</span>
+              <h3 class="display-nfs" style="font-size:1.4rem; margin-top:4px;">Pagani Zonda F</h3>
+              <p style="font-size:.82rem; color:var(--steel);">The F that started the legend — 7.3 V12, gated manual.</p>
             </div>
           </a>
         </div>
+        <div class="heat" aria-hidden="true"><div class="heat-fill"></div></div>
+        <div class="heat-label">HEAT 01/04</div>
 
         <div class="panel reveal" style="margin-top:48px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;">
           <div>
@@ -110,12 +116,19 @@
     </section>
   </main>
 
+  <div class="marquee" aria-hidden="true"><div class="marquee-inner"><span>ROSEBANK INTERNATIONAL ▸ PRETORIA ▸ THE VAULT IS OPEN ▸ EST. MMXXIV ▸ </span><span>ROSEBANK INTERNATIONAL ▸ PRETORIA ▸ THE VAULT IS OPEN ▸ EST. MMXXIV ▸ </span><span>ROSEBANK INTERNATIONAL ▸ PRETORIA ▸ THE VAULT IS OPEN ▸ EST. MMXXIV ▸ </span></div></div>
   <footer class="footer">
     <div class="footer-grid">
       <div>
         <div class="footer-logo">Obsidian <span>Motors</span></div>
         <p class="footer-tagline">Rare cars, quietly placed. A private collection, sourced and verified.</p>
         <p class="footer-meta">Est. 2026 · Rosebank International<br>Pretoria, South Africa<br>WEDE5020 · POE Part 2</p>
+        <div class="rpm" aria-hidden="true">
+          <span class="rpm-label">Idle</span>
+          <span class="rpm-bar">
+            <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </span>
+        </div>
       </div>
       <div>
         <h4>Showroom</h4>
@@ -141,7 +154,7 @@
         <p>Mon – Fri · 08:00 – 18:00<br>
            Sat · 10:00 – 16:00<br>
            Sun · By appointment</p>
-        <p class="footer-meta">Instagram · @obsidian.motors<br>Blacklist advised.</p>
+         <p class="footer-meta">Instagram · @obsidian.motors<br>Blacklist advised · HEAT LEVEL 3.</p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -154,5 +167,10 @@
   </footer>
 
   <script src="js/site.js" defer></script>
+  <script src="js/motion.js" defer></script>
+  <script src="js/cursor.js" defer></script>
+  <script src="js/carousel.js" defer></script>
+  <script src="js/video.js" defer></script>
+  <script src="js/transition.js" defer></script>
 </body>
 </html>

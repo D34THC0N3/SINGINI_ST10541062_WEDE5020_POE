@@ -13,37 +13,38 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Kanit:ital,wght@1,800&family=Inter:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/motion.css" />
   <script>document.documentElement.classList.add("js");</script>
+  <script src="assets/vendor/gsap/gsap.min.js" defer></script>
+  <script src="assets/vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/gsap/Observer.min.js" defer></script>
 </head>
-<body>
+<body><div class="vignette" aria-hidden="true"></div>
 <div id="page-fade" aria-hidden="true"></div>
 
-  <!-- intro: crystal → wordmark → fade to black → hero. once per load, click skips -->
+  <!-- intro: crystal ritual. count 000→100, light sweep, quarter turn, wordmark, out -->
   <div id="intro" aria-hidden="true">
     <div class="intro-inner">
-      <svg class="intro-crystal" viewBox="0 0 32 32" aria-hidden="true">
-        <polygon points="16,2 27,11 23,30 9,30 5,11" fill="#0a0a0c" stroke="#b8976a" stroke-width="1.1"/>
-        <polyline points="5,11 16,15 27,11" fill="none" stroke="#b8976a" stroke-width=".6" opacity=".6"/>
-        <polyline points="16,15 16,30" fill="none" stroke="#b8976a" stroke-width=".6" opacity=".45"/>
-        <circle cx="10.5" cy="8.5" r="1.4" fill="#ede8e0"/>
-      </svg>
-      <p class="intro-boot">Obsidian Motors · starting up</p>
-      <p class="intro-word"><span>Obsidian</span><span>Motors</span></p>
-      <div class="intro-rule"></div>
+      <div class="intro-gem-wrap">
+        <img class="intro-gem" src="assets/icons/logo-crystal.svg" alt="" width="120" height="120" />
+        <span class="intro-sweep" aria-hidden="true"></span>
+        <span class="intro-flash" aria-hidden="true"></span>
+      </div>
+      <p class="intro-word"><span>O</span><span>b</span><span>s</span><span>i</span><span>d</span><span>i</span><span>a</span><span>n</span></p>
+      <p class="intro-boot">motors — pretoria</p>
     </div>
+    <p class="intro-count" aria-hidden="true">000</p>
+    <span class="intro-hair" aria-hidden="true"></span>
   </div>
 
   <header class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
-        <svg class="crystal" viewBox="0 0 32 32" aria-hidden="true">
-          <polygon points="16,2 27,11 23,30 9,30 5,11" fill="none" stroke="#b8976a" stroke-width="1.4"/>
-          <circle cx="10.5" cy="8.5" r="1.5" fill="#ede8e0"/>
-        </svg>
+        <img class="crystal" src="assets/icons/logo-crystal.svg" alt="" width="18" height="18" />
         Obsidian <span>Motors</span>
       </a>
       <nav>
@@ -64,7 +65,7 @@
 
     <!-- HERO — full-screen Pagani film, scroll scrubs the footage -->
     <section class="hero-vid" id="hero">
-      <video id="hero-video" poster="assets/images/still-zonda-mileson.jpg" autoplay muted loop playsinline preload="auto">
+      <video id="hero-video" poster="assets/images/still-zonda-mileson.webp" autoplay muted loop playsinline preload="auto">
         <source src="assets/videos/hero.mp4" type="video/mp4" />
       </video>
       <div class="hero-scrim"></div>
@@ -95,8 +96,8 @@
         <h2>Three worth chasing.</h2>
         <p style="margin:14px 0 32px; max-width:60ch;">Three cars wearing Obsidian numbers right now. Tap a dossier for the full file.</p>
         <div class="grid-3">
-          <a class="card reveal" href="collection.html">
-            <img class="ph" src="assets/images/still-amg.jpg" alt="Mercedes-AMG GT-R Black Series on a night circuit" loading="lazy" />
+          <a class="card reveal" href="collection.html" data-cursor="VIEW">
+            <img class="ph" src="assets/images/still-amg.webp" alt="Mercedes-AMG GT-R Black Series on a night circuit" loading="lazy" />
             <div class="card-body">
               <h3>Mercedes-AMG GT-R Black Series</h3>
               <p>The Green Hell in road clothes — flat-plane V8, carbon everything.</p>
@@ -104,8 +105,8 @@
               <span class="card-cue">View dossier →</span>
             </div>
           </a>
-          <a class="card reveal" href="collection.html">
-            <img class="ph" src="assets/images/still-zonda-r.jpg" alt="Pagani Zonda R on circuit" loading="lazy" />
+          <a class="card reveal" href="collection.html" data-cursor="VIEW">
+            <img class="ph" src="assets/images/still-zonda-r.webp" alt="Pagani Zonda R on circuit" loading="lazy" />
             <div class="card-body">
               <h3>Pagani Zonda R</h3>
               <p>Track-only V12 art. The loudest quiet purchase you will ever make.</p>
@@ -113,8 +114,8 @@
               <span class="card-cue">View dossier →</span>
             </div>
           </a>
-          <a class="card reveal" href="collection.html">
-            <img class="ph" src="assets/images/still-jesko.jpg" alt="Koenigsegg Jesko Attack finished in gold leaf" loading="lazy" />
+          <a class="card reveal" href="collection.html" data-cursor="VIEW">
+            <img class="ph" src="assets/images/still-jesko.webp" alt="Koenigsegg Jesko Attack finished in gold leaf" loading="lazy" />
             <div class="card-body">
               <h3>Koenigsegg Jesko Attack</h3>
               <p>1600 hp under real gold leaf. Megacar territory, documented top to toe.</p>
@@ -139,7 +140,7 @@
           <div class="btn-row"><a href="collection.html" class="btn">See the metal</a></div>
         </div>
         <div class="grow-vid-wrap">
-          <video id="grow-vid" poster="assets/images/still-jesko.jpg" autoplay muted loop playsinline preload="auto">
+          <video id="grow-vid" poster="assets/images/still-jesko.webp" autoplay muted loop playsinline preload="auto">
             <source src="assets/videos/grow.mp4" type="video/mp4" />
           </video>
           <p class="grow-tag">Drift cut · 4K render</p>
@@ -236,6 +237,7 @@
 
   </main>
 
+  <div class="marquee" aria-hidden="true"><div class="marquee-inner"><span>ROSEBANK INTERNATIONAL ▸ PRETORIA ▸ THE VAULT IS OPEN ▸ EST. MMXXIV ▸ </span><span>ROSEBANK INTERNATIONAL ▸ PRETORIA ▸ THE VAULT IS OPEN ▸ EST. MMXXIV ▸ </span><span>ROSEBANK INTERNATIONAL ▸ PRETORIA ▸ THE VAULT IS OPEN ▸ EST. MMXXIV ▸ </span></div></div>
   <footer class="footer">
     <div class="footer-grid">
       <div>
@@ -273,7 +275,7 @@
         <p>Mon – Fri · 08:00 – 18:00<br>
            Sat · 10:00 – 16:00<br>
            Sun · By appointment</p>
-        <p class="footer-meta">Instagram · @obsidian.motors<br>Blacklist advised.</p>
+         <p class="footer-meta">Instagram · @obsidian.motors<br>Blacklist advised · HEAT LEVEL 3.</p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -286,5 +288,10 @@
   </footer>
 
   <script src="js/site.js" defer></script>
+  <script src="js/motion.js" defer></script>
+  <script src="js/cursor.js" defer></script>
+  <script src="js/carousel.js" defer></script>
+  <script src="js/video.js" defer></script>
+  <script src="js/transition.js" defer></script>
 </body>
 </html>

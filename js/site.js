@@ -11,6 +11,8 @@
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest("a[href]");
       if (!a || reduce) return;
+      // garage door owns internal nav when its up, else wed fight over the click
+      if (window.OMTransition) return;
       var href = a.getAttribute("href");
       if (!href || href.charAt(0) === "#" || a.target || /\.(jpe?g|png|webp|mp4|webm)$/i.test(href)) return;
       e.preventDefault();
@@ -67,17 +69,36 @@
     vids.forEach(function (v) { vio.observe(v); });
   }
 
-  // intro — brand reveal on load, click skips, gone afterwards
+  // intro — brand ritual, once per session, click skips. counter climbs while
+  // the crystal does its sweep + quarter turn (pure css), then fade to hero.
   var intro = document.getElementById("intro");
   if (intro) {
-    if (reduce) { intro.remove(); }
-    else {
+    var seen = false;
+    try { seen = sessionStorage.getItem("om_intro") === "done"; } catch (e) {}
+    if (reduce || seen) {
+      intro.remove();
+      if (window.OMMotion) window.OMMotion.heroIn();
+    } else {
       document.body.classList.add("intro-lock");
+      var countEl = intro.querySelector(".intro-count");
+      var step = function (v) { if (countEl) countEl.textContent = String(v).padStart(3, "0"); };
+      if (window.gsap) {
+        var c = { v: 0 };
+        gsap.to(c, { v: 100, duration: 1.9, ease: "power2.inOut", onUpdate: function () { step(Math.round(c.v)); } });
+      } else {
+        // no gsap? fake it with a quick timer
+        var n = 0; var tick = setInterval(function () { n += 5; step(n); if (n >= 100) clearInterval(tick); }, 80);
+      }
       var kill = function () {
         intro.classList.add("is-fade");
-        setTimeout(function () { intro.remove(); document.body.classList.remove("intro-lock"); }, 1000);
+        try { sessionStorage.setItem("om_intro", "done"); } catch (e) {}
+        setTimeout(function () {
+          intro.remove();
+          document.body.classList.remove("intro-lock");
+          if (window.OMMotion) window.OMMotion.heroIn();
+        }, 1000);
       };
-      var t = setTimeout(kill, 2800);
+      var t = setTimeout(kill, 3800);
       intro.addEventListener("click", function () { clearTimeout(t); kill(); });
     }
   }

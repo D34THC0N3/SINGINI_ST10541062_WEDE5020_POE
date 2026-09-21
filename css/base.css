@@ -1,11 +1,4 @@
-/* ============================================================
-   OBSIDIAN MOTORS — base.css
-   Tokens, reset, typography, atmosphere. Loaded first.
-   Nothing component-shaped lives here — this is the material
-   every other sheet builds with.
-
-   STACK: css/base.css → css/layout.css → css/components.css
-   ============================================================ */
+/* base.css - colours, reset, type. loaded first. */
 
 /* ---------- tokens ---------- */
 :root {

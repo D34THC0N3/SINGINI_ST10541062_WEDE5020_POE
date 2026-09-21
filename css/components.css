@@ -1,8 +1,4 @@
-/* ============================================================
-   OBSIDIAN MOTORS — components.css
-   Buttons, cards, panels, forms, the cinema kit (ticker,
-   video breaks, tapes), and the reveal system.
-   ============================================================ */
+/* components.css - buttons, cards, panels, forms, video breaks. */
 
 /* ---------- buttons ---------- */
 .btn, .btn-outline {
@@ -17,7 +13,7 @@
 .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
 .btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
 
-/* reveal — scroll in, real smooth, no ai jitter */
+/* reveal — scroll in */
 .js .section:not(.story), .js .reveal {
   opacity: 0;
   transform: translateY(26px);

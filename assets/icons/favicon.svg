@@ -1,11 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Obsidian Motors mark: an obsidian shard — cut facets in gold,
-       single pale glint on the upper facet -->
+  <!-- favicon: same crystal on a dark rounded square, simplified for 16px -->
   <rect width="64" height="64" rx="14" fill="#070707"/>
-  <polygon points="32,7 54,23 46,57 18,57 10,23" fill="#0c0c0e" stroke="#b8976a" stroke-width="1.8" stroke-linejoin="round"/>
-  <polyline points="10,23 32,30 54,23" fill="none" stroke="#b8976a" stroke-width="1" opacity=".6"/>
-  <polyline points="32,30 32,44" fill="none" stroke="#b8976a" stroke-width="1" opacity=".45"/>
-  <polyline points="32,44 46,57" fill="none" stroke="#b8976a" stroke-width="1" opacity=".35"/>
-  <polyline points="32,44 18,57" fill="none" stroke="#b8976a" stroke-width="1" opacity=".35"/>
-  <circle cx="21" cy="18" r="2.6" fill="#ede8e0"/>
+  <polygon points="20,12 44,12 54,25 32,54 10,25" fill="#0c0714"/>
+  <polygon points="20,12 44,12 54,25 32,29 10,25" fill="#130d22"/>
+  <g fill="none" stroke="#b8976a" stroke-width="1.4" stroke-linejoin="round" opacity=".65">
+    <polygon points="20,12 44,12 54,25 32,54 10,25"/>
+    <polyline points="20,12 32,29 44,12"/>
+    <polyline points="54,25 32,29 10,25"/>
+    <line x1="32" y1="29" x2="32" y2="54"/>
+  </g>
+  <polygon points="25,17 28,19 25,21 22,19" fill="#ede8e0" opacity=".95"/>
 </svg>
