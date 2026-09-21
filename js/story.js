@@ -84,4 +84,43 @@
       scrollTrigger: { trigger: hd, start: "top 84%", once: true }
     });
   });
+
+  // ----- next-chapter kickers so no section ends dead -----
+  var secs = document.querySelectorAll("main > section");
+  secs.forEach(function (sec, i) {
+    if (i >= secs.length - 1 || sec.querySelector(".next-kick")) return;
+    var nextEb = secs[i + 1].querySelector(".eyebrow, .pin-tag, h1, h2");
+    var name = nextEb ? nextEb.textContent.trim().toUpperCase().slice(0, 26) : "NEXT";
+    var kick = document.createElement("p");
+    kick.className = "next-kick";
+    kick.setAttribute("aria-hidden", "true");
+    kick.innerHTML = "NEXT&nbsp;&nbsp;<b>" + name + "</b>&nbsp;&nbsp;<span class='nk-arrow'>→</span>";
+    sec.appendChild(kick);
+  });
+
+  // ----- chase cam band between the two biggest acts -----
+  if (secs.length > 3 && !document.querySelector(".chase") && matchMedia("(min-width: 861px)").matches) {
+    var mid = secs[Math.floor(secs.length / 2)];
+    var chase = document.createElement("div");
+    chase.className = "chase";
+    chase.setAttribute("aria-hidden", "true");
+    chase.innerHTML = "<img src='assets/images/desert-wreck.webp' alt='' loading='lazy'>" +
+      "<span class='chase-word'>NIGHT RUN</span>" +
+      "<i class='streak' style='top:30%'></i><i class='streak' style='top:52%'></i><i class='streak' style='top:74%'></i>";
+    mid.parentNode.insertBefore(chase, mid);
+    var cimg = chase.querySelector("img");
+    gsap.fromTo(cimg, { yPercent: -12 }, { yPercent: 12, ease: "none",
+      scrollTrigger: { trigger: chase, start: "top bottom", end: "bottom top", scrub: 0.8 } });
+    chase.querySelectorAll(".streak").forEach(function (s, i) {
+      gsap.fromTo(s, { x: "0vw" }, { x: "160vw", ease: "none",
+        scrollTrigger: { trigger: chase, start: "top bottom", end: "bottom top", scrub: 1 + i * 0.2 } });
+    });
+  }
+
+  // ----- nav crystal turns a little as u scroll, quiet mechanical thing -----
+  var gem = document.querySelector(".nav-logo .crystal");
+  if (gem) {
+    gsap.fromTo(gem, { rotate: 0 }, { rotate: 90, ease: "none",
+      scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 1 } });
+  }
 })();

@@ -97,6 +97,11 @@
       try { sessionStorage.setItem("om_transition", "open"); } catch (e) {}
       location.href = href;
     }, 950);
+    // absolute backup, if the anim jams just go anyway
+    setTimeout(function () {
+      try { sessionStorage.setItem("om_transition", "open"); } catch (e) {}
+      location.href = href;
+    }, 1500);
   }
 
   document.addEventListener("click", function (e) {
@@ -111,11 +116,40 @@
     if (href.startsWith("http") && new URL(href, location.href).origin !== location.origin) return;
     if (new URL(a.href).pathname === location.pathname && new URL(a.href).search === location.search) return;
     e.preventDefault();
+    // cards with a film expand it fullscreen first, then the shutter takes over
+    var cardVid = a.querySelector("video");
+    if (cardVid && window.gsap && !reduce) {
+      e.preventDefault();
+      if (busy) return;
+      busy = true;
+      try {
+        var vsrc = cardVid.getAttribute("data-src") || cardVid.currentSrc || cardVid.getAttribute("src");
+        sessionStorage.setItem("om_handoff", JSON.stringify({ src: vsrc, time: cardVid.currentTime || 0 }));
+      } catch (err) {}
+      var r = a.getBoundingClientRect();
+      var ghost = document.createElement("div");
+      ghost.setAttribute("aria-hidden", "true");
+      ghost.style.cssText = "position:fixed;z-index:8900;pointer-events:none;background:#000;overflow:hidden;" +
+        "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + r.height + "px";
+      var gv = document.createElement("video");
+      gv.muted = true; gv.loop = true; gv.playsInline = true;
+      gv.poster = cardVid.poster || "";
+      if (cardVid.getAttribute("src")) gv.src = cardVid.getAttribute("src");
+      gv.style.cssText = "width:100%;height:100%;object-fit:cover";
+      ghost.appendChild(gv);
+      document.body.appendChild(ghost);
+      try { gv.play().catch(function () {}); } catch (err) {}
+      gsap.to(ghost, { left: 0, top: 0, width: innerWidth, height: innerHeight,
+        duration: 0.7, ease: "expo.inOut", onComplete: function () { busy = false; closeAndGo(a.href); } });
+      return;
+    }
     closeAndGo(a.href);
   });
 
   // new page: door opens back up
   addEventListener("pageshow", function (ev) {
+    // head script hid the body so the shut door never flashes, show it now
+    document.documentElement.classList.remove("gate-closed");
     // back button restores the shut door from cache, force it open
     if (ev && ev.persisted) {
       try { sessionStorage.removeItem("om_transition"); } catch (e) {}
@@ -165,4 +199,31 @@
   });
 
   window.OMTransition = { overlay: overlay };
+
+  // shared gate so the intro can lift the same door into the hero
+  window.OM = window.OM || {};
+  window.OM.gate = {
+    close: function (href) { closeAndGo(href); },
+    open: function () {
+      overlay.hidden = false;
+      hud.textContent = gateFor(location.href) + " ▸ OPEN";
+      Array.prototype.forEach.call(slats.childNodes, function (el) {
+        el.style.transition = "none";
+        el.style.transform = "translateY(0)";
+      });
+      hud.style.opacity = "1";
+      bloom.style.opacity = "1";
+      overlay.offsetHeight;
+      requestAnimationFrame(function () {
+        Array.prototype.forEach.call(slats.childNodes, function (el, i) {
+          el.style.transition = "transform .7s cubic-bezier(.16,1,.3,1) " + (i * 0.015) + "s";
+          el.style.transform = "translateY(-100%)";
+        });
+        bloom.style.transition = "top .7s cubic-bezier(.16,1,.3,1), opacity .5s";
+        bloom.style.top = "-90px";
+        hud.style.opacity = "0";
+        setTimeout(function () { overlay.hidden = true; busy = false; bloom.style.opacity = "0"; bloom.style.top = "100%"; }, 950);
+      });
+    }
+  };
 })();

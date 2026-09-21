@@ -8,6 +8,30 @@
     document.title = document.hidden ? "▸ THE VAULT IS WAITING" : realTitle;
   });
 
+  // numbers tick up like an odometer when they scroll into view
+  // put data-count="15" on anything and it rolls up to it
+  var nums = document.querySelectorAll("[data-count]");
+  if (nums.length && "IntersectionObserver" in window && !reduce) {
+    var nio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        nio.unobserve(en.target);
+        var el = en.target;
+        var end = parseFloat(el.getAttribute("data-count")) || 0;
+        var pad = (el.getAttribute("data-pad") || "").length;
+        if (!window.gsap) {
+          el.textContent = String(Math.round(end)).padStart(pad, "0");
+          return;
+        }
+        var o = { v: 0 };
+        gsap.to(o, { v: end, duration: 1.2, ease: "power4.out", onUpdate: function () {
+          el.textContent = String(Math.round(o.v)).padStart(pad, "0");
+        }});
+      });
+    }, { threshold: 0.4 });
+    nums.forEach(function (n) { nio.observe(n); });
+  }
+
   // typing "nos" anywhere fires a lil speed burst. 10s cooldown so u cant spam it
   if (!reduce) {
     var buf = "", cooled = 0;

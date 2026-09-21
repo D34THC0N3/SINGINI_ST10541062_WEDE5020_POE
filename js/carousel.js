@@ -1,97 +1,100 @@
-/* carousel + heat meter + peek. drag / wheel / keyboard, snap to card */
+// carousel. endless drift marquee + fullscreen peek on hold
 (function () {
+  try {
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var touch = matchMedia("(pointer: coarse)").matches;
   var wrap = document.querySelector(".carousel");
   if (!wrap) return;
   if (reduce) return; // plain grid if js is off
-  var cards = wrap.querySelectorAll(".carousel-card");
-  if (!cards.length) return;
+  var cards = Array.prototype.slice.call(wrap.querySelectorAll(".carousel-card"));
+  if (!cards.length || !window.gsap) return;
   var heat = document.querySelector(".heat-fill");
   var label = document.querySelector(".heat-label");
-  var x = 0, maxX = 0, startX = 0, curX = 0, isDrag = false, vel = 0, lastX = 0;
-  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-  function updateMax() {
-    maxX = Math.max(0, wrap.scrollWidth - wrap.clientWidth);
-  }
-  updateMax();
-  addEventListener("resize", updateMax);
-  function render() {
-    wrap.scrollLeft = x;
-    // tilt a bit when moving fast, skip the blown up one
-    var skew = clamp(vel * 0.08, -3, 3);
-    cards.forEach(function (c) {
-      if (c.style.position === "fixed") return; // peek is open, leave it alone
-      c.style.transform = "skewX(" + skew + "deg) scale(" + (Math.abs(skew) > 1 ? 0.98 : 1) + ")";
-    });
-    if (heat) heat.style.width = (maxX ? (x / maxX * 100) : 0) + "%";
-    if (label) label.textContent = "HEAT " + String(Math.round(maxX ? (x / maxX * 3) + 1 : 1)).padStart(2, "0") + "/04";
-  }
-  // dragging - skip this if Observer is doing it or they fight and it goes 2x speed lol
-  var useObserver = !!(window.gsap && window.Observer);
-  wrap.addEventListener("pointerdown", function (e) { if (useObserver) return; isDrag = true; startX = e.clientX; curX = x; try { wrap.setPointerCapture(e.pointerId); } catch (err) {} document.documentElement.classList.add("dragging"); });
-  addEventListener("pointermove", function (e) {
-    if (!isDrag || useObserver) return;
-    var dx = e.clientX - startX;
-    var nx = curX - dx;
-    vel = nx - x;
-    x = clamp(nx, 0, maxX);
-    render();
-  });
-  var endDrag = function () { if (isDrag) { isDrag = false; document.documentElement.classList.remove("dragging"); snap(); } };
-  addEventListener("pointerup", endDrag);
-  addEventListener("pointercancel", endDrag);
-  // mouse wheel
-  wrap.addEventListener("wheel", function (e) {
-    if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
-    // at the edges let the page have the scroll so nobody gets trapped
-    if ((e.deltaY > 0 && x >= maxX) || (e.deltaY < 0 && x <= 0)) return;
-    e.preventDefault();
-    vel = e.deltaY * 0.4;
-    x = clamp(x + vel, 0, maxX);
-    render();
-  }, { passive: false });
-  // arrow keys
-  wrap.setAttribute("tabindex", "0");
+
   wrap.setAttribute("role", "region");
   wrap.setAttribute("aria-roledescription", "carousel");
-  wrap.setAttribute("aria-label", "Collection carousel");
-  wrap.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowRight") { x = clamp(x + 360, 0, maxX); render(); snap(); }
-    if (e.key === "ArrowLeft") { x = clamp(x - 360, 0, maxX); render(); snap(); }
+  wrap.setAttribute("aria-label", "Collection cars");
+  var live = document.createElement("p");
+  live.className = "peek-live";
+  live.setAttribute("aria-live", "polite");
+  live.style.cssText = "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)";
+  wrap.appendChild(live);
+
+  // double the track so it loops forever
+  var track = document.createElement("div");
+  track.className = "drift";
+  track.style.cssText = "display:flex;gap:4vw;width:max-content;will-change:transform";
+  cards.forEach(function (c) { track.appendChild(c); });
+  cards.forEach(function (c) {
+    var cl = c.cloneNode(true);
+    cl.setAttribute("aria-hidden", "true");
+    cl.querySelectorAll("a").forEach(function (a) { a.tabIndex = -1; });
+    cl.tabIndex = -1;
+    track.appendChild(cl);
   });
-  var snapTween = null;
-  function snap() {
-    // line up with the closest card
-    var best = 0, bestD = Infinity;
-    cards.forEach(function (c) {
-      var d = Math.abs(c.offsetLeft - x);
-      if (d < bestD) { bestD = d; best = c.offsetLeft; }
-    });
-    if (snapTween && snapTween.kill) snapTween.kill();
-    if (window.gsap) {
-      var o = { v: x };
-      snapTween = gsap.to(o, { v: best, duration: 0.6, ease: "power3.out", overwrite: true, onUpdate: function () { x = o.v; vel *= 0.8; render(); } });
+  wrap.appendChild(track);
+  wrap.style.overflow = "hidden";
+
+  var drift = gsap.to(track, { xPercent: -50, duration: 45, ease: "none", repeat: -1,
+    onUpdate: function () {
+      var p = drift.progress();
+      if (heat) heat.style.width = (p * 100) + "%";
+      if (label) label.textContent = "HEAT " + String(Math.min(4, Math.floor(p * 4) + 1)).padStart(2, "0") + "/04";
     }
-    else { x = best; render(); }
+  });
+  function slow() { gsap.to(drift, { timeScale: 0, duration: 0.4 }); }
+  function go() { gsap.to(drift, { timeScale: 1, duration: 0.6 }); }
+
+  // drag or wheel adds speed, eases back after
+  var backTimer = null;
+  if (window.Observer) {
+    gsap.registerPlugin(Observer);
+    Observer.create({ target: wrap, type: "pointer,touch,wheel",
+      onChange: function (self) {
+        var v = Math.abs((self.deltaX || 0) + (self.deltaY || 0)) / 40;
+        drift.timeScale(gsap.utils.clamp(-4, 5, 1 + v));
+        var sk = gsap.utils.clamp(-3, 3, v * 2);
+        gsap.to(track, { skewX: sk, duration: 0.2, overwrite: true });
+        clearTimeout(backTimer);
+      },
+      onStop: function () {
+        backTimer = setTimeout(function () {
+          go();
+          gsap.to(track, { skewX: 0, duration: 0.5 });
+        }, 600);
+      }
+    });
   }
-  // hold ur mouse on a card for 3 sec and it blows up big
+  wrap.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") drift.timeScale(3);
+    if (e.key === "ArrowLeft") drift.timeScale(-2);
+  });
+  wrap.addEventListener("keyup", go);
+
+  // roving focus on the real cards only
+  cards.forEach(function (c, i) {
+    c.tabIndex = i === 0 ? 0 : -1;
+    c.addEventListener("focus", function () {
+      slow();
+      cards.forEach(function (b, j) { b.tabIndex = j === i ? 0 : -1; });
+      live.textContent = "Card " + (i + 1) + " of " + cards.length;
+    });
+    c.addEventListener("blur", go);
+  });
+
+  // ----- fullscreen peek -----
   var dim = document.createElement("div");
+  dim.id = "peek-dim";
   dim.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.7);opacity:0;transition:opacity .35s;z-index:7990;pointer-events:none";
   document.body.appendChild(dim);
-  var openCard = null;
-  function closePeek() {
-    if (!openCard) return;
-    var card = openCard; openCard = null;
-    dim.style.opacity = "0";
-    var cue = card.querySelector(".peek-cue");
-    if (cue) cue.remove();
-    card.style.position = ""; card.style.left = ""; card.style.top = ""; card.style.width = ""; card.style.height = ""; card.style.transform = ""; card.style.zIndex = "";
-    document.body.style.overflow = "";
-  }
-  addEventListener("keydown", function (e) { if (e.key === "Escape") closePeek(); });
-  dim.addEventListener("click", closePeek);
-  // radial ring around the cursor while u hold, 3 sec then it opens
-  // click also opens it right away cos waiting 3 sec is annoying lol
+  var peek = document.createElement("div");
+  peek.id = "peek";
+  peek.hidden = true;
+  peek.setAttribute("role", "dialog");
+  peek.setAttribute("aria-modal", "true");
+  peek.setAttribute("aria-label", "Car dossier");
+  document.body.appendChild(peek);
+
   var ring = document.createElement("div");
   ring.className = "peek-ring";
   ring.setAttribute("aria-hidden", "true");
@@ -102,66 +105,127 @@
   ringFill.style.strokeDasharray = RC;
   ringFill.style.strokeDashoffset = RC;
 
+  var specs = {
+    "BMW M3 GTR": ["3.2 V8 · 493 hp", "6-speed sequential", "Most Wanted hero, wing included"],
+    "Mercedes-AMG GT3": ["6.2 V8 · 550 hp", "race box, road plates", "Evo aero, carbon everything"],
+    "McLaren F1 GTR Longtail": ["6.1 V12 · 600 hp", "RWD, gold bay", "97 longtail, Woking royalty"],
+    "Pagani Zonda F": ["7.3 V12 · 602 hp", "gated manual", "the F that started it"]
+  };
+  var openCard = null, lastFocus = null;
+
   function openPeek(card) {
     if (openCard) return;
     openCard = card;
+    lastFocus = document.activeElement;
     ring.classList.remove("on");
-    dim.style.opacity = "1";
-    card.style.position = "fixed";
-    card.style.left = "50%"; card.style.top = "50%";
-    card.style.width = "85vw"; card.style.height = "80vh";
-    card.style.transform = "translate(-50%,-50%)";
-    card.style.zIndex = "8000";
-    document.body.style.overflow = "hidden";
+    slow();
+    var r = card.getBoundingClientRect();
+    var img = card.querySelector("img, video");
+    var title = card.querySelector("h3") ? card.querySelector("h3").textContent : "Vault car";
+    var bl = card.querySelector("span") ? card.querySelector("span").textContent : "";
+    var sp = specs[title] || ["verified", "papered", "vault kept"];
+    var media = "";
+    if (img && img.tagName === "VIDEO") {
+      media = "<video class='peek-media' src='" + img.currentSrc + "' muted loop playsinline autoplay></video>";
+    } else if (img) {
+      media = "<img class='peek-media' src='" + img.src + "' alt='" + (img.alt || title) + "'>";
+    }
+    peek.innerHTML = "<button class='peek-close' type='button'>CLOSE ✕</button>" + media +
+      "<div class='peek-spec'><p class='mono-kicker'>" + bl + "</p>" +
+      "<h3 class='display-nfs' style='font-size:2rem;margin:8px 0;'>" + title + "</h3>" +
+      "<p>" + sp.join(" · ") + "</p>" +
+      "<p style='margin-top:16px;'><a class='btn peek-go' href='" + card.href + "'>Open the dossier →</a></p></div>";
+    // dossier click stores where the film was so the next page can pick it up
+    var goBtn = peek.querySelector(".peek-go");
+    var cardVid = card.querySelector("video");
+    if (goBtn && cardVid) {
+      goBtn.addEventListener("click", function () {
+        try {
+          var vsrc = cardVid.getAttribute("data-src") || cardVid.currentSrc || cardVid.getAttribute("src");
+          sessionStorage.setItem("om_handoff", JSON.stringify({ src: vsrc, time: cardVid.currentTime || 0 }));
+        } catch (e) {}
+      });
+    }
+    peek.hidden = false;
     card.setAttribute("data-cursor", "CLOSE");
-    card.setAttribute("role", "dialog");
-    card.setAttribute("aria-modal", "true");
-    // little tag that says open it
-    var cue = document.createElement("span");
-    cue.className = "peek-cue";
-    cue.textContent = "Open the dossier →";
-    card.appendChild(cue);
+    dim.style.opacity = "1";
+    dim.style.pointerEvents = "auto";
+    document.body.classList.add("viewing");
+    document.body.style.overflow = "hidden";
+    gsap.fromTo(peek,
+      { clipPath: "inset(" + r.top + "px " + (innerWidth - r.right) + "px " + (innerHeight - r.bottom) + "px " + r.left + "px)" },
+      { clipPath: "inset(0px 0px 0px 0px)", duration: 0.7, ease: "expo.inOut",
+        onComplete: function () { var b = peek.querySelector(".peek-close"); if (b) b.focus(); } });
+    peek.querySelector(".peek-close").addEventListener("click", closePeek);
+    dim.addEventListener("click", closePeek);
   }
+  function closePeek() {
+    if (!openCard) return;
+    var card = openCard; openCard = null;
+    gsap.to(peek, { clipPath: "inset(50% 50% 50% 50%)", duration: 0.5, ease: "expo.inOut", onComplete: function () {
+      peek.hidden = true;
+      peek.innerHTML = "";
+      dim.style.opacity = "0";
+      dim.style.pointerEvents = "none";
+      document.body.classList.remove("viewing");
+      document.body.style.overflow = "";
+      go();
+      if (lastFocus) lastFocus.focus();
+    }});
+  }
+  addEventListener("keydown", function (e) { if (e.key === "Escape") closePeek(); });
+  peek.addEventListener("pointerleave", function (e) {
+    if (touch || !openCard) return;
+    var r = peek.getBoundingClientRect();
+    if (e.clientX < r.left - 40 || e.clientX > r.right + 40 || e.clientY < r.top - 40 || e.clientY > r.bottom + 40) closePeek();
+  });
+
   cards.forEach(function (card) {
-    var timer = null, ringTween = null;
+    var timer = null, ringTween = null, halfTimer = null;
     card.setAttribute("data-cursor", card.getAttribute("data-cursor") || "VIEW");
-    // persistent corner tick so u know it opens, found this the hard way
     var tick = document.createElement("span");
     tick.className = "peek-tick";
     tick.setAttribute("aria-hidden", "true");
     tick.textContent = "EXPAND";
     card.appendChild(tick);
+    // touch or reduced: taps just follow the link
+    if (touch) return;
     card.addEventListener("mouseenter", function () {
-      timer = setTimeout(function () { openPeek(card); }, 3000);
-      // ring fills over the 3 sec so u know something is coming
+      slow();
+      card.style.transform = "scale(1.02)";
       ring.classList.add("on");
-      if (window.gsap) ringTween = gsap.fromTo(ringFill, { strokeDashoffset: RC }, { strokeDashoffset: 0, duration: 3, ease: "none" });
-      var sp = card.querySelector(".peek-tick");
-      if (sp) sp.textContent = "KEEP HOLDING ▸";
+      ringTween = gsap.fromTo(ringFill, { strokeDashoffset: RC }, { strokeDashoffset: 0, duration: 1.5, ease: "none" });
+      halfTimer = setTimeout(function () {
+        var sp = card.querySelector("p");
+        if (sp && !openCard) { sp.dataset.orig = sp.textContent; sp.textContent = "KEEP HOLDING ▸"; }
+      }, 750);
+      timer = setTimeout(function () { openPeek(card); }, 1500);
+      card.style.transition = "transform .3s";
     });
     card.addEventListener("mousemove", function (e) {
       ring.style.transform = "translate(" + (e.clientX - 20) + "px," + (e.clientY - 20) + "px)";
     });
     card.addEventListener("mouseleave", function () {
       clearTimeout(timer);
+      clearTimeout(halfTimer);
       if (ringTween) ringTween.kill();
       ring.classList.remove("on");
-      var sp = card.querySelector(".peek-tick");
-      if (sp) sp.textContent = "EXPAND";
+      card.style.transform = "";
+      var sp = card.querySelector("p");
+      if (sp && sp.dataset.orig) { sp.textContent = sp.dataset.orig; delete sp.dataset.orig; }
       if (openCard === card) closePeek();
+      else go();
     });
-    // tapping/clicking opens it now, no waiting
     card.addEventListener("click", function (e) {
-      if (openCard) return; // already open, let the link work
+      if (openCard) return;
       e.preventDefault();
       clearTimeout(timer);
+      clearTimeout(halfTimer);
       openPeek(card);
     });
+    card.addEventListener("keydown", function (e) {
+      if ((e.key === "Enter" || e.key === " ") && !openCard) { e.preventDefault(); openPeek(card); }
+    });
   });
-  // smoother dragging if gsap is loaded
-  if (useObserver) {
-    gsap.registerPlugin(Observer);
-    Observer.create({ target: wrap, type: "pointer,touch", onDrag: function (self) { vel = -self.deltaX; x = clamp(x - self.deltaX, 0, maxX); render(); }, onDragEnd: function () { snap(); } });
-  }
-  render();
+  } catch (e) {}
 })();

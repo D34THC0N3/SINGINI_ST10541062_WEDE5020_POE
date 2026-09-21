@@ -24,8 +24,39 @@
     ringScale += (targetScale - ringScale) * 0.18;
     ring.style.transform = "translate(" + (rx - 17) + "px," + (ry - 17) + "px) scale(" + ringScale + ")";
     dot.style.transform = "translate(" + (dx - 2) + "px," + (dy - 2) + "px)";
+    // tail lights + readout live in the same loop so theres only one raf
+    for (var i = 0; i < dots.length; i++) {
+      var t = dots[i];
+      t.x += (mx - t.x) * t.lag;
+      t.y += (my - t.y) * t.lag;
+      t.el.style.opacity = active ? String(0.5 - i * 0.09) : "0";
+      t.el.style.transform = "translate(" + (t.x - 2) + "px," + (t.y - 2) + "px)";
+    }
+    if (active && ++hudTick % 6 === 0) {
+      hx[0].textContent = (mx / innerWidth).toFixed(4);
+      hx[1].textContent = (my / innerHeight).toFixed(4);
+      hud.classList.add("on");
+    }
+    if (!active) hud.classList.remove("on");
     requestAnimationFrame(loop);
   }
+  // tail lights. 5 gold dots with more lag the further back they are
+  var dots = [];
+  for (var i = 0; i < 5; i++) {
+    var d = document.createElement("i");
+    d.className = "trail-dot";
+    d.setAttribute("aria-hidden", "true");
+    document.documentElement.appendChild(d);
+    dots.push({ el: d, x: mx, y: my, lag: 0.22 - i * 0.03 });
+  }
+  // tiny readout bottom left with the mouse pos, lusion does this lol
+  var hud = document.createElement("div");
+  hud.id = "mouse-hud";
+  hud.setAttribute("aria-hidden", "true");
+  hud.innerHTML = "X <b>0.0000</b>  Y <b>0.0000</b>";
+  document.documentElement.appendChild(hud);
+  var hx = hud.querySelectorAll("b");
+  var hudTick = 0;
   loop();
   // words that show in the circle, circle gets bigger
   document.addEventListener("mouseover", function (e) {

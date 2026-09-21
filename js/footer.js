@@ -24,6 +24,25 @@
   }, 100);
 
   function attach(fClone) {
+    // slow garage loop behind the crystal, barely there
+    var loop = document.createElement("video");
+    loop.setAttribute("aria-hidden", "true");
+    loop.muted = true; loop.loop = true; loop.playsInline = true;
+    loop.preload = "none";
+    loop.poster = "assets/images/still-zonda-mileson.webp";
+    loop.setAttribute("data-src", "assets/videos/zonda-mileson-4k.mp4");
+    loop.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.15;pointer-events:none;filter:saturate(.85) brightness(.8)";
+    fClone.insertBefore(loop, fClone.firstChild);
+    if (window.OM && window.OM.video) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (en) {
+          if (en.isIntersecting) {
+            if (!loop.getAttribute("src")) { loop.setAttribute("src", loop.getAttribute("data-src")); loop.load(); }
+            window.OM.video.play(loop);
+          } else window.OM.video.stop(loop);
+        });
+      }).observe(loop);
+    }
     // next gate block, click or scroll down to go
     var gate = document.createElement("div");
     gate.className = "next-gate";

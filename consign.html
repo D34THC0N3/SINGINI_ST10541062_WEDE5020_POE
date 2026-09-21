@@ -6,19 +6,22 @@
   <title>Consign — Obsidian Motors</title>
   <meta name="description" content="Sell your car privately through Obsidian Motors. Discreet valuation, handled in-house, commission agreed up front." />
   <meta name="theme-color" content="#07080a" />
-  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png" />
   <link rel="manifest" href="site.webmanifest" />
   <meta property="og:title" content="Consign — Obsidian Motors" />
   <meta property="og:description" content="Sell your car privately. Discreet, handled in-house, no surprises." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Kanit:ital,wght@1,800&family=Inter:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Kanit:ital,wght@1,800&family=Racing+Sans+One&family=Inter:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/motion.css" />
-  <script>document.documentElement.classList.add("js");</script>
+  <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("om_transition")==="open")document.documentElement.classList.add("gate-closed")}catch(e){}</script>
   <script src="assets/vendor/gsap/gsap.min.js" defer></script>
   <script src="assets/vendor/gsap/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/gsap/Observer.min.js" defer></script>
@@ -69,6 +72,7 @@
             <li>Handled end to end, in-house, by the people you spoke to</li>
             <li>Commission agreed up front — no surprises at the end</li>
           </ul>
+          <video class="process-clip" src="assets/videos/cta-bg.mp4" muted loop playsinline preload="none" poster="assets/images/still-jesko.webp" data-cursor="PLAY" aria-label="Short film: handover at the vault" style="margin-top:28px;"></video>
         </div>
 
         <div class="form-card" style="margin-top:32px;">
@@ -153,6 +157,7 @@
   </footer>
 
   <script src="js/site.js" defer></script>
+  <script src="js/intro.js" defer></script>
   <script src="js/motion.js" defer></script>
   <script src="js/cursor.js" defer></script>
   <script src="js/carousel.js" defer></script>

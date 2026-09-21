@@ -6,19 +6,22 @@
   <title>Collection — Obsidian Motors</title>
   <meta name="description" content="A short, rotating list of the rarest cars we currently hold — each verified, documented, and photographed in the vault." />
   <meta name="theme-color" content="#07080a" />
-  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png" />
   <link rel="manifest" href="site.webmanifest" />
   <meta property="og:title" content="Collection — Obsidian Motors" />
   <meta property="og:description" content="The rarest cars we currently hold — verified, documented, ready to explore in photography." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Kanit:ital,wght@1,800&family=Inter:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Kanit:ital,wght@1,800&family=Racing+Sans+One&family=Inter:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/motion.css" />
-  <script>document.documentElement.classList.add("js");</script>
+  <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("om_transition")==="open")document.documentElement.classList.add("gate-closed")}catch(e){}</script>
   <noscript><style>
     /* no js, no carousel drama: plain grid so every car is still there */
     .carousel{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); overflow:visible; mask:none; }
@@ -59,7 +62,8 @@
   </div></div>
 
   <main>
-    <section class="section" style="padding-top:calc(var(--nav-h) + 40px);">
+    <section class="section" style="padding-top:calc(var(--nav-h) + 40px); position:relative; overflow:hidden;">
+      <video class="section-bg" muted loop playsinline preload="none" poster="assets/images/still-amg.webp" data-src="assets/videos/amg-gtr-green-hell-4k.mp4" aria-hidden="true" tabindex="-1"></video>
       <div class="wrap">
         <span class="eyebrow">Four machines. One vault.</span>
         <h1 class="display-nfs">Three cars worth chasing.</h1>
@@ -67,18 +71,23 @@
           We hold a handful of cars at a time, never a lot full. Each one is checked, papered, and
           logged before it earns a spot here. Open a dossier to see the photography.
         </p>
+        <p class="vault-stats" aria-label="Vault stats: 4 machines, 2 films, 15 wanted">
+          <span><b data-count="4" data-pad="00">00</b> machines</span>
+          <span><b data-count="2" data-pad="00">00</b> films</span>
+          <span><b data-count="15" data-pad="00">00</b> wanted</span>
+        </p>
 
         <div class="carousel" data-cursor="DRAG" style="margin-top:44px;">
           <a class="carousel-card bracket" href="contact.html" data-cursor="VIEW">
-            <img src="assets/images/gt2rs.webp" alt="BMW M3 GTR under the vault spots, dark showroom" loading="lazy" />
+            <img src="assets/images/hd/m3-gtr.jpg" srcset="assets/images/m3-gtr.webp 1024w, assets/images/hd/m3-gtr.jpg 2048w" data-opt="assets/images/m3-gtr.webp" width="2048" height="1152" alt="BMW E46 M3 GTR race car at full noise on track" loading="lazy" decoding="async" />
             <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
               <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #15</span>
               <h3 class="display-nfs" style="font-size:1.4rem; margin-top:4px;">BMW M3 GTR</h3>
               <p style="font-size:.82rem; color:var(--steel);">Garching V8 — the Most Wanted hero.</p>
             </div>
           </a>
-          <a class="carousel-card bracket" href="contact.html" data-cursor="VIEW">
-            <img src="assets/images/amg-gt3.webp" alt="Mercedes-AMG GT3 race car in the vault" loading="lazy" />
+          <a class="carousel-card bracket" href="contact.html" data-cursor="PLAY">
+            <video src="assets/videos/tape-2.mp4" muted loop playsinline preload="none" poster="assets/images/sls-gt3.webp" style="width:100%; height:100%; object-fit:cover;" aria-label="Short film: SLS AMG GT3 out after dark"></video>
             <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
               <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #14</span>
               <h3 class="display-nfs" style="font-size:1.4rem; margin-top:4px;">Mercedes-AMG GT3</h3>
@@ -86,7 +95,7 @@
             </div>
           </a>
           <a class="carousel-card bracket" href="contact.html" data-cursor="PLAY">
-            <video src="assets/videos/grow.mp4" muted loop playsinline preload="none" poster="assets/images/still-zonda-r.webp" style="width:100%; height:100%; object-fit:cover;"></video>
+            <video src="assets/videos/grow.mp4" muted loop playsinline preload="none" poster="assets/images/f1-longtail.webp" style="width:100%; height:100%; object-fit:cover;"></video>
             <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
               <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #13</span>
               <h3 class="display-nfs" style="font-size:1.4rem; margin-top:4px;">McLaren F1 GTR Longtail</h3>
@@ -94,7 +103,7 @@
             </div>
           </a>
           <a class="carousel-card bracket" href="contact.html" data-cursor="VIEW">
-            <img src="assets/images/zonda-f.webp" alt="Red Pagani Zonda F out on the lawn" loading="lazy" />
+            <img src="assets/images/hd/zonda-f-new.jpg" srcset="assets/images/zonda-f-new.webp 1024w, assets/images/hd/zonda-f-new.jpg 2048w" data-opt="assets/images/zonda-f-new.webp" width="2048" height="1536" alt="Pagani Zonda F Clubsport in dark profile" loading="lazy" decoding="async" />
             <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
               <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #12</span>
               <h3 class="display-nfs" style="font-size:1.4rem; margin-top:4px;">Pagani Zonda F</h3>
@@ -104,6 +113,14 @@
         </div>
         <div class="heat" aria-hidden="true"><div class="heat-fill"></div></div>
         <div class="heat-label">HEAT 01/04</div>
+
+        <div class="split reveal" role="slider" aria-label="Motion versus style comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
+          <video class="split-a" muted loop playsinline preload="none" poster="assets/images/sls-gt3.webp" data-src="assets/videos/tape-2.mp4" aria-hidden="true" tabindex="-1"></video>
+          <video class="split-b" muted loop playsinline preload="none" poster="assets/images/f1-longtail.webp" data-src="assets/videos/grow.mp4" aria-hidden="true" tabindex="-1"></video>
+          <span class="split-chip left">MOTION</span>
+          <span class="split-chip right">STYLE</span>
+          <span class="split-bar" aria-hidden="true"></span>
+        </div>
 
         <div class="panel reveal" style="margin-top:48px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;">
           <div>
@@ -167,6 +184,7 @@
   </footer>
 
   <script src="js/site.js" defer></script>
+  <script src="js/intro.js" defer></script>
   <script src="js/motion.js" defer></script>
   <script src="js/cursor.js" defer></script>
   <script src="js/carousel.js" defer></script>

@@ -40,9 +40,10 @@ h1{ overflow:hidden; }
 .heat-fill{ position:absolute; left:0; top:0; bottom:0; width:0; background:var(--gold); transition:width .3s; }
 .heat-label{ font:10px "IBM Plex Mono",monospace; letter-spacing:.14em; color:var(--faint); margin-top:8px; }
 /* the page door thing lives in transition.js, keep it hidden here */
+#gate{ will-change:transform, opacity; }
 #gate[hidden]{ display:none !important; }
 /* big italic headings font */
-.display-nfs{ font-family:"Kanit", Fraunces, serif; font-weight:800; font-style:italic; letter-spacing:-.02em; text-transform:uppercase; }
+.display-nfs{ font-family:"Kanit","Racing Sans One", Fraunces, serif; font-weight:800; font-style:italic; letter-spacing:-.02em; text-transform:uppercase; }
 /* rpm bar */
 .rpm{ height:24px; background:conic-gradient(from -90deg, var(--gold) var(--rpm,0%), transparent 0); border:1px solid var(--line); border-radius:4px; position:relative; }
 .rpm::after{ content:"RPM " attr(data-rpm); position:absolute; right:8px; top:50%; transform:translateY(-50%); font:10px "IBM Plex Mono",monospace; color:var(--faint); }
@@ -237,3 +238,150 @@ a:hover .warmup, .card:hover .warmup, a:focus-visible .warmup{ filter:grayscale(
 .menu-btn:hover{ border-color:var(--gold); }
 
 body{ position:relative; } /* road svg needs this or it floats in space lol */
+
+/* no flash of page when the door opens, head script adds the class */
+html.gate-closed body{ opacity:0; }
+
+/* letterbox bars, intro + peek grow these */
+.letterbox{ position:fixed; left:0; right:0; height:0; background:#000; z-index:7500; pointer-events:none;
+  transition:height .6s cubic-bezier(.76,0,.24,1); }
+.letterbox.top{ top:0; } .letterbox.bot{ bottom:0; }
+body.viewing .letterbox{ height:6vh; }
+@media (prefers-reduced-motion: reduce){ .letterbox{ display:none; } }
+
+/* next-chapter kickers story.js sticks at the end of each section */
+.next-kick{ display:flex; align-items:center; gap:10px; margin-top:6vh; padding-bottom:2vh;
+  font:10px "IBM Plex Mono",monospace; letter-spacing:.2em; color:var(--faint); text-transform:uppercase; }
+.next-kick b{ color:var(--gold); font-weight:500; }
+.next-kick .nk-arrow{ color:var(--gold); display:inline-block; animation:nkNudge 2s ease-in-out infinite; }
+@keyframes nkNudge{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(6px); } }
+
+/* chase cam divider band story.js drops between big acts */
+.chase{ position:relative; overflow:hidden; min-height:46vh; display:grid; place-items:center;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.chase img{ position:absolute; inset:-12% 0; width:100%; height:124%; object-fit:cover;
+  filter:saturate(.8) brightness(.45); will-change:transform; }
+.chase .chase-word{ position:relative; font:800 italic clamp(3rem,10vw,8rem)/1 "Kanit","Racing Sans One",sans-serif;
+  text-transform:uppercase; letter-spacing:-.02em; color:transparent;
+  -webkit-text-stroke:1px rgba(184,151,106,.35); white-space:nowrap; }
+.chase .streak{ position:absolute; left:-30vw; height:1px; width:30vw; pointer-events:none;
+  background:linear-gradient(to right, transparent, rgba(184,151,106,.5), transparent); }
+
+/* process steps stack like lap cards on consign */
+.process{ list-style:none; display:grid; gap:14px; margin-top:26px; }
+.process li{ position:sticky; top:calc(var(--nav-h) + 16px); background:var(--panel);
+  border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px 20px 64px; color:var(--steel);
+  counter-increment:step; }
+.process{ counter-reset:step; }
+.process li::before{ content:"0" counter(step); position:absolute; left:20px; top:18px;
+  font:800 italic 1.2rem "Kanit",sans-serif; color:var(--gold); transform:skewX(-8deg); }
+.process-clip{ width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:var(--radius);
+  border:1px solid var(--line); filter:saturate(.85) brightness(.85); }
+
+/* slat-blind reveal strips + vault stats */
+.slats{ position:absolute; inset:0; z-index:2; display:flex; pointer-events:none; }
+.slats i{ flex:1; background:var(--void); transform:scaleY(1); transform-origin:top; }
+.vault-stats{ display:flex; gap:26px; margin-top:22px; font:10px "IBM Plex Mono",monospace;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--faint); }
+.vault-stats b{ display:block; font:800 italic 1.9rem "Kanit","Racing Sans One",sans-serif;
+  letter-spacing:0; color:var(--gold); text-shadow:0 0 14px rgba(184,151,106,.3); }
+@media (prefers-reduced-motion: reduce){ .slats{ display:none; } }
+
+/* tapes wall: 6 tiles, giant word behind, bg loops */
+#tapes{ position:relative; }
+.giant-word{ position:absolute; top:2vh; left:50%; transform:translateX(-50%); z-index:0;
+  font:800 italic clamp(3.4rem,11vw,9rem)/1 "Kanit","Racing Sans One",sans-serif; white-space:nowrap;
+  color:transparent; -webkit-text-stroke:1px rgba(184,151,106,.25); pointer-events:none; }
+#tapes .wrap{ position:relative; z-index:1; }
+.mono-kicker{ font:10px "IBM Plex Mono",monospace; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--gold); margin-top:12px; }
+#tapes .tapes{ grid-template-columns:repeat(3, 1fr); }
+#tapes .tape{ aspect-ratio:16/9; }
+.tape-num{ position:absolute; top:12px; left:14px; z-index:2; font:10px "IBM Plex Mono",monospace;
+  letter-spacing:.16em; color:var(--gold); background:rgba(7,7,7,.6); padding:4px 8px; pointer-events:none; }
+.section-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:.25; pointer-events:none; filter:saturate(.85) brightness(.8); }
+.night-band{ position:relative; overflow:hidden; min-height:72vh; display:grid; place-items:center;
+  border-top:1px solid var(--line); }
+.night-band video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  filter:saturate(.85) brightness(.5); }
+.night-band h2{ position:relative; z-index:1; font-size:clamp(2.6rem,8vw,7rem); text-align:center; }
+
+/* fullscreen peek panel */
+#peek{ position:fixed; inset:0; z-index:8000; background:var(--void); overflow:auto;
+  display:grid; place-items:center; padding:10vh 7.5vw; }
+#peek[hidden]{ display:none !important; }
+.peek-close{ position:absolute; top:4vh; right:5vw; z-index:2; font:10px "IBM Plex Mono",monospace;
+  letter-spacing:.18em; color:var(--gold); border:1px solid var(--line-2); padding:10px 16px; }
+.peek-close:hover{ border-color:var(--gold); }
+.peek-media{ width:min(880px,100%); aspect-ratio:16/9; object-fit:cover; border-radius:var(--radius);
+  border:1px solid var(--line); }
+.peek-spec{ width:min(880px,100%); margin-top:22px; }
+@media (prefers-reduced-motion: reduce){ .giant-word{ display:none; } }
+
+/* gsap intro kills the css anims and drives everything itself */
+#intro.mine .intro-gem, #intro.mine .intro-sweep, #intro.mine .intro-flash,
+#intro.mine .intro-word span, #intro.mine .intro-boot, #intro.mine .intro-hair{ animation:none !important; }
+#intro.mine .intro-gem{ opacity:0; }
+#intro.mine .intro-word span{ transform:translateY(110%); }
+#intro.mine .intro-hair{ transform:scaleX(0); }
+.intro-turn{ position:absolute; inset:0; transform-style:preserve-3d; }
+.intro-turn img{ width:120px; height:120px; }
+
+/* shared grade on every video so mixed clips read as one shoot */
+video{ filter:contrast(1.08) saturate(.85) brightness(.9); }
+/* footage shows through the letters */
+.knockout{ position:absolute; inset:0; z-index:1; display:grid; place-items:center;
+  background:#000; mix-blend-mode:multiply; pointer-events:none; }
+.knockout span{ font:800 italic clamp(2.4rem,9vw,7.5rem)/1 "Kanit","Racing Sans One",sans-serif;
+  text-transform:uppercase; letter-spacing:-.02em; color:#fff; text-align:center; }
+.sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+/* scanlines on the bands */
+.night-band::after{ content:""; position:absolute; inset:0; z-index:1; pointer-events:none; opacity:.5;
+  background:repeating-linear-gradient(to bottom, transparent 0 3px, rgba(0,0,0,.35) 3px 4px); }
+/* split slider, motion vs style */
+.split{ position:relative; margin-top:48px; height:52vh; min-height:340px; overflow:hidden;
+  border:1px solid var(--line); border-radius:var(--radius); --split:50%; }
+.split video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.split .split-b{ clip-path:inset(0 0 0 var(--split)); }
+.split-bar{ position:absolute; top:0; bottom:0; left:var(--split); width:2px; background:var(--gold);
+  box-shadow:0 0 12px rgba(184,151,106,.7); }
+.split-chip{ position:absolute; top:14px; z-index:2; font:10px "IBM Plex Mono",monospace;
+  letter-spacing:.16em; color:var(--gold); background:rgba(7,7,7,.65); padding:5px 10px; }
+.split-chip.left{ left:14px; } .split-chip.right{ right:14px; }
+/* pin chapter video beds */
+.pin-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0;
+  transition:opacity 1s; filter:saturate(.8) brightness(.5); }
+.pin-ch.vid-on .pin-bg{ opacity:.55; }
+/* faint light leak when a section rolls in */
+.section{ position:relative; }
+.section.lit::before{ content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:linear-gradient(105deg, transparent 55%, rgba(184,151,106,.07) 75%, transparent 90%);
+  animation:leak 1.4s cubic-bezier(.22,1,.36,1); }
+@keyframes leak{ from{ transform:translateX(-30%); opacity:0; } 30%{ opacity:1; } to{ transform:translateX(30%); opacity:0; } }
+/* hairlines that draw under section headlines */
+.rule-line{ height:1px; background:var(--gold); transform:scaleX(0); transform-origin:left;
+  margin-top:18px; max-width:220px; opacity:.7; }
+@media (prefers-reduced-motion: reduce){
+  .split-bar{ display:none; } .section.lit::before{ animation:none; } .night-band::after{ display:none; }
+  .knockout{ position:static; background:none; mix-blend-mode:normal; }
+}
+
+/* menu open: burger becomes an X */
+.menu-open .nav-toggle span{ background:transparent; }
+.menu-open .nav-toggle span::before{ transform:translate(-50%,-50%) rotate(45deg); top:0; }
+.menu-open .nav-toggle span::after{ transform:translate(-50%,-50%) rotate(-45deg); top:0; }
+.menu-open .menu-btn{ color:var(--chrome); border-color:var(--gold); }
+
+/* tail light trail + mouse readout, cursor.js drives these */
+.trail-dot{ position:fixed; left:0; top:0; width:5px; height:5px; border-radius:50%; background:var(--gold);
+  pointer-events:none; z-index:9998; opacity:0; }
+#mouse-hud{ position:fixed; left:14px; bottom:12px; z-index:9998; pointer-events:none;
+  font:10px "IBM Plex Mono",monospace; letter-spacing:.14em; color:var(--faint); opacity:0; transition:opacity .3s; }
+#mouse-hud.on{ opacity:1; }
+#mouse-hud b{ color:var(--gold); font-weight:500; }
+@media (pointer:coarse){ .trail-dot, #mouse-hud{ display:none; } }
+@media (prefers-reduced-motion: reduce){
+  .next-kick .nk-arrow{ animation:none; }
+  .process li{ position:static; }
+}

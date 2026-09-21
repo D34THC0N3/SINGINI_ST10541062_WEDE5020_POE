@@ -78,6 +78,80 @@
         }
       });
     });
+    // ----- slat-blind reveals on feature pics, same shutter idea as the door -----
+    document.querySelectorAll(".pin-ch img, .story-split img").forEach(function (img) {
+      var host = img.parentNode;
+      if (!host || host.querySelector(".slats")) return;
+      host.style.position = "relative";
+      host.style.overflow = "hidden";
+      var sl = document.createElement("div");
+      sl.className = "slats";
+      sl.setAttribute("aria-hidden", "true");
+      for (var i = 0; i < 6; i++) sl.appendChild(document.createElement("i"));
+      host.appendChild(sl);
+      // pics start a bit blurry then snap into focus, cheap cinema trick
+      img.style.filter = "blur(8px)";
+      ScrollTrigger.create({
+        trigger: host, start: "top 80%", once: true,
+        onEnter: function () {
+          gsap.to(sl.childNodes, { scaleY: 0, duration: 0.7, ease: "expo.inOut", stagger: 0.05 });
+          gsap.to(img, { filter: "blur(0px)", duration: 0.6, delay: 0.2 });
+        }
+      });
+    });
+    // ----- grid sections tilt in a little like theyre being dealt -----
+    document.querySelectorAll(".grid-3, .grid-4").forEach(function (grid) {
+      gsap.fromTo(grid, { rotateX: 8, autoAlpha: 0.001, transformPerspective: 900 }, {
+        rotateX: 0, autoAlpha: 1, duration: 0.9, ease: "power4.out",
+        scrollTrigger: { trigger: grid, start: "top 85%", once: true }
+      });
+    });
+    // ----- light leak + hairline draw when a section rolls in -----
+    document.querySelectorAll("main section").forEach(function (sec) {
+      var h2 = sec.querySelector("h2");
+      var rule = null;
+      if (h2 && !sec.querySelector(".rule-line")) {
+        rule = document.createElement("span");
+        rule.className = "rule-line";
+        rule.setAttribute("aria-hidden", "true");
+        h2.appendChild(rule);
+      }
+      ScrollTrigger.create({
+        trigger: sec, start: "top 75%", once: true,
+        onEnter: function () {
+          sec.classList.add("lit");
+          setTimeout(function () { sec.classList.remove("lit"); }, 1500);
+          if (rule) gsap.to(rule, { scaleX: 1, duration: 0.8, ease: "power3.inOut" });
+        }
+      });
+    });
+    // ----- split slider drag + arrows -----
+    document.querySelectorAll(".split").forEach(function (sp) {
+      var val = 50;
+      function set(v) {
+        val = Math.max(5, Math.min(95, v));
+        sp.style.setProperty("--split", val + "%");
+        sp.setAttribute("aria-valuenow", Math.round(val));
+      }
+      var dragging = false;
+      sp.addEventListener("pointerdown", function (e) { dragging = true; try { sp.setPointerCapture(e.pointerId); } catch (err) {} });
+      sp.addEventListener("pointermove", function (e) {
+        if (!dragging) return;
+        var r = sp.getBoundingClientRect();
+        set((e.clientX - r.left) / r.width * 100);
+      });
+      addEventListener("pointerup", function () { dragging = false; });
+      sp.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft") { set(val - 6); e.preventDefault(); }
+        if (e.key === "ArrowRight") { set(val + 6); e.preventDefault(); }
+      });
+    });
+    // ----- tapes drift opposite ways, two rows passing each other -----
+    var tapes = document.querySelectorAll("#tapes .tape");
+    tapes.forEach(function (t, i) {
+      gsap.fromTo(t, { yPercent: i % 2 ? 6 : -6 }, { yPercent: i % 2 ? -6 : 6, ease: "none",
+        scrollTrigger: { trigger: "#tapes", start: "top bottom", end: "bottom top", scrub: 1 } });
+    });
     // ----- stop the moving text when the tab is hidden -----
     document.querySelectorAll(".marquee-inner, .ticker-track").forEach(function (el) {
       document.addEventListener("visibilitychange", function () {
@@ -126,6 +200,22 @@
       pinChs.forEach(function (ch) {
         var img = ch.querySelector("img");
         if (!img) return;
+        // video bed fades in under the still while the chapter is up
+        var bed = ch.querySelector(".pin-bg");
+        if (bed && window.OM && window.OM.video) {
+          if (bed.getAttribute("data-src") && !bed.getAttribute("src")) {
+            bed.setAttribute("src", bed.getAttribute("data-src"));
+            bed.load();
+          }
+          ScrollTrigger.create({
+            trigger: ch, start: "top 60%", end: "bottom 40%",
+            onToggle: function (self) {
+              ch.classList.toggle("vid-on", self.isActive);
+              if (self.isActive) window.OM.video.play(bed);
+              else window.OM.video.stop(bed);
+            }
+          });
+        }
         if (canPin) {
           var tl = gsap.timeline({ scrollTrigger: { trigger: ch, start: "top top", end: "+=40%", scrub: 0.8, pin: true } });
           tl.fromTo(img, { scale: 1.15 }, { scale: 1, ease: "none" }, 0);
@@ -202,6 +292,16 @@
 
   // ----- quick loading number on other pages -----
   // home has the big intro so skip it there
+  if (!reduce) {
+    var lbTop = document.createElement("div");
+    lbTop.className = "letterbox top";
+    lbTop.setAttribute("aria-hidden", "true");
+    var lbBot = document.createElement("div");
+    lbBot.className = "letterbox bot";
+    lbBot.setAttribute("aria-hidden", "true");
+    document.body.appendChild(lbTop);
+    document.body.appendChild(lbBot);
+  }
   if (!reduce && !document.getElementById("intro") && !sessionStorage.getItem("om_transition")) {
     var fb = document.createElement("div");
     fb.className = "boot-flash";

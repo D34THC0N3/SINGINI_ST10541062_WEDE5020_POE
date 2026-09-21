@@ -6,19 +6,22 @@
   <title>About — Obsidian Motors</title>
   <meta name="description" content="How Obsidian Motors works: a private network for the world's rarest cars, from quiet acquisitions to the Dubai recovery programme." />
   <meta name="theme-color" content="#07080a" />
-  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png" />
   <link rel="manifest" href="site.webmanifest" />
   <meta property="og:title" content="About — Obsidian Motors" />
   <meta property="og:description" content="A private network for the world's rarest cars." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Kanit:ital,wght@1,800&family=Inter:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Kanit:ital,wght@1,800&family=Racing+Sans+One&family=Inter:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/motion.css" />
-  <script>document.documentElement.classList.add("js");</script>
+  <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("om_transition")==="open")document.documentElement.classList.add("gate-closed")}catch(e){}</script>
   <script src="assets/vendor/gsap/gsap.min.js" defer></script>
   <script src="assets/vendor/gsap/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/gsap/Observer.min.js" defer></script>
@@ -93,21 +96,24 @@
     </section>
     <!-- the 3 big pic sections that stick for a bit -->
     <section class="pin-ch" aria-label="Chapter: established">
-      <img src="assets/images/desert-wreck.webp" alt="Rusted shell abandoned in the desert where recoveries start" loading="lazy" />
+      <video class="pin-bg" muted loop playsinline preload="none" poster="assets/images/desert-wreck.webp" data-src="assets/videos/tape-1.mp4" aria-hidden="true" tabindex="-1"></video>
+      <img src="assets/images/hd/workshop.jpg" srcset="assets/images/workshop.webp 1024w, assets/images/hd/workshop.jpg 2048w" data-opt="assets/images/workshop.webp" width="2048" height="1366" alt="Workshop floor where recovered cars get stripped and inspected" loading="lazy" decoding="async" />
       <div class="pin-copy">
         <p class="pin-tag">CH.01 — EST.</p>
         <h2 class="display-nfs">It started with<br>what the desert gave up.</h2>
       </div>
     </section>
     <section class="pin-ch" aria-label="Chapter: the craft">
-      <img src="assets/images/crewcab-van.webp" alt="Open transporter carrying two GT-Rs through the city" loading="lazy" />
+      <video class="pin-bg" muted loop playsinline preload="none" poster="assets/images/still-amg.webp" data-src="assets/videos/tape-2.mp4" aria-hidden="true" tabindex="-1"></video>
+      <img src="assets/images/hd/f1-engine.jpg" srcset="assets/images/f1-engine.webp 1024w, assets/images/hd/f1-engine.jpg 2048w" data-opt="assets/images/f1-engine.webp" width="2048" height="1210" alt="McLaren F1 V12 engine bay, the kind of detail we inspect" loading="lazy" decoding="async" />
       <div class="pin-copy">
         <p class="pin-tag">CH.02 — THE CRAFT</p>
         <h2 class="display-nfs">Moved quiet.<br>Papered proper.</h2>
       </div>
     </section>
     <section class="pin-ch" aria-label="Chapter: now">
-      <img src="assets/images/still-zonda-r.webp" alt="Black Zonda R on circuit, the vault's loudest resident" loading="lazy" />
+      <video class="pin-bg" muted loop playsinline preload="none" poster="assets/images/still-zonda-r.webp" data-src="assets/videos/tape-3.mp4" aria-hidden="true" tabindex="-1"></video>
+      <img src="assets/images/hd/zonda-roadster.jpg" srcset="assets/images/zonda-roadster.webp 1024w, assets/images/hd/zonda-roadster.jpg 2048w" data-opt="assets/images/zonda-roadster.webp" width="2048" height="1365" alt="Pagani Zonda Roadster parked under showroom lights" loading="lazy" decoding="async" />
       <div class="pin-copy">
         <p class="pin-tag">CH.03 — NOW</p>
         <h2 class="display-nfs">The vault<br>stays open late.</h2>
@@ -149,7 +155,8 @@
         </div>
       </div>
     </section>
-    <section class="section" style="text-align:center;">
+    <section class="section" style="text-align:center; position:relative; overflow:hidden;">
+      <video class="section-bg" muted loop playsinline preload="none" poster="assets/images/still-zonda-r.webp" data-src="assets/videos/laferrari-yellow-4k.mp4" aria-hidden="true" tabindex="-1"></video>
       <div class="wrap">
         <h2>Ready to begin?</h2>
         <p style="margin:14px auto 0; max-width:56ch;">Looking for a specific car, or thinking about selling one of your own? Either way, we'd like to hear from you.</p>
@@ -212,6 +219,7 @@
   </footer>
 
   <script src="js/site.js" defer></script>
+  <script src="js/intro.js" defer></script>
   <script src="js/motion.js" defer></script>
   <script src="js/cursor.js" defer></script>
   <script src="js/carousel.js" defer></script>

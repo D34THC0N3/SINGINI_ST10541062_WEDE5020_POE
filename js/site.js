@@ -60,38 +60,7 @@
 
   // vids are handled in video.js (one decoder at a time) so dont double-play them here
 
-  // intro plays once, click to skip. then show the heading.
-  var intro = document.getElementById("intro");
-  if (intro) {
-    var seen = false;
-    try { seen = sessionStorage.getItem("om_intro") === "done"; } catch (e) {}
-    if (reduce || seen) {
-      intro.remove();
-      if (window.OMMotion) window.OMMotion.heroIn();
-    } else {
-      document.body.classList.add("intro-lock");
-      var countEl = intro.querySelector(".intro-count");
-      var step = function (v) { if (countEl) countEl.textContent = String(v).padStart(3, "0"); };
-      if (window.gsap) {
-        var c = { v: 0 };
-        gsap.to(c, { v: 100, duration: 1.6, ease: "power2.inOut", onUpdate: function () { step(Math.round(c.v)); } });
-      } else {
-        // no gsap, just use a timer
-        var n = 0; var tick = setInterval(function () { n += 5; step(n); if (n >= 100) clearInterval(tick); }, 80);
-      }
-      var kill = function () {
-        intro.classList.add("is-fade");
-        try { sessionStorage.setItem("om_intro", "done"); } catch (e) {}
-        setTimeout(function () {
-          intro.remove();
-          document.body.classList.remove("intro-lock");
-          if (window.OMMotion) window.OMMotion.heroIn();
-        }, 1000);
-      };
-      var t = setTimeout(kill, 3000); // was 3.8s, felt draggy lol
-      intro.addEventListener("click", function () { clearTimeout(t); kill(); });
-    }
-  }
+  // intro lives in intro.js now, it owns the #intro box + heroIn timing
 
   // big video zooms a tiny bit when u scroll, no scrubbing cos it makes it stutter
   var hv = document.getElementById("hero-video");

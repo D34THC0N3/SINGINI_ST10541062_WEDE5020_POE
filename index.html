@@ -6,19 +6,22 @@
   <title>Obsidian Motors — Rare cars, quietly placed. Pretoria.</title>
   <meta name="description" content="A private collection of the world's rarest cars — sourced, verified, and placed with a very few. Rosebank International, Pretoria." />
   <meta name="theme-color" content="#07080a" />
-  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png" />
   <link rel="manifest" href="site.webmanifest" />
   <meta property="og:title" content="Obsidian Motors" />
   <meta property="og:description" content="Rare cars, quietly placed. A private collection, sourced and verified." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Kanit:ital,wght@1,800&family=Inter:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Kanit:ital,wght@1,800&family=Racing+Sans+One&family=Inter:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/motion.css" />
-  <script>document.documentElement.classList.add("js");</script>
+  <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("om_transition")==="open")document.documentElement.classList.add("gate-closed")}catch(e){}</script>
   <script src="assets/vendor/gsap/gsap.min.js" defer></script>
   <script src="assets/vendor/gsap/ScrollTrigger.min.js" defer></script>
   <script src="assets/vendor/gsap/Observer.min.js" defer></script>
@@ -65,14 +68,14 @@
 
     <!-- big video at the top, moves when u scroll -->
     <section class="hero-vid" id="hero">
-      <video id="hero-video" poster="assets/images/still-zonda-mileson.webp" autoplay muted loop playsinline preload="auto">
+      <video id="hero-video" poster="assets/images/m3-gtr.webp" autoplay muted loop playsinline preload="auto">
         <source src="assets/videos/hero.mp4" type="video/mp4" />
       </video>
       <div class="hero-scrim"></div>
       <div class="wrap hero-copy">
         <p class="eyebrow">Est. 2026 · Pretoria — Rosebank International</p>
         <h1 class="display-nfs">Obsidian<br><span class="outline">Motors</span></h1>
-        <p class="lead">No dealership vibes. Just cold, rare metal — Pagani, Koenigsegg, longtails — caught on film, then placed quiet.</p>
+        <p class="lead">No dealership vibes. Just cold, rare metal — M3 GTR, AMG GT3, F1 Longtail, Zonda F — caught on film, then placed quiet.</p>
         <div class="btn-row">
           <a href="collection.html" class="btn">Peep the vault</a>
           <a href="contact.html" class="btn-outline">Hit us up</a>
@@ -140,7 +143,7 @@
           <div class="btn-row"><a href="collection.html" class="btn">See the metal</a></div>
         </div>
         <div class="grow-vid-wrap">
-          <video id="grow-vid" poster="assets/images/still-jesko.webp" autoplay muted loop playsinline preload="auto">
+          <video id="grow-vid" poster="assets/images/f1-longtail.webp" autoplay muted loop playsinline preload="auto">
             <source src="assets/videos/grow.mp4" type="video/mp4" />
           </video>
           <p class="grow-tag">Drift cut · 4K render</p>
@@ -161,32 +164,53 @@
       </div>
     </section>
 
-    <!-- the 3 small videos -->
-    <section class="section" id="tapes">
+    <!-- tapes. dense grid, every tile has a size so nothing collapses lol -->
+    <section class="section" id="tapes" style="padding-top:14vh; padding-bottom:14vh;">
       <div class="wrap">
         <span class="eyebrow">Street tapes</span>
-        <h2 class="display-nfs">Short. Loud.<br>Watch with sound off, still hits.</h2>
+        <h2 class="display-nfs">Short. Loud.</h2>
+        <p class="mono-kicker">Watch with sound off, still hits.</p>
+        <span class="giant-word" aria-hidden="true">STREET TAPES</span>
         <div class="tapes" style="margin-top:34px;">
-          <figure class="tape reveal">
-            <video autoplay muted loop playsinline preload="metadata">
-              <source src="assets/videos/tape-1.mp4" type="video/mp4" />
-            </video>
+          <figure class="tape bracket reveal" data-cursor="PLAY">
+            <video muted loop playsinline preload="metadata" poster="assets/images/still-zonda-r.webp" data-src="assets/videos/tape-1.mp4" style="aspect-ratio:16/9;" aria-label="Tape 1: Zonda R at full noise"></video>
+            <span class="tape-num">TAPE 01</span>
             <figcaption>Zonda R · carbon, all the way up</figcaption>
           </figure>
-          <figure class="tape reveal">
-            <video autoplay muted loop playsinline preload="metadata">
-              <source src="assets/videos/tape-2.mp4" type="video/mp4" />
-            </video>
-            <figcaption>Jesko "Odin" · gold leaf, 1600 hp</figcaption>
+          <figure class="tape bracket reveal" data-cursor="PLAY">
+            <video muted loop playsinline preload="metadata" poster="assets/images/still-amg.webp" data-src="assets/videos/tape-2.mp4" style="aspect-ratio:16/9;" aria-label="Tape 2: AMG out after dark"></video>
+            <span class="tape-num">TAPE 02</span>
+            <figcaption>AMG · out after dark</figcaption>
           </figure>
-          <figure class="tape reveal">
-            <video autoplay muted loop playsinline preload="metadata">
-              <source src="assets/videos/tape-3.mp4" type="video/mp4" />
-            </video>
+          <figure class="tape bracket reveal" data-cursor="PLAY">
+            <video muted loop playsinline preload="metadata" poster="assets/images/still-jesko.webp" data-src="assets/videos/tape-3.mp4" style="aspect-ratio:16/9;" aria-label="Tape 3: onboard, hold on"></video>
+            <span class="tape-num">TAPE 03</span>
             <figcaption>Onboard · hold on to something</figcaption>
+          </figure>
+          <figure class="tape bracket reveal" data-cursor="PLAY">
+            <video muted loop playsinline preload="metadata" poster="assets/images/still-zonda-mileson.webp" data-src="assets/videos/ford-gt-studio-4k.mp4" style="aspect-ratio:16/9;" aria-label="Tape 4: Ford GT studio cut"></video>
+            <span class="tape-num">TAPE 04</span>
+            <figcaption>Ford GT · studio cut, 1 of 40</figcaption>
+          </figure>
+          <figure class="tape bracket reveal" data-cursor="PLAY">
+            <video muted loop playsinline preload="metadata" poster="assets/images/still-jesko.webp" data-src="assets/videos/valkyrie-spider-4k.mp4" style="aspect-ratio:16/9;" aria-label="Tape 5: Valkyrie spider"></video>
+            <span class="tape-num">TAPE 05</span>
+            <figcaption>Valkyrie Spider · 85 ever built</figcaption>
+          </figure>
+          <figure class="tape bracket reveal" data-cursor="PLAY">
+            <video muted loop playsinline preload="metadata" poster="assets/images/still-zonda-r.webp" data-src="assets/videos/zonda-mileson-4k.mp4" style="aspect-ratio:16/9;" aria-label="Tape 6: one of one Zonda"></video>
+            <span class="tape-num">TAPE 06</span>
+            <figcaption>Mileson Zonda · one of one</figcaption>
           </figure>
         </div>
       </div>
+    </section>
+
+    <!-- closing band before the footer, footage shows through the letters -->
+    <section class="night-band" aria-label="The night is ours">
+      <video muted loop playsinline preload="none" poster="assets/images/still-jesko.webp" data-src="assets/videos/laferrari-aperta-4k.mp4" aria-hidden="true" tabindex="-1"></video>
+      <div class="knockout" aria-hidden="true"><span>THE NIGHT IS OURS</span></div>
+      <h2 class="display-nfs sr-only">The night is ours</h2>
     </section>
 
     <!-- how we get the cars -->
@@ -211,7 +235,8 @@
       </div>
     </section>
 
-    <section class="section centered" id="editorial">
+    <section class="section centered" id="editorial" style="position:relative; overflow:hidden;">
+      <video class="section-bg" muted loop playsinline preload="none" poster="assets/images/still-jesko.webp" data-src="assets/videos/jesko-odin-4k.mp4" aria-hidden="true" tabindex="-1"></video>
       <div class="wrap" style="display:flex; justify-content:center;">
         <div>
           <blockquote>We don't flip cars. We place them with the few who understand what they are.</blockquote>
@@ -288,6 +313,7 @@
   </footer>
 
   <script src="js/site.js" defer></script>
+  <script src="js/intro.js" defer></script>
   <script src="js/motion.js" defer></script>
   <script src="js/cursor.js" defer></script>
   <script src="js/carousel.js" defer></script>
