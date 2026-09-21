@@ -21,13 +21,13 @@
 .nav-inner { max-width: var(--wide); margin: 0 auto; min-height: var(--nav-h);
   padding: 10px var(--gap); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 
-/* wordmark: serif capitals + the obsidian crystal sitting in the name */
+/* logo with the little crystal pic */
 .nav-logo { font-family: var(--font-display); font-weight: 600; letter-spacing: .14em;
   text-transform: uppercase; color: var(--chrome); font-size: .98rem; display: inline-flex; align-items: center; gap: 10px; }
 .nav-logo .crystal { width: 13px; height: 13px; flex: 0 0 auto; }
 .nav-logo span { color: var(--gold); }
 
-/* links read like HUD labels — mono, tracked, quiet until touched */
+/* nav links, grey until u hover */
 .nav-links { list-style: none; display: flex; gap: 30px; }
 .nav-links a {
   font-family: var(--font-mono); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
@@ -43,7 +43,7 @@
 .nav-cta:hover, .nav-cta.is-current { border-color: var(--gold); color: var(--gold); }
 .nav-actions { display: flex; align-items: center; gap: 12px; }
 
-/* mobile hamburger (hidden on desktop) */
+/* menu button, only on phones */
 .nav-toggle { display: none; width: 42px; height: 42px; border: 1px solid var(--line-2); border-radius: 10px;
   background: transparent; cursor: pointer; position: relative; }
 .nav-toggle span, .nav-toggle span::before, .nav-toggle span::after {
@@ -55,7 +55,7 @@
 .nav.is-open .nav-toggle span::before { transform: translate(-50%, -50%) rotate(45deg); top: 0; }
 .nav.is-open .nav-toggle span::after  { transform: translate(-50%, -50%) rotate(-45deg); top: 0; }
 
-/* page fade — lil blink between pages, still cinematic */
+/* quick fade between pages */
 #page-fade { display: none; }
 .js #page-fade { display: block; position: fixed; inset: 0; z-index: 999; background: var(--void);
   pointer-events: none; opacity: 1; }
@@ -63,9 +63,7 @@
 .js #page-fade.is-leaving { opacity: 1; pointer-events: all; transition: opacity .32s var(--ease); }
 @keyframes fadeOut { to { opacity: 0; } }
 
-/* ---------- intro (brand ritual, takes over once per session on home) ----------
-   sequence: black → counter climbs 000→100 → gold hairline sweep across the
-   crystal → quarter turn + refraction flash → letters slide in → fade to hero. */
+/* ---------- intro (plays once on home) ---------- */
 #intro { display: none; }
 .js #intro { position: fixed; inset: 0; z-index: 300; background: var(--void);
   display: grid; place-items: center; overflow: hidden; cursor: pointer; }
@@ -77,12 +75,12 @@
              intro-gem-turn 1.1s cubic-bezier(.76,0,.24,1) 1.8s forwards; }
 @keyframes intro-gem-in { to { opacity: 1; transform: scale(1) rotateY(0); } }
 @keyframes intro-gem-turn { to { transform: scale(1) rotateY(360deg); } }
-/* the gold hairline sweep driving across the facets */
+/* shiny line that goes across */
 .intro-sweep { position: absolute; inset: -12px; pointer-events: none;
   background: linear-gradient(100deg, transparent 42%, rgba(184,151,106,.85) 50%, transparent 58%);
   transform: translateX(-130%); animation: intro-sweep .8s cubic-bezier(.76,0,.24,1) 1.1s forwards; mix-blend-mode: screen; }
 @keyframes intro-sweep { to { transform: translateX(130%); } }
-/* one-frame refraction flash when the turn finishes */
+/* quick flash at the end */
 .intro-flash { position: absolute; inset: -20px; background: #fff; opacity: 0; mix-blend-mode: screen; pointer-events: none;
   animation: intro-flash .18s linear 2.75s forwards; }
 @keyframes intro-flash { 0% { opacity: 0; } 35% { opacity: .12; } 100% { opacity: 0; } }
@@ -105,16 +103,16 @@
 /* percentage counter, bottom left */
 .intro-count { position: absolute; left: 22px; bottom: 20px; font-family: var(--font-mono);
   font-size: 11px; letter-spacing: .18em; color: var(--gold); }
-/* gold hairline along the very bottom edge */
+/* gold line at the very bottom */
 .intro-hair { position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
   background: var(--gold); transform: scaleX(0); transform-origin: left;
   animation: intro-hair 2.1s cubic-bezier(.76,0,.24,1) .1s forwards; }
 @keyframes intro-hair { to { transform: scaleX(1); } }
-/* while the intro plays the page is locked so no one scrolls through it */
+/* locks scrolling while the intro plays */
 .intro-lock { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .js #intro { display: none; } }
 
-/* hero vid — full screen, scroll scrubs it */
+/* big video, moves when u scroll */
 .hero-vid { position: relative; height: 100vh; min-height: 560px; overflow: hidden; background: #040404; }
 .hero-vid video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
   filter: saturate(.9) contrast(1.08) brightness(.88); will-change: transform, filter; }
@@ -130,7 +128,7 @@
 .hero-hint { margin-top: 14px; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .16em;
   text-transform: uppercase; color: var(--faint); }
 
-/* grow section — text left, vertical cut right; the cut eats the screen on scroll */
+/* words left, video right. video gets huge on scroll */
 .grow-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 32px; align-items: center;
   min-height: 86vh; padding: 72px var(--gap); }
 .grow-vid-wrap { position: relative; height: 78vh; min-height: 480px; overflow: hidden;
@@ -166,14 +164,14 @@
 .footer-bottom a { color: var(--faint); margin-left: 20px; }
 .footer-bottom a:hover { color: var(--gold); }
 
-/* ---------- centered frames (CTA sections, 404) ---------- */
+/* ---------- centered pages (contact bit, 404) ---------- */
 .centered { min-height: 86vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px var(--gap) 60px; }
 .centered .code { font-family: var(--font-display); font-size: clamp(4rem, 3rem + 10vw, 12rem); font-weight: 550; color: var(--panel);
   letter-spacing: .02em; -webkit-text-stroke: 1px var(--line-2); }
 .centered h1 { font-size: clamp(1.5rem, 1rem + 1.5vw, 2.2rem); margin: 0 0 14px; }
 .centered p { margin-bottom: 28px; }
 
-/* responsive — thinner = more screen, ya feel */
+/* phone sizes */
 @media (max-width: 860px) {
   .nav-links { display: none; }
   .nav-links.is-open {
@@ -193,4 +191,4 @@
   .footer-grid { grid-template-columns: 1fr; gap: 30px; }
 }
 
-/* reduced motion — no fancy, just show it. a11y first */
+/* no animation mode, just show everything */

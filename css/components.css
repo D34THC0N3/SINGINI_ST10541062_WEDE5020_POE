@@ -21,7 +21,7 @@
 }
 .js .section.is-in, .js .reveal.is-in { opacity: 1; transform: none; }
 
-/* ---------- media plates (real photographs, dark-graded) ---------- */
+/* ---------- pics ---------- */
 .ph {
   position: relative;
   border: 1px dashed var(--line-2);
@@ -60,26 +60,26 @@ img.ph-hero { aspect-ratio: 21 / 9; }
   font-size: .72rem; letter-spacing: .1em; color: var(--chrome); background: rgba(7,7,7,.6);
   border: 1px solid var(--line-2); border-radius: 6px; padding: 3px 8px; }
 
-/* ---------- panels & stats ---------- */
+/* ---------- boxes ---------- */
 .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px;
   transition: border-color .3s, transform .3s var(--ease); }
 .panel:hover { border-color: var(--line-2); transform: translateY(-4px); }
 
 
-/* ---------- editorial / quotes ---------- */
+/* ---------- quotes ---------- */
 blockquote { font-family: var(--font-display); font-weight: 550; font-size: clamp(1.6rem, 1rem + 2.4vw, 3rem);
   color: var(--chrome); line-height: 1.2; max-width: 24ch; letter-spacing: -.01em; }
 cite { display: block; margin-top: 20px; font-style: normal; font-family: var(--font-mono); font-size: .8rem;
   letter-spacing: .12em; color: var(--gold); text-transform: uppercase; }
 
-/* ---------- garage-door section reveal (the NFS-MW nod) ---------- */
-/* a thin industrial divider: mono bay number + hairlinetick strip */
+/* ---------- the little divider lines with numbers ---------- */
+/* thin line with a number in the middle */
 .bay-rule { display: flex; align-items: center; gap: 18px; max-width: var(--max); margin: 0 auto; padding: 0 var(--gap) 34px;
   font-family: var(--font-mono); font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--faint); }
 .bay-rule::before, .bay-rule::after { content: ""; height: 1px; flex: 1; background: var(--line); }
 .bay-rule b { color: var(--gold); font-weight: 500; }
 
-/* ---------- about page: channels + values ---------- */
+/* ---------- about page bits ---------- */
 .channel { display: grid; grid-template-columns: 72px 1fr 1fr; gap: 36px; align-items: start; margin-bottom: 64px; }
 .channel--reverse .channel-img { order: -1; }
 .channel-num { font-family: var(--font-mono); font-size: 2.4rem; font-weight: 500; color: var(--gold); opacity: .5; }
@@ -106,7 +106,7 @@ cite { display: block; margin-top: 20px; font-style: normal; font-family: var(--
 .field textarea { min-height: 130px; resize: vertical; }
 .form-note { font-family: var(--font-mono); font-size: .74rem; color: var(--faint); margin-top: 14px; }
 
-/* ordered process list */
+/* numbered list */
 ul.process { list-style: none; margin-top: 10px; counter-reset: step; }
 ul.process li { padding: 16px 0; border-top: 1px solid var(--line); color: var(--steel);
   display: flex; gap: 14px; align-items: baseline; }
@@ -136,8 +136,8 @@ ul.process li::before { content: counter(step, decimal-leading-zero); counter-in
 .legal a { color: var(--gold); }
 .legal-updated { font-family: var(--font-mono); font-size: .78rem; color: var(--faint); margin-bottom: 10px; }
 
-/* ---------- NFS-flavoured marquee ticker ---------- */
-/* a mono loop strip, sits between the hero and the cards */
+/* ---------- moving text strip ---------- */
+/* sits between the big video and the cars */
 .ticker { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   background: var(--carbon); padding: 14px 0; }
 .ticker-track { display: flex; gap: 48px; width: max-content; animation: ticker-run 28s linear infinite; }
@@ -146,8 +146,8 @@ ul.process li::before { content: counter(step, decimal-leading-zero); counter-in
 .ticker b { color: var(--gold); font-weight: 500; }
 @keyframes ticker-run { to { transform: translateX(-50%); } }
 
-/* ---------- full-bleed video break ---------- */
-/* sticky bg: the vid pins itself while the type scrolls over it */
+/* ---------- big video section ---------- */
+/* video sticks in place while the words scroll over it */
 .vidbreak { position: relative; height: 220vh; }
 .vidbreak-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; place-items: center; }
 .vidbreak video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
@@ -156,8 +156,8 @@ ul.process li::before { content: counter(step, decimal-leading-zero); counter-in
 .vidbreak h2 { font-size: clamp(2.6rem, 1.4rem + 6vw, 6.4rem); text-transform: uppercase; letter-spacing: -.02em; line-height: .95; }
 .vidbreak .eyebrow { margin-bottom: 20px; }
 
-/* ---------- vertical tape trio ---------- */
-/* three 9:16 cuts in a row — hover lifts and unmutes the grade */
+/* ---------- the 3 upright videos ---------- */
+/* 3 tall videos in a row, they light up on hover */
 .tapes { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
 .tape { position: relative; aspect-ratio: 9 / 16; overflow: hidden; border-radius: var(--radius);
   border: 1px solid var(--line); background: var(--carbon); }
@@ -169,8 +169,8 @@ ul.process li::before { content: counter(step, decimal-leading-zero); counter-in
   background: rgba(7,7,7,.6); border: 1px solid var(--line-2); border-radius: 999px; padding: 7px 12px;
   backdrop-filter: blur(6px); }
 
-/* ---------- footer rpm strip ---------- */
-/* an rpm bar that idles in the footer — pure decoration */
+/* ---------- footer rpm bar ---------- */
+/* just for looks tbh */
 .rpm { display: flex; align-items: center; gap: 14px; margin-top: 26px; }
 .rpm-label { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .24em; text-transform: uppercase; color: var(--faint); }
 .rpm-bar { display: flex; gap: 4px; }

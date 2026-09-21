@@ -3,7 +3,7 @@
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var wrap = document.querySelector(".carousel");
   if (!wrap) return;
-  if (reduce) return; // fallback grid via css noscript
+  if (reduce) return; // plain grid if js is off
   var cards = wrap.querySelectorAll(".carousel-card");
   if (!cards.length) return;
   var heat = document.querySelector(".heat-fill");
@@ -17,13 +17,13 @@
   addEventListener("resize", updateMax);
   function render() {
     wrap.scrollLeft = x;
-    // skew + scale
+    // tilt a bit when moving fast
     var skew = clamp(vel * 0.08, -3, 3);
     cards.forEach(function (c) { c.style.transform = "skewX(" + skew + "deg) scale(" + (Math.abs(skew) > 1 ? 0.98 : 1) + ")"; });
     if (heat) heat.style.width = (maxX ? (x / maxX * 100) : 0) + "%";
     if (label) label.textContent = "HEAT " + String(Math.round(maxX ? (x / maxX * 3) + 1 : 1)).padStart(2, "0") + "/04";
   }
-  // drag
+  // dragging
   wrap.addEventListener("pointerdown", function (e) { isDrag = true; startX = e.clientX; curX = x; wrap.setPointerCapture(e.pointerId); document.documentElement.classList.add("dragging"); });
   addEventListener("pointermove", function (e) {
     if (!isDrag) return;
@@ -36,7 +36,7 @@
   var endDrag = function () { if (isDrag) { isDrag = false; document.documentElement.classList.remove("dragging"); snap(); } };
   addEventListener("pointerup", endDrag);
   addEventListener("pointercancel", endDrag);
-  // wheel
+  // mouse wheel
   wrap.addEventListener("wheel", function (e) {
     if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
     e.preventDefault();
@@ -44,7 +44,7 @@
     x = clamp(x + vel, 0, maxX);
     render();
   }, { passive: false });
-  // keyboard
+  // arrow keys
   wrap.setAttribute("tabindex", "0");
   wrap.setAttribute("role", "region");
   wrap.setAttribute("aria-roledescription", "carousel");
@@ -54,7 +54,7 @@
     if (e.key === "ArrowLeft") { x = clamp(x - 360, 0, maxX); render(); snap(); }
   });
   function snap() {
-    // snap to nearest card
+    // line up with the closest card
     var best = 0, bestD = Infinity;
     cards.forEach(function (c) {
       var d = Math.abs(c.offsetLeft - x);
@@ -63,7 +63,7 @@
     if (window.gsap) gsap.to({ v: x }, { v: best, duration: 0.6, ease: "power3.out", onUpdate: function () { x = this.targets()[0].v; render(); } });
     else { x = best; render(); }
   }
-  // peek — hover a card for 3s and the lights dim, card blows up to near-fullscreen
+  // hold ur mouse on a card for 3 sec and it blows up big
   var dim = document.createElement("div");
   dim.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.7);opacity:0;transition:opacity .35s;z-index:7990;pointer-events:none";
   document.body.appendChild(dim);
@@ -92,7 +92,7 @@
         card.style.zIndex = "8000";
         document.body.style.overflow = "hidden";
         card.setAttribute("data-cursor", "CLOSE");
-        // dossier cue, no showcase page so it points at the contact flow
+        // little tag that says open it
         var cue = document.createElement("span");
         cue.className = "peek-cue";
         cue.textContent = "Open the dossier →";
@@ -104,7 +104,7 @@
       if (openCard === card) closePeek();
     });
   });
-  // GSAP Observer if available for smoother
+  // smoother dragging if gsap is loaded
   if (window.gsap && window.Observer) {
     gsap.registerPlugin(Observer);
     Observer.create({ target: wrap, type: "pointer,touch", onDrag: function (self) { vel = self.deltaX; x = clamp(x - self.deltaX, 0, maxX); render(); } });

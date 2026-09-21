@@ -2,37 +2,34 @@
 
 /* ---------- tokens ---------- */
 :root {
-  /* surfaces — obsidian scale, warm-neutral, no blue tint */
+  /* background colours */
   --void:   #070707;
   --carbon: #0d0d0d;
   --panel:  #141414;
   --raise:  #1b1a19;
 
-  /* hairlines */
+  /* thin lines */
   --line:   rgba(237, 232, 224, .07);
   --line-2: rgba(237, 232, 224, .15);
 
-  /* text — warm neutrals (never pure white) */
-  --chrome: #ede8e0;   /* primary — warm bone */
-  --steel:  #9b958c;   /* secondary — warm stone */
-  --faint:  #6b6560;   /* captions / tertiary */
+  /* text colours, off white not pure white */
+  --chrome: #ede8e0;   /* main text colour */
+  --steel:  #9b958c;   /* second text colour */
+  --faint:  #6b6560;   /* small grey text */
 
-  /* the ONE saturated accent — muted garage gold (single hue, no second saturation) */
+  /* the one gold colour lol, only gold we use */
   --gold:     #b8976a;
   --gold-dim: #8a6d4a;
-  --ember:    var(--gold-dim); /* required * uses gold-dim so no second hue ships */
+  --ember:    var(--gold-dim); /* darker gold, same colour just darker */
 
-  /* metrics — thinner, uses more screen, real cinema */
+  /* sizes and stuff */
   --max:   1320px;
   --wide:  1520px;
   --radius: 14px;
   --gap:   16px;
   --nav-h: 56px;
 
-  /* the editorial trio:
-     Fraunces  — high-contrast display serif (the voice)
-     Inter     — quiet grotesk body
-     IBM Plex  — HUD readouts, mono technical labels */
+  /* fonts: fancy one for headings, normal one for words, mono for small labels */
   --font-display: "Fraunces", "Cormorant Garamond", Georgia, serif;
   --font-body:    "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
@@ -63,7 +60,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 ::selection { background: var(--gold); color: var(--void); }
 
-/* keyboard focus — visible everywhere (accessibility floor) */
+/* gold outline when u tab through, so u can see where u are */
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
 
 /* ---------- typography ---------- */
@@ -82,7 +79,7 @@ p  { color: var(--steel); }
 
 .lead { font-size: clamp(1.05rem, .95rem + .5vw, 1.3rem); color: var(--chrome); max-width: 62ch; line-height: 1.55; }
 
-/* eyebrow — small mono label, the HUD voice of the site */
+/* small label above headings */
 .eyebrow {
   display: inline-block;
   font-family: var(--font-mono);
@@ -94,8 +91,8 @@ p  { color: var(--steel); }
 }
 .eyebrow::before { content: "// "; color: var(--faint); }
 
-/* ---------- atmosphere (pure CSS lighting) ---------- */
-/* one faint warm pool from above — the garage is never flat black */
+/* ---------- background glow ---------- */
+/* soft gold glow up top so its not just flat black */
 body::before {
   content: "";
   position: fixed; inset: 0;
@@ -104,17 +101,17 @@ body::before {
     radial-gradient(900px 700px at 8% 108%, rgba(184, 151, 106, .028), transparent 55%);
   pointer-events: none; z-index: 0;
 }
-/* fine film grain — the cinematic tooth */
+/* grainy overlay for texture */
 body::after {
   content: "";
   position: fixed; inset: 0; z-index: 1;
   pointer-events: none; opacity: .04; mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-/* keep real content above the atmosphere layers */
+/* keep everything above the background bits */
 header, main, footer { position: relative; z-index: 2; }
 
-/* ---------- reduced motion (blanket rule) ---------- */
+/* ---------- turn off animation if the user asked for that ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }

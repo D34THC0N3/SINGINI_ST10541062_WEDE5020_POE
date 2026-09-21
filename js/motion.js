@@ -1,10 +1,10 @@
-/* motion.js - reveals, marquees, rpm ticker, chapter hud. */
+/* motion.js - fade ins, moving text, rpm bar. */
 (function () {
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // ----- split helpers (overflow hidden + yPercent rise) -----
+  // ----- letter splitting bits -----
   function splitChars(el) {
-    // walk child nodes so <br> and styled spans survive the split
+    // go through everything so <br> and colours dont break
     var out = [];
     Array.prototype.slice.call(el.childNodes).forEach(function (node) {
       if (node.nodeType === 3) {
@@ -12,7 +12,7 @@
         var frag = document.createDocumentFragment();
         for (var i = 0; i < t.length; i++) {
           var s = document.createElement("span");
-          s.textContent = t[i] === " " ? " " : t[i]; // nbsp keeps spaces alive in the split
+          s.textContent = t[i] === " " ? " " : t[i]; // keep the spaces or words stick together
           s.style.display = "inline-block";
           s.style.transform = "translateY(110%)";
           frag.appendChild(s);
@@ -26,13 +26,13 @@
     return out;
   }
   function splitLines(el) {
-    // words wrapped in mask spans; good enough for short headings
+    // wrap words so they can slide up, fine for short headings
     var text = el.textContent;
     el.innerHTML = text.split(" ").map(function (w) { return '<span style="display:inline-block;overflow:hidden"><span style="display:inline-block;transform:translateY(110%)">' + w + " </span></span>"; }).join("");
     return el.querySelectorAll("span span");
   }
 
-  // ----- hero entrance. fired by the gate reveal, the intro, or plain load -----
+  // ----- heading coming in on load -----
   var heroDone = false;
   function heroIn() {
     if (heroDone || reduce) return;
@@ -53,7 +53,7 @@
   if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
   if (!reduce && window.gsap && window.ScrollTrigger) {
-    // ----- base scroll reveals -----
+    // ----- stuff fading in on scroll -----
     ScrollTrigger.batch(".reveal, .section", {
       onEnter: function (batch) {
         gsap.fromTo(batch, { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7, ease: "power4.out", stagger: 0.08, overwrite: true });
@@ -61,13 +61,13 @@
       start: "top 85%",
       once: true
     });
-    // ----- image parallax -----
+    // ----- pics moving slower than the page -----
     document.querySelectorAll(".ph, .carousel-card img").forEach(function (img) {
       var wrap = img.closest(".card, .panel, .carousel-card, .channel-img, .wrap");
       if (!wrap) return;
       gsap.fromTo(img, { yPercent: -8 }, { yPercent: 8, ease: "none", scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom top", scrub: 0.8 } });
     });
-    // ----- copy beats: eyebrow → headline → body → cta, inside each section -----
+    // ----- label then heading then words, one after the other -----
     document.querySelectorAll("main section").forEach(function (sec) {
       var beats = sec.querySelectorAll(".eyebrow, h2, h3, p.lead, .btn-row");
       if (!beats.length) return;
@@ -78,13 +78,13 @@
         }
       });
     });
-    // ----- marquee pause on tab hidden -----
+    // ----- stop the moving text when the tab is hidden -----
     document.querySelectorAll(".marquee-inner").forEach(function (el) {
       document.addEventListener("visibilitychange", function () {
         el.style.animationPlayState = document.hidden ? "paused" : "running";
       });
     });
-    // ----- rpm footer ticker: revs rise with page scroll -----
+    // ----- rpm bar fills up as u scroll -----
     var rpm = document.querySelector(".rpm");
     if (rpm) {
       ScrollTrigger.create({
@@ -96,7 +96,7 @@
         }
       });
     }
-    // ----- nav shrinks after 40px -----
+    // ----- smaller nav after scrolling a bit -----
     var nav = document.querySelector(".nav");
     if (nav) {
       ScrollTrigger.create({
@@ -105,7 +105,7 @@
         onLeaveBack: function () { nav.classList.remove("nav-compact"); }
       });
     }
-    // ----- giant ghost chapter numbers, drift slower than content -----
+    // ----- big faded numbers that move slower -----
     var secs = document.querySelectorAll("main > section");
     var chapNames = ["The Film", "The Fleet", "After Hours", "Night Run", "Street Tapes", "The Hunt", "The Standard", "Speak"];
     secs.forEach(function (sec, i) {
@@ -118,8 +118,8 @@
       sec.appendChild(n);
       gsap.fromTo(n, { yPercent: 20 }, { yPercent: -20, ease: "none", scrollTrigger: { trigger: sec, start: "top bottom", end: "bottom top", scrub: 1 } });
     });
-    // ----- about pin chapters: each frame holds while its image settles 1.15 -> 1 -----
-    // pin only where its cheap (desktop, fine pointer). everywhere else its a plain scrub zoom.
+    // ----- about page pics that stick then zoom out -----
+    // only stick on desktop, on phones it just zooms
     var pinChs = document.querySelectorAll(".pin-ch");
     if (pinChs.length) {
       var canPin = matchMedia("(min-width: 861px)").matches && matchMedia("(pointer:fine)").matches;
@@ -134,7 +134,7 @@
         }
       });
     }
-    // ----- chapter HUD, right edge -----
+    // ----- little chapter label on the right -----
     if (secs.length > 1 && innerWidth > 860) {
       var hud = document.createElement("div");
       hud.className = "chap-hud";
@@ -159,13 +159,13 @@
         });
       });
     }
-    // ----- fullscreen footer takeover (scroll into the pit wall) -----
+    // ----- big footer popup at the bottom -----
     var footer = document.querySelector("footer.footer");
     if (footer) {
       var fClone = footer.cloneNode(true);
       fClone.classList.add("footer-full");
       fClone.setAttribute("aria-hidden", "true");
-      // crystal watermark behind everything
+      // big faded logo behind it
       var wm = document.createElement("img");
       wm.src = "assets/icons/logo-crystal.svg"; wm.alt = ""; wm.className = "footer-watermark";
       fClone.insertBefore(wm, fClone.firstChild);
@@ -178,7 +178,7 @@
           clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 0.6, ease: "power4.inOut",
           onComplete: function () { open = true; busy = false; }
         });
-        // big-links stagger + watermark breathe
+        // links come in one by one
         gsap.fromTo(fClone.querySelectorAll("a, h4"), { y: 22, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5, ease: "power4.out", stagger: 0.05, delay: 0.25 });
         var r = fClone.querySelector(".rpm");
         if (r) gsap.fromTo(r, { "--rpm": "0%" }, { "--rpm": "100%", duration: 1.1, ease: "power2.inOut", delay: 0.3 });
@@ -194,14 +194,14 @@
         trigger: footer, start: "top 20%",
         onEnter: openFooter
       });
-      // scroll up off the bottom closes it again
+      // scroll back up to close it
       addEventListener("wheel", function (e) { if (open && e.deltaY < -8) closeFooter(); }, { passive: true });
       addEventListener("keydown", function (e) { if (open && e.key === "Escape") closeFooter(); });
     }
   }
 
-  // ----- non-index quick boot flash (300ms counter) -----
-  // index has the full intro instead, skip there
+  // ----- quick loading number on other pages -----
+  // home has the big intro so skip it there
   if (!reduce && !document.getElementById("intro") && !sessionStorage.getItem("om_transition")) {
     var fb = document.createElement("div");
     fb.className = "boot-flash";
@@ -221,9 +221,9 @@
     }, 50);
   }
 
-  // ---------- hover library ----------
+  // ---------- hover bits ----------
   if (!reduce && matchMedia("(pointer:fine)").matches) {
-    // underline draws in from whatever side the cursor entered from
+    // underline starts from where ur mouse came in
     document.addEventListener("mouseover", function (e) {
       if (!e.target || !e.target.closest) return;
       var a = e.target.closest("a");
@@ -232,7 +232,7 @@
       a.style.setProperty("--ul-o", e.clientX < r.left + r.width / 2 ? "left" : "right");
       a.classList.add("ul-in");
     });
-    // nav wordmark letter wave — split obsidian | motors, keep gold on motors
+    // logo letters wave, motors stays gold
     var logo = document.querySelector(".nav-logo");
     if (logo && !logo.dataset.split) {
       logo.dataset.split = "1";
@@ -255,17 +255,17 @@
           });
         }
       });
-      // stagger the wave per letter
+      // delay each letter a tiny bit
       logo.querySelectorAll("span.l").forEach(function (s, i) {
         s.style.transitionDelay = (i * 0.02) + "s";
       });
     }
-    // cursor-tracked 3d tilt on grid cards (carousel does its own skew drama)
+    // cards tilt towards ur mouse
     document.querySelectorAll(".card").forEach(function (card) {
       card.classList.add("tilt-sheen");
       card.addEventListener("pointermove", function (e) {
-        if (card.style.position === "fixed") return; // peek open
-        if (document.documentElement.classList.contains("dragging")) return; // mid carousel drag
+        if (card.style.position === "fixed") return; // card is blown up
+        if (document.documentElement.classList.contains("dragging")) return; // while dragging
         var r = card.getBoundingClientRect();
         var px = (e.clientX - r.left) / r.width - 0.5;
         var py = (e.clientY - r.top) / r.height - 0.5;
@@ -280,7 +280,7 @@
         card.style.setProperty("--sx", 0);
       });
     });
-    // decrypt scramble on mono chips (spec lines, BL badges, tags)
+    // little labels scramble on hover
     var glyphs = "▮▞▚◢◤#@%&$0123456789";
     document.querySelectorAll(".heat-label, .card-price, .card-cue, [style*='IBM Plex Mono'], .mono-chip").forEach(function (chip) {
       var busy = false;
@@ -300,13 +300,13 @@
 
   window.OMMotion = { heroIn: heroIn, splitLines: splitLines, splitChars: splitChars };
 
-  // plain load (no intro, no gate): fire hero on load
+  // normal load, just show the heading
   addEventListener("load", function () {
     var gated = false;
     try { if (sessionStorage.getItem("om_transition") === "open") gated = true; } catch (e) {}
-    if (document.getElementById("intro")) return; // intro will fire it
-    if (gated) return; // gate will fire it
-    if (document.querySelector(".boot-flash")) return; // boot flash will fire it
+    if (document.getElementById("intro")) return; // intro does it
+    if (gated) return; // page door does it
+    if (document.querySelector(".boot-flash")) return; // loading number does it
     heroIn();
   });
 })();

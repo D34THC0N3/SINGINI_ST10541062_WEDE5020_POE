@@ -1,10 +1,10 @@
-/* obsidian - video.js. one decoder at a time, lazy, poster, pause off-screen */
+/* video.js. only plays vids u can see, pauses the rest */
 (function () {
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) return;
   var vids = document.querySelectorAll("video");
   if (!vids.length) return;
-  // lazy via IntersectionObserver
+  // load vids late
   var active = null;
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
@@ -26,16 +26,16 @@
     if (!v.getAttribute("poster")) v.setAttribute("poster", "assets/images/alpine-garage.webp");
     io.observe(v);
   });
-  // single decoder: pause on hidden
+  // pause when the tab is hidden
   document.addEventListener("visibilitychange", function () {
     if (document.hidden && active) active.pause();
     else if (!document.hidden && active) active.play().catch(function () {});
   });
-  // hover play for carousel cards (cursor PLAY)
+  // play on hover for the car cards
   document.querySelectorAll(".carousel-card").forEach(function (c) {
     var v = c.querySelector("video");
     if (!v) return;
-    // card already carries data-cursor="PLAY" in the html so the ring picks it up in time
+    // the html already says PLAY so the circle picks it up
     c.addEventListener("mouseenter", function () { if (active && active !== v) active.pause(); active = v; v.play().catch(function () {}); });
     c.addEventListener("mouseleave", function () { v.pause(); });
   });

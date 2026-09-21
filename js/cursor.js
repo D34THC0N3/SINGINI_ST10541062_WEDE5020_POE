@@ -27,9 +27,9 @@
     requestAnimationFrame(loop);
   }
   loop();
-  // state labels: VIEW / DRAG / PLAY / CLOSE, ring grows out
+  // words that show in the circle, circle gets bigger
   document.addEventListener("mouseover", function (e) {
-    // target isnt always a real element (page swaps etc), so check first
+    // sometimes theres nothing there so check first or it breaks lol
     if (!e.target || !e.target.closest) return;
     var el = e.target.closest("[data-cursor]");
     if (el) {
@@ -43,7 +43,7 @@
     var el = e.target.closest("[data-cursor]");
     if (el) { label.style.opacity = "0"; targetScale = 1; }
   });
-  // magnetic - nav links + buttons lean toward the cursor a few px
+  // buttons lean towards ur mouse a tiny bit
   document.querySelectorAll(".btn, .btn-outline, .nav-cta, .nav-links a").forEach(function (el) {
     el.addEventListener("mousemove", function (e) {
       var r = el.getBoundingClientRect();
@@ -54,14 +54,14 @@
     });
     el.addEventListener("mouseleave", function () { el.style.transform = ""; });
   });
-  // hide on inputs
+  // hide it on text boxes
   document.addEventListener("mouseenter", function (e) {
-    // same guard, document has no .matches and it throws
+    // same check or it errors
     if (e.target && e.target.matches && e.target.matches("input, textarea, select")) { ring.style.opacity = "0"; dot.style.opacity = "0"; }
   }, true);
   document.addEventListener("mouseleave", function (e) {
     if (e.target && e.target.matches && e.target.matches("input, textarea, select")) { ring.style.opacity = ""; dot.style.opacity = ""; }
   }, true);
-  // cursor none only on fine pointer
+  // only hide the normal cursor on mouse, not touch
   document.documentElement.style.cursor = "none";
 })();
