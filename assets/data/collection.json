@@ -1,0 +1,122 @@
+{
+  "cars": [
+    {
+      "id": "m3-gtr",
+      "name": "BMW M3 GTR",
+      "badge": "BL #15",
+      "type": "road",
+      "year": 2001,
+      "engine": "4.0L P60B40 V8",
+      "power": "331 kW @ 8000 rpm",
+      "transmission": "6-speed sequential",
+      "drivetrain": "RWD, mechanical LSD",
+      "weight": "1,350 kg (dry)",
+      "zeroTo100": "3.1 s",
+      "topSpeed": "300+ km/h",
+      "chassis": "E46 steel monocoque, carbon doors/roof/hood",
+      "production": "10 road cars (homologation special)",
+      "price": "POA",
+      "images": {
+        "thumb": "assets/images/m3-gtr.webp",
+        "full": "assets/images/hd/m3-gtr.jpg",
+        "gallery": [
+          "assets/images/m3-gtr.webp",
+          "assets/images/hd/m3-gtr.jpg"
+        ]
+      },
+      "video": "assets/videos/tape-2.mp4",
+      "poster": "assets/images/m3-gtr.webp",
+      "description": "Garching V8 — the Most Wanted hero. The only E46 with a V8, built for ALMS GTR regulations."
+    },
+    {
+      "id": "amg-gt3",
+      "name": "Mercedes-AMG GT3",
+      "badge": "BL #14",
+      "type": "race",
+      "year": 2016,
+      "engine": "6.2L M159 V8",
+      "power": "390 kW @ 7500 rpm",
+      "transmission": "6-speed Xtrac sequential",
+      "drivetrain": "RWD, adjustable traction control",
+      "weight": "1,310 kg (FIA GT3 spec)",
+      "zeroTo100": "3.2 s",
+      "topSpeed": "295 km/h",
+      "chassis": "Aluminium spaceframe, carbon composite body",
+      "production": "FIA GT3 / IMSA GTD",
+      "price": "POA",
+      "images": {
+        "thumb": "assets/images/sls-gt3.webp",
+        "full": "assets/images/hd/sls-gt3.jpg",
+        "gallery": [
+          "assets/images/sls-gt3.webp",
+          "assets/images/hd/sls-gt3.jpg"
+        ]
+      },
+      "video": "assets/videos/tape-2.mp4",
+      "poster": "assets/images/sls-gt3.webp",
+      "description": "Race V8, road-legal. The GT3 that dominated Blancpain and IMSA — naturally aspirated M159 howl."
+    },
+    {
+      "id": "f1-longtail",
+      "name": "McLaren F1 GTR Longtail",
+      "badge": "BL #13",
+      "type": "race",
+      "year": 1997,
+      "engine": "6.1L BMW S70/2 V12",
+      "power": "447 kW @ 7400 rpm",
+      "transmission": "6-speed Xtrac sequential",
+      "drivetrain": "RWD, central seating position",
+      "weight": "1,050 kg (race trim)",
+      "zeroTo100": "2.9 s",
+      "topSpeed": "330 km/h (Le Mans '97)",
+      "chassis": "Carbon fibre monocoque, gold foil engine bay",
+      "production": "10 Longtail chassis (1997)",
+      "price": "POA",
+      "images": {
+        "thumb": "assets/images/f1-longtail.webp",
+        "full": "assets/images/hd/f1-engine.jpg",
+        "gallery": [
+          "assets/images/f1-longtail.webp",
+          "assets/images/hd/f1-engine.jpg"
+        ]
+      },
+      "video": "assets/videos/grow.mp4",
+      "poster": "assets/images/f1-longtail.webp",
+      "description": "Woking '97 — 6.1 V12, RWD. The Longtail that won Le Mans '95, '96, '97 in the hands of the greats."
+    },
+    {
+      "id": "zonda-f",
+      "name": "Pagani Zonda F",
+      "badge": "BL #12",
+      "type": "road",
+      "year": 2005,
+      "engine": "7.3L Mercedes-AMG M297 V12",
+      "power": "449 kW @ 6500 rpm",
+      "transmission": "6-speed AMT (Cima), gated manual optional",
+      "drivetrain": "RWD, mechanical LSD",
+      "weight": "1,230 kg (dry)",
+      "zeroTo100": "3.6 s",
+      "topSpeed": "345 km/h",
+      "chassis": "Carbo-titanium monocoque",
+      "production": "25 F Clubsport units",
+      "price": "POA",
+      "images": {
+        "thumb": "assets/images/zonda-f-new.webp",
+        "full": "assets/images/hd/zonda-f-new.jpg",
+        "gallery": [
+          "assets/images/zonda-f-new.webp",
+          "assets/images/hd/zonda-roadster.jpg"
+        ]
+      },
+      "video": "assets/videos/zonda-mileson-4k.mp4",
+      "poster": "assets/images/zonda-f-new.webp",
+      "description": "The F that started the legend — 7.3 V12, gated manual. Horacio's masterpiece, the last analogue hypercar."
+    }
+  ],
+  "meta": {
+    "total": 4,
+    "films": 2,
+    "wanted": 15,
+    "lastUpdated": "2026-11-02"
+  }
+}

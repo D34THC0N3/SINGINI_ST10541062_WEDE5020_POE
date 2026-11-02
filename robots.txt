@@ -1,0 +1,18 @@
+# Obsidian Motors - robots.txt
+# WEDE5020 POE Part 3
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://d34thc0n3.github.io/SINGINI_ST10541062_WEDE5020_POE/sitemap.xml
+
+# Disallow private/admin areas (none in static site)
+# Disallow: /includes/
+# Disallow: /assets/data/
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 10
+
+# Host
+Host: https://d34thc0n3.github.io/SINGINI_ST10541062_WEDE5020_POE/

@@ -16,7 +16,7 @@ body::after { opacity:.03; animation: grainMove 0.8s steps(4) infinite; }
 .marquee span{ padding:0 24px; }
 /* mask h1 lines so the char rise looks like lusion, not a jump */
 h1{ overflow:hidden; }
-@keyframes marquee{ 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes marquee{ 0%{transform:translateX(-50%)} 100%{transform:translateX(0)} }
 @media (prefers-reduced-motion: reduce){ .marquee-inner{ animation:none; } }
 /* cursor - ring + dot, only hide normal cursor on real mice */
 @media (pointer:fine) and (prefers-reduced-motion: no-preference){

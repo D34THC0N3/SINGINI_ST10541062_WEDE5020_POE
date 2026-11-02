@@ -19,7 +19,7 @@
 }
 .nav.is-scrolled { background: #070707; }
 .nav-inner { max-width: var(--wide); margin: 0 auto; min-height: var(--nav-h);
-  padding: 10px var(--gap); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  padding: 10px calc(var(--gap) / 2); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 
 /* logo with the little crystal pic */
 .nav-logo { font-family: var(--font-display); font-weight: 600; letter-spacing: .14em;
@@ -120,7 +120,7 @@
   background: linear-gradient(to top, rgba(7,7,7,.78) 0%, rgba(7,7,7,.2) 42%, rgba(7,7,7,.08) 100%),
     radial-gradient(900px 600px at 70% 20%, rgba(184,151,106,.14), transparent 60%); }
 .hero-copy { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column;
-  justify-content: flex-end; padding-bottom: 56px; }
+  justify-content: flex-end; padding-bottom: 56px; padding-left: calc(var(--gap) / 2); }
 .hero-copy h1 { font-size: clamp(3rem, 2rem + 6vw, 7.2rem); line-height: .88; text-transform: uppercase;
   letter-spacing: -.03em; font-weight: 550; }
 .hero-copy h1 .outline { -webkit-text-stroke: 1.6px var(--gold); color: transparent; }
