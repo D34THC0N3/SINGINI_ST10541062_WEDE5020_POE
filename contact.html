@@ -83,31 +83,44 @@
           <!-- form -->
           <div class="form-card">
             <h2>Send a message</h2>
-            <form data-enquiry novalidate>
+            <form data-enquiry action="mailto:enquiries@obsidianmotors.co.za" method="post" enctype="text/plain" novalidate>
               <div class="field">
                 <label for="m-name">Name <span class="req">*</span></label>
-                <input id="m-name" type="text" name="name" autocomplete="name" required />
+                <input id="m-name" type="text" name="name" autocomplete="name" minlength="2" required />
               </div>
               <div class="field">
                 <label for="m-email">Email <span class="req">*</span></label>
                 <input id="m-email" type="email" name="email" autocomplete="email" required />
               </div>
               <div class="field">
-                <label for="m-vehicle">Interested in</label>
+                <label for="m-message-type">Message type <span class="req">*</span></label>
+                <select id="m-message-type" name="message_type" required>
+                  <option value="" disabled selected>What is this about?</option>
+                  <option>General question</option>
+                  <option>Buying a car</option>
+                  <option>Selling or consigning</option>
+                  <option>Servicing and maintenance</option>
+                  <option>Press or media</option>
+                  <option>Something else</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="m-vehicle">Interested in <span class="opt">(optional)</span></label>
                 <select id="m-vehicle" name="vehicle">
                   <option value="" disabled selected>Select a car…</option>
+                  <option>BMW M3 GTR</option>
                   <option>Mercedes-AMG GT3</option>
-                  <option>Pagani Zonda</option>
-                  <option>Porsche GT2 RS</option>
+                  <option>McLaren F1 GTR Longtail</option>
+                  <option>Pagani Zonda F</option>
                   <option>General enquiry</option>
                 </select>
               </div>
               <div class="field">
                 <label for="m-message">Message <span class="req">*</span></label>
-                <textarea id="m-message" name="message" required></textarea>
+                <textarea id="m-message" name="message" minlength="20" required></textarea>
               </div>
               <button type="submit" class="btn">Send message</button>
-              <p class="form-note" data-ok hidden style="color:var(--teal);">Thanks — your message is in. We'll reply within one business day.</p>
+              <p class="form-note" data-ok hidden style="color:var(--gold);">Thanks — your message is ready in your email app. Send it and we'll reply within one business day.</p>
             </form>
           </div>
         </div>
@@ -189,5 +202,6 @@
   <script src="js/footer.js" defer></script>
   <script src="js/media.js" defer></script>
   <script src="js/extras.js" defer></script>
+  <script src="js/forms.js" defer></script>
 </body>
 </html>

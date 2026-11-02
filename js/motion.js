@@ -1,4 +1,4 @@
-/* motion.js - fade ins, moving text, rpm bar. */
+/* motion.js - reveal, parallax, text animation, sticky, hover. */
 (function () {
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -14,7 +14,7 @@
         var frag = document.createDocumentFragment();
         for (var i = 0; i < t.length; i++) {
           var s = document.createElement("span");
-          s.textContent = t[i] === " " ? " " : t[i]; // keep the spaces or words stick together
+          s.textContent = t[i] === " " ? " " : t[i]; // keep the spaces or words stick together
           s.style.display = "inline-block";
           s.style.transform = "translateY(110%)";
           // gsap reads this as y so the tween below lines up
@@ -38,7 +38,7 @@
       var chars = splitChars(h1);
       if (window.gsap) {
         gsap.set(chars, { yPercent: 110 });
-        gsap.to(chars, { yPercent: 0, duration: 0.9, ease: "power4.out", stagger: 0.02, overwrite: true });
+        gsap.to(chars, { yPercent: 0, duration: 1, ease: "elastic.out(1, .6)", stagger: 0.022, overwrite: true });
       }
       else for (var i = 0; i < chars.length; i++) chars[i].style.transform = "none";
     }
@@ -48,15 +48,23 @@
       gsap.set(c2, { yPercent: 110 });
       gsap.to(c2, { yPercent: 0, duration: 0.5, ease: "none", stagger: 0.015 });
     }
+    var lead = document.querySelector(".lead");
+    if (lead && window.gsap) {
+      gsap.fromTo(lead, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7, ease: "power3.out", delay: 0.25 });
+    }
+    var btnRow = document.querySelector(".btn-row");
+    if (btnRow && window.gsap) {
+      gsap.fromTo(btnRow, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7, ease: "back.out(1.6)", delay: 0.4 });
+    }
   }
 
   if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
   if (!reduce && window.gsap && window.ScrollTrigger) {
-    // ----- stuff fading in on scroll -----
+    // ----- stuff fading in on scroll, with a small bounce -----
     ScrollTrigger.batch(".reveal, .section", {
       onEnter: function (batch) {
-        gsap.fromTo(batch, { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7, ease: "power4.out", stagger: 0.08, overwrite: true });
+        gsap.fromTo(batch, { y: 44, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.8, ease: "power2.out", stagger: 0.08, overwrite: true });
       },
       start: "top 85%",
       once: true
@@ -65,8 +73,11 @@
     document.querySelectorAll(".ph, .carousel-card img").forEach(function (img) {
       var wrap = img.closest(".card, .panel, .carousel-card, .channel-img, .wrap");
       if (!wrap) return;
-      gsap.fromTo(img, { yPercent: -8 }, { yPercent: 8, ease: "none", scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom top", scrub: 0.8 } });
+      gsap.fromTo(img, { yPercent: -10 }, { yPercent: 10, ease: "none", scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom top", scrub: 0.9 } });
     });
+    // ----- hero video drifts slower than the page -----
+    var heroVid = document.querySelector("#hero video");
+    if (heroVid) gsap.fromTo(heroVid, { yPercent: -6, scale: 1.12 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: 0.6 } });
     // ----- label then heading then words, one after the other -----
     document.querySelectorAll("main section").forEach(function (sec) {
       var beats = sec.querySelectorAll(".eyebrow, h2, h3, p.lead, .btn-row");
@@ -74,7 +85,7 @@
       ScrollTrigger.create({
         trigger: sec, start: "top 78%", once: true,
         onEnter: function () {
-          gsap.fromTo(beats, { y: 26, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, ease: "power4.out", stagger: 0.12, overwrite: true });
+          gsap.fromTo(beats, { y: 26, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, ease: "power4.out", stagger: 0.1, overwrite: true });
         }
       });
     });
@@ -370,12 +381,12 @@
         var px = (e.clientX - r.left) / r.width - 0.5;
         var py = (e.clientY - r.top) / r.height - 0.5;
         card.style.transition = "transform .1s linear";
-        card.style.transform = "perspective(900px) rotateY(" + (px * 6) + "deg) rotateX(" + (-py * 6) + "deg)";
+        card.style.transform = "perspective(900px) rotateY(" + (px * 8) + "deg) rotateX(" + (-py * 8) + "deg)";
         card.style.setProperty("--sx", (px * 60));
       });
       card.addEventListener("pointerleave", function () {
         if (card.style.position === "fixed") return;
-        card.style.transition = "transform .45s cubic-bezier(.22,1,.36,1)";
+        card.style.transition = "transform .55s cubic-bezier(.22,1.4,.36,1)";
         card.style.transform = "";
         card.style.setProperty("--sx", 0);
       });

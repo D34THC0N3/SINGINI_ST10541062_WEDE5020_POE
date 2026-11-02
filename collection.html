@@ -77,8 +77,19 @@
           <span><b data-count="15" data-pad="00">00</b> wanted</span>
         </p>
 
-        <div class="carousel" data-cursor="DRAG" style="margin-top:44px;">
-          <a class="carousel-card bracket" href="contact.html" data-cursor="VIEW">
+        <div class="filter-bar reveal">
+          <label for="car-search" class="sr-only">Search the collection</label>
+          <input id="car-search" class="filter-input" type="search" placeholder="Search by name or engine…" autocomplete="off" />
+          <select id="car-type" class="filter-input" style="flex:0 1 200px;" aria-label="Filter by type">
+            <option value="all">All cars</option>
+            <option value="road">Road legal</option>
+            <option value="race">Track / race</option>
+          </select>
+          <span class="filter-count" data-filter-count aria-live="polite">4 cars</span>
+        </div>
+
+        <div class="carousel" data-cursor="DRAG" style="margin-top:20px;">
+          <a class="carousel-card bracket" data-type="road" data-name="BMW M3 GTR 4.0L P60B40 V8" href="contact.html" data-cursor="VIEW">
             <img src="assets/images/hd/m3-gtr.jpg" srcset="assets/images/m3-gtr.webp 1024w, assets/images/hd/m3-gtr.jpg 2048w" data-opt="assets/images/m3-gtr.webp" width="2048" height="1152" alt="BMW E46 M3 GTR race car at full noise on track" loading="lazy" decoding="async" />
             <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
               <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #15</span>
@@ -86,7 +97,7 @@
               <p style="font-size:.82rem; color:var(--steel);">Garching V8 — the Most Wanted hero.</p>
             </div>
           </a>
-          <a class="carousel-card bracket" href="contact.html" data-cursor="PLAY">
+          <a class="carousel-card bracket" data-type="race" data-name="Mercedes-AMG GT3 6.2L M159 V8" href="contact.html" data-cursor="PLAY">
             <video src="assets/videos/tape-2.mp4" muted loop playsinline preload="none" poster="assets/images/sls-gt3.webp" style="width:100%; height:100%; object-fit:cover;" aria-label="Short film: SLS AMG GT3 out after dark"></video>
             <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
               <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #14</span>
@@ -94,7 +105,7 @@
               <p style="font-size:.82rem; color:var(--steel);">Race V8, road-legal.</p>
             </div>
           </a>
-          <a class="carousel-card bracket" href="contact.html" data-cursor="PLAY">
+          <a class="carousel-card bracket" data-type="race" data-name="McLaren F1 GTR Longtail 6.1L BMW S70/2 V12" href="contact.html" data-cursor="PLAY">
             <video src="assets/videos/grow.mp4" muted loop playsinline preload="none" poster="assets/images/f1-longtail.webp" style="width:100%; height:100%; object-fit:cover;"></video>
             <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
               <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #13</span>
@@ -102,7 +113,7 @@
               <p style="font-size:.82rem; color:var(--steel);">Woking '97 — 6.1 V12, RWD.</p>
             </div>
           </a>
-          <a class="carousel-card bracket" href="contact.html" data-cursor="VIEW">
+          <a class="carousel-card bracket" data-type="road" data-name="Pagani Zonda F 7.3L Mercedes-AMG M297 V12" href="contact.html" data-cursor="VIEW">
             <img src="assets/images/hd/zonda-f-new.jpg" srcset="assets/images/zonda-f-new.webp 1024w, assets/images/hd/zonda-f-new.jpg 2048w" data-opt="assets/images/zonda-f-new.webp" width="2048" height="1536" alt="Pagani Zonda F Clubsport in dark profile" loading="lazy" decoding="async" />
             <div style="position:absolute; bottom:0; left:0; right:0; padding:18px; background:linear-gradient(to top, rgba(7,7,7,.88), transparent);">
               <span style="font:10px 'IBM Plex Mono',monospace; color:var(--gold);">BL #12</span>
@@ -196,5 +207,6 @@
   <script src="js/footer.js" defer></script>
   <script src="js/media.js" defer></script>
   <script src="js/extras.js" defer></script>
+  <script src="js/collection.js" defer></script>
 </body>
 </html>
