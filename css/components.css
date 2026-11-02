@@ -120,7 +120,6 @@ cite { display: block; margin-top: 20px; font-style: normal; font-family: var(--
 .filter-input:focus { outline: none; border-color: var(--gold); }
 .filter-count { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em;
   text-transform: uppercase; color: var(--gold); }
-.filter-empty { padding: 40px 0; font-family: var(--font-mono); font-size: .8rem; color: var(--faint); }
 .is-filtered-out { display: none !important; }
 
 /* lightbox */
